@@ -4,10 +4,10 @@ import { TypographyOptions } from '@mui/material/styles/createTypography'
 const baseTypographyOptions: TypographyOptions = {
   fontFamily: 'Noto Sans KR',
   body1: {
-    fontWeight: 200,
+    fontWeight: 400,
   },
   body2: {
-    fontWeight: 200,
+    fontWeight: 400,
   },
   caption: {
     fontWeight: 100,

@@ -1,5 +1,6 @@
 import { AppBar, AppBarProps, Toolbar, ToolbarProps } from '@mui/material'
 import { ReactNode } from 'react'
+import { css } from '@emotion/react'
 
 export interface CustomAppbarProps {
   children: ReactNode
@@ -14,7 +15,16 @@ export const CustomAppbar = ({
 }: CustomAppbarProps) => {
   return (
     <AppBar position='static' {...appbarProps}>
-      <Toolbar {...toolbarProps}>{children}</Toolbar>
+      <Toolbar {...toolbarProps} css={style.root}>
+        {children}
+      </Toolbar>
     </AppBar>
   )
+}
+
+const style = {
+  root: css`
+    display: flex;
+    justify-content: space-between;
+  `,
 }
