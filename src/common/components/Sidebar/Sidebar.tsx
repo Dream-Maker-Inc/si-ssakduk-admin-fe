@@ -1,9 +1,9 @@
-import { Colors } from "@/common/themes/Color";
-import { css } from "@emotion/react";
+import { Colors } from '@/common/themes/Color'
+import { css } from '@emotion/react'
 
 export const Sidebar = () => {
-  return <div css={st.root}></div>;
-};
+  return <div css={st.root}></div>
+}
 
 const st = {
   root: css`
@@ -12,4 +12,4 @@ const st = {
     min-width: 240px;
     border-right: 1px solid ${Colors.Border};
   `,
-};
+}

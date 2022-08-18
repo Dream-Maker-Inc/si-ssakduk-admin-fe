@@ -1,1 +1,1 @@
-export { CustomAppbar } from "./CustomAppbar";
+export { CustomAppbar } from './CustomAppbar'

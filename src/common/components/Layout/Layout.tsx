@@ -1,11 +1,11 @@
-import { Colors } from "@/common/themes/Color";
-import { css } from "@emotion/react";
-import { ReactNode } from "react";
-import { CustomAppbar } from "../Appbar";
-import { Sidebar } from "../Sidebar";
+import { Colors } from '@/common/themes/Color'
+import { css } from '@emotion/react'
+import { ReactNode } from 'react'
+import { CustomAppbar } from '../Appbar'
+import { Sidebar } from '../Sidebar'
 
 export interface LayoutProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export const Layout = ({ children }: LayoutProps) => {
@@ -19,8 +19,8 @@ export const Layout = ({ children }: LayoutProps) => {
         <main css={st.main}>{children}</main>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const st = {
   root: css`
@@ -39,4 +39,4 @@ const st = {
     height: 100%;
     background-color: ${Colors.MainContentBg};
   `,
-};
+}
