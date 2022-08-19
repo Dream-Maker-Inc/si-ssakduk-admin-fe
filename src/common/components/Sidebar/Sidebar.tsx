@@ -1,40 +1,58 @@
 import { Colors } from '@/common/themes/Color'
 import { css } from '@emotion/react'
-import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
-import {
-  BookmarkRounded,
-  DashboardRounded,
-  ForumRounded,
-  PersonRounded,
-} from '@mui/icons-material'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import BookmarkRounded from '@mui/icons-material/BookmarkRounded'
+import DashboardRounded from '@mui/icons-material/DashboardRounded'
+import ForumRounded from '@mui/icons-material/ForumRounded'
+import PersonRounded from '@mui/icons-material/PersonRounded'
+import Link from 'next/link'
+import CancelRounded from '@mui/icons-material/CancelRounded'
 
 export const Sidebar = () => {
   return (
     <div css={st.root}>
-      <ListItemButton>
-        <ListItemIcon>
-          <DashboardRounded />
-        </ListItemIcon>
-        <ListItemText primary='메인화면 관리' />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <PersonRounded />
-        </ListItemIcon>
-        <ListItemText primary='회원 관리' />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <ForumRounded />
-        </ListItemIcon>
-        <ListItemText primary='커뮤니티 관리' />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <BookmarkRounded />
-        </ListItemIcon>
-        <ListItemText primary='라이프 관리' />
-      </ListItemButton>
+      <Link href='/main'>
+        <ListItemButton>
+          <ListItemIcon>
+            <DashboardRounded />
+          </ListItemIcon>
+          <ListItemText primary='메인화면 관리' />
+        </ListItemButton>
+      </Link>
+      <Link href='/member'>
+        <ListItemButton>
+          <ListItemIcon>
+            <PersonRounded />
+          </ListItemIcon>
+          <ListItemText primary='회원 관리' />
+        </ListItemButton>
+      </Link>
+      <Link href='/break-member'>
+        <ListItemButton>
+          <ListItemIcon>
+            <CancelRounded />
+          </ListItemIcon>
+          <ListItemText primary='틸퇴 회원 관리' />
+        </ListItemButton>
+      </Link>
+      <Link href='/community'>
+        <ListItemButton>
+          <ListItemIcon>
+            <ForumRounded />
+          </ListItemIcon>
+          <ListItemText primary='커뮤니티 관리' />
+        </ListItemButton>
+      </Link>
+      <Link href='/life'>
+        <ListItemButton>
+          <ListItemIcon>
+            <BookmarkRounded />
+          </ListItemIcon>
+          <ListItemText primary='라이프 관리' />
+        </ListItemButton>
+      </Link>
     </div>
   )
 }

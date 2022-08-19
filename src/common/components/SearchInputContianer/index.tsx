@@ -1,0 +1,1 @@
+export { SearchInputContainer } from './SearchInputContainer'
