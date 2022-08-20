@@ -48,6 +48,14 @@ const Detail = () => {
           <SingleImageRow title='첨부 파일' images={data.attachments} />
           <SingleDataRow title='등록 일자' content={data.regDate} />
           <SingleDataRow title='최종 수정 일자' content={data.updateDate} />
+          <SingleDataRow
+            title='숨김 여부'
+            content={
+              data.isVisible
+                ? '정상 게시 중입니다.'
+                : '숨김 처리된 게시물입니다.'
+            }
+          />
         </Stack>
       </ContentContainer>
 

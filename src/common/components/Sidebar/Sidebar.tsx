@@ -10,6 +10,7 @@ import PersonRounded from '@mui/icons-material/PersonRounded'
 import CancelRounded from '@mui/icons-material/CancelRounded'
 import PeopleRounded from '@mui/icons-material/PeopleRounded'
 import ForumRounded from '@mui/icons-material/ForumRounded'
+import { BreakPoints, MediaQueries } from '@/common/themes/Limit'
 
 export const Sidebar = () => {
   return (
@@ -62,6 +63,14 @@ export const Sidebar = () => {
           <ListItemText primary='톡 관리' />
         </ListItemButton>
       </Link>
+      <Link href='/agreement'>
+        <ListItemButton>
+          <ListItemIcon>
+            <DashboardRounded />
+          </ListItemIcon>
+          <ListItemText primary='약관 관리' />
+        </ListItemButton>
+      </Link>
     </div>
   )
 }
@@ -70,5 +79,9 @@ const st = {
   root: css`
     min-width: 240px;
     border-right: 1px solid ${Colors.Border};
+
+    @media ${MediaQueries.md} {
+      display: none;
+    }
   `,
 }

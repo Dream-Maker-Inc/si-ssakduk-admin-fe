@@ -29,6 +29,7 @@ export const community = [
     ],
     regDate: new Date(2022, 11, 11).toLocaleDateString(),
     updateDate: new Date(2022, 12, 12).toLocaleDateString(),
+    isVisible: true,
   },
 
   {
@@ -45,6 +46,7 @@ export const community = [
     ],
     regDate: new Date(2022, 11, 11).toLocaleDateString(),
     updateDate: new Date(2022, 12, 12).toLocaleDateString(),
+    isVisible: true,
   },
 
   {
@@ -61,6 +63,7 @@ export const community = [
     ],
     regDate: new Date(2022, 11, 11).toLocaleDateString(),
     updateDate: new Date(2022, 12, 12).toLocaleDateString(),
+    isVisible: true,
   },
 
   {
@@ -77,5 +80,6 @@ export const community = [
     ],
     regDate: new Date(2022, 11, 11).toLocaleDateString(),
     updateDate: new Date(2022, 11, 11).toLocaleDateString(),
+    isVisible: true,
   },
 ]
