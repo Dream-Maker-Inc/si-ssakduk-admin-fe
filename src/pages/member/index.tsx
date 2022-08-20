@@ -47,11 +47,17 @@ const Member = () => (
               <Link href={`/member/${row.idx}`} key={row.idx}>
                 <TableRow key={row.idx} css={style.tableItem}>
                   <TableCell component='th' scope='row'>
-                    {row.idx}
+                    <Typography variant='body2'>{row.idx}</Typography>
                   </TableCell>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell>{row.nickname}</TableCell>
-                  <TableCell>{row.regdate}</TableCell>
+                  <TableCell>
+                    <Typography variant='body2'>{row.name}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant='body2'>{row.nickname}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant='body2'>{row.regdate}</Typography>
+                  </TableCell>
                 </TableRow>
               </Link>
             ))}

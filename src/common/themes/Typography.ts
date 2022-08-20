@@ -5,23 +5,25 @@ const baseTypographyOptions: TypographyOptions = {
   fontFamily: 'Noto Sans KR',
   h1: {
     fontSize: 30,
-    fontWeight: 500,
+    fontWeight: 700,
   },
   h2: {
     fontSize: 24,
-    fontWeight: 500,
+    fontWeight: 700,
   },
   body1: {
     fontSize: 16,
-    fontWeight: 500,
+    fontWeight: 400,
   },
   body2: {
     fontSize: 16,
-    fontWeight: 400,
-    color: '#666',
+    fontWeight: 700,
+    color: '#999',
   },
   caption: {
-    fontWeight: 100,
+    fontSize: 14,
+    fontWeight: 300,
+    color: 'gray',
     lineHeight: 1.4,
   },
 }

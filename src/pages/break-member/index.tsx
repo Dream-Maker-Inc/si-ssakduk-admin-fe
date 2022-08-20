@@ -50,11 +50,17 @@ const BreakMember = () => (
               <Link href={`/break-member/${row.idx}`} key={row.idx}>
                 <TableRow key={row.idx} css={style.tableItem}>
                   <TableCell component='th' scope='row'>
-                    {row.idx}
+                    <Typography variant='body2'>{row.idx}</Typography>
                   </TableCell>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell>{row.nickname}</TableCell>
-                  <TableCell>{row.breakDate}</TableCell>
+                  <TableCell>
+                    <Typography variant='body2'>{row.name}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant='body2'>{row.nickname}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant='body2'>{row.breakDate}</Typography>
+                  </TableCell>
                 </TableRow>
               </Link>
             ))}

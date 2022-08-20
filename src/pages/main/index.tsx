@@ -52,9 +52,6 @@ const style = {
   content: css`
     display: flex;
   `,
-  title: css`
-    width: 300px;
-  `,
 }
 
 export default Main
