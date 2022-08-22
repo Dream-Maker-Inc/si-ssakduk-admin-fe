@@ -1,17 +1,20 @@
-import Stack from '@mui/material/Stack'
-import { TitleContainer } from '@/common/components/TitleContainer'
-import { ContentContainer } from '@/common/ContentContainer'
 import { ChangeEvent, useState } from 'react'
+import { css } from '@emotion/react'
+
+import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
-import { css } from '@emotion/react'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import TextField from '@mui/material/TextField'
+import Checkbox from '@mui/material/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import Button from '@mui/material/Button'
 import SendRounded from '@mui/icons-material/SendRounded'
-import { Checkbox, FormControlLabel } from '@mui/material'
+
+import { TitleContainer } from '@/common/components/TitleContainer'
+import { ContentContainer } from '@/common/ContentContainer'
 
 const Edit = () => {
   const [title, setTitle] = useState<string>('')
@@ -38,7 +41,7 @@ const Edit = () => {
             <Typography css={style.title} variant='body1'>
               제목
             </Typography>
-            <FormControl fullWidth sx={{ m: 1 }}>
+            <FormControl sx={{ m: 1, flex: 1 }}>
               <InputLabel>제목을 입력하세요.</InputLabel>
               <OutlinedInput
                 value={title}
@@ -51,9 +54,9 @@ const Edit = () => {
 
           <article css={style.root}>
             <Typography css={style.title} variant='body1'>
-              내용을 입력하세요.
+              내용
             </Typography>
-            <FormControl fullWidth sx={{ m: 1 }}>
+            <FormControl sx={{ m: 1, flex: 1 }}>
               <TextField
                 label='내용을 입력하세요.'
                 multiline

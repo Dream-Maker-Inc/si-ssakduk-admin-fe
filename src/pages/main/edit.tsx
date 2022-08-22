@@ -1,11 +1,14 @@
-import Stack from '@mui/material/Stack'
-import { TitleContainer } from '@/common/components/TitleContainer'
-import { ContentContainer } from '@/common/ContentContainer'
-import { css } from '@emotion/react'
-import { Button, TextField } from '@mui/material'
-import { SendRounded } from '@mui/icons-material'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { css } from '@emotion/react'
+
+import Stack from '@mui/material/Stack'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import SendRounded from '@mui/icons-material/SendRounded'
+
+import { TitleContainer } from '@/common/components/TitleContainer'
+import { ContentContainer } from '@/common/ContentContainer'
 
 const Edit = () => {
   const router = useRouter()
@@ -15,7 +18,7 @@ const Edit = () => {
     router.push('/main')
   }
 
-  const [buttonClickable, setButtonClickable] = useState(false)
+  const [buttonClickable, setButtonClickable] = useState<boolean>(false)
   const handleButtonClickable = () => setButtonClickable(true)
 
   return (

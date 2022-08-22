@@ -10,7 +10,7 @@ import PersonRounded from '@mui/icons-material/PersonRounded'
 import CancelRounded from '@mui/icons-material/CancelRounded'
 import PeopleRounded from '@mui/icons-material/PeopleRounded'
 import ForumRounded from '@mui/icons-material/ForumRounded'
-import { BreakPoints, MediaQueries } from '@/common/themes/Limit'
+import { MediaQueries } from '@/common/themes/Limit'
 
 export const Sidebar = () => {
   return (
@@ -55,7 +55,7 @@ export const Sidebar = () => {
           <ListItemText primary='라이프 관리' />
         </ListItemButton>
       </Link>
-      <Link href='/chat'>
+      <Link href='/talk'>
         <ListItemButton>
           <ListItemIcon>
             <ForumRounded />

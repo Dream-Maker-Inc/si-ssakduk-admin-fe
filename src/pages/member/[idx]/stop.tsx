@@ -1,26 +1,29 @@
-import Stack from '@mui/material/Stack'
-import { TitleContainer } from '@/common/components/TitleContainer'
-import { ContentContainer } from '@/common/ContentContainer'
+import { css } from '@emotion/react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { member } from '@/data/member'
+
+import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
-import { useState } from 'react'
-import { Colors } from '@/common/themes/Color'
-import { css } from '@emotion/react'
 import SendRounded from '@mui/icons-material/SendRounded'
+
+import { member } from '@/data/member'
+import { Colors } from '@/common/themes/Color'
+import { TitleContainer } from '@/common/components/TitleContainer'
+import { ContentContainer } from '@/common/ContentContainer'
 
 const Stop = () => {
   const router = useRouter()
   const { idx } = router.query
-  const data = member[idx - 1]
+  const [period, setPeriod] = useState<string>('')
+  const [buttonClickable, setButtonClickable] = useState<boolean>(false)
 
-  const [period, setPeriod] = useState('')
-  const [buttonClickable, setButtonClickable] = useState(false)
+  if (!idx) return
+  const data = member[+idx - 1]
 
   const handleButtonClickable = () => setButtonClickable(true)
 

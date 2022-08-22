@@ -1,6 +1,5 @@
 import Typography from '@mui/material/Typography'
 import { css } from '@emotion/react'
-import Link from 'next/link'
 import { Divider } from '@mui/material'
 
 type SingleImageRowProps = {

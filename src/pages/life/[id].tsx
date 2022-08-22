@@ -1,21 +1,25 @@
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+
 import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+import IconButton from '@mui/material/IconButton'
+import DeleteRounded from '@mui/icons-material/DeleteRounded'
+import EditRounded from '@mui/icons-material/EditRounded'
+
+import { life } from '@/data/life'
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
-import Typography from '@mui/material/Typography'
-import { useRouter } from 'next/router'
-import { IconButton } from '@mui/material'
-import { DeleteRounded, EditRounded } from '@mui/icons-material'
-import Link from 'next/link'
-import { community } from '@/data/community'
 import { SingleDataRow } from '@/common/components/SingleDataRow'
 import { SingleImageRow } from '@/common/components/SingleImageRow'
-import { CommentItem } from '@/common/components/CommentItem/CommentItem'
-import { life } from '@/data/life'
 
 const Detail = () => {
   const router = useRouter()
   const { id } = router.query
-  const data = life[id - 1]
+  if (!id) return
+
+  const data = life[+id - 1]
+  if (!data) return
 
   return (
     <Stack>

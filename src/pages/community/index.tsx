@@ -1,7 +1,7 @@
+import Link from 'next/link'
+import { css } from '@emotion/react'
+
 import Stack from '@mui/material/Stack'
-import { TitleContainer } from '@/common/components/TitleContainer'
-import { ContentContainer } from '@/common/ContentContainer'
-import { SearchInputContainer } from '@/common/components/SearchInputContianer'
 import PeopleRounded from '@mui/icons-material/PeopleRounded'
 import Typography from '@mui/material/Typography'
 import Table from '@mui/material/Table'
@@ -9,11 +9,13 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import TableBody from '@mui/material/TableBody'
-import Link from 'next/link'
 import TableContainer from '@mui/material/TableContainer'
-import { css } from '@emotion/react'
+import Chip from '@mui/material/Chip'
+
 import { community } from '@/data/community'
-import { Chip } from '@mui/material'
+import { TitleContainer } from '@/common/components/TitleContainer'
+import { ContentContainer } from '@/common/ContentContainer'
+import { SearchInputContainer } from '@/common/components/SearchInputContianer'
 
 const Community = () => (
   <Stack>
@@ -67,7 +69,7 @@ const Community = () => (
           <TableBody>
             {community.map(row => (
               <Link href={`/community/${row.id}`} key={row.id}>
-                <TableRow key={row.id} css={style.tableItem}>
+                <TableRow css={style.tableItem}>
                   <TableCell component='th' scope='row'>
                     <Typography variant='body2'> {row.id}</Typography>
                   </TableCell>

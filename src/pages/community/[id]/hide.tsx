@@ -1,37 +1,38 @@
-import Stack from '@mui/material/Stack'
-import { TitleContainer } from '@/common/components/TitleContainer'
-import { ContentContainer } from '@/common/ContentContainer'
+import { SyntheticEvent, useState } from 'react'
 import { useRouter } from 'next/router'
+import { css } from '@emotion/react'
+
+import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import { ChangeEvent, useState } from 'react'
-import { Colors } from '@/common/themes/Color'
-import { css } from '@emotion/react'
+import Checkbox from '@mui/material/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import SendRounded from '@mui/icons-material/SendRounded'
+
+import { Colors } from '@/common/themes/Color'
 import { community } from '@/data/community'
-import { Checkbox, FormControlLabel } from '@mui/material'
+import { TitleContainer } from '@/common/components/TitleContainer'
+import { ContentContainer } from '@/common/ContentContainer'
 
 const Hide = () => {
   const router = useRouter()
   const { id } = router.query
-  const data = community[id - 1]
 
-  const [checked, setChecked] = useState(false)
-  const [buttonClickable, setButtonClickable] = useState(false)
+  const [checked, setChecked] = useState<boolean>(false)
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(true)
 
-  const handleCheckboxChecked = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      setChecked(true)
-    } else setChecked(false)
+  if (!id) return
 
-    if (checked) {
-      handleButtonClickable()
-    } else {
-      setButtonClickable(false)
-    }
+  const data = community[+id - 1]
+  if (!data) return
+
+  const handleCheckboxChecked = (event: SyntheticEvent) => {
+    const target = event.target as HTMLInputElement
+    target.checked ? setChecked(true) : setChecked(false)
+    checked ? handleButtonClickable() : setButtonDisabled(false)
   }
 
-  const handleButtonClickable = () => setButtonClickable(true)
+  const handleButtonClickable = () => setButtonDisabled(true)
 
   const handleButtonClick = () => {
     alert('반영되었습니다.')
@@ -65,7 +66,7 @@ const Hide = () => {
         />
 
         <Button
-          disabled={!buttonClickable}
+          disabled={buttonDisabled}
           variant='outlined'
           endIcon={<SendRounded />}
           css={style.button}

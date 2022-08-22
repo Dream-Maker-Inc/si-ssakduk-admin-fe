@@ -1,20 +1,22 @@
-import { TitleContainer } from '@/common/components/TitleContainer'
+import Link from 'next/link'
+import { css } from '@emotion/react'
+
 import Typography from '@mui/material/Typography'
-import { ContentContainer } from '@/common/ContentContainer'
-import { SearchInputContainer } from '@/common/components/SearchInputContianer'
-import PersonRounded from '@mui/icons-material/PersonRounded'
 import TableContainer from '@mui/material/TableContainer'
 import Table from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import TableBody from '@mui/material/TableBody'
-import Link from 'next/link'
 import Stack from '@mui/material/Stack'
-import { css } from '@emotion/react'
-import { life } from '@/data/life'
-import { AddRounded } from '@mui/icons-material'
 import Button from '@mui/material/Button'
+import AddRounded from '@mui/icons-material/AddRounded'
+import PersonRounded from '@mui/icons-material/PersonRounded'
+
+import { life } from '@/data/life'
+import { TitleContainer } from '@/common/components/TitleContainer'
+import { ContentContainer } from '@/common/ContentContainer'
+import { SearchInputContainer } from '@/common/components/SearchInputContianer'
 
 const Life = () => (
   <Stack>

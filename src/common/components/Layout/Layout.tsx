@@ -28,16 +28,22 @@ const st = {
     flex-direction: column;
     width: 100%;
     height: 100%;
+    overflow: hidden;
   `,
   inner: css`
     display: flex;
     width: 100%;
     height: 100%;
+    overflow: hidden;
   `,
   main: css`
+    display: flex;
+    flex-direction: column;
+
     width: 100%;
     height: 100%;
     background-color: ${Colors.MainContentBg};
     padding: 40px;
+    overflow: auto;
   `,
 }

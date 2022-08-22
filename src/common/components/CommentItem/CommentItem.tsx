@@ -35,17 +35,17 @@ export const CommentItem = ({
             </Typography>
           }
         />
-        <IconButton>
-          <DeleteRounded
-            onClick={() =>
-              confirm(
-                `[${primaryText.substring(
-                  0,
-                  10,
-                )}...] 댓글을 삭제하시겠습니까?\n삭제 후에는 되돌릴 수 없습니다.`,
-              )
-            }
-          />
+        <IconButton
+          onClick={() =>
+            confirm(
+              `[${primaryText.substring(
+                0,
+                10,
+              )}...] 댓글을 삭제하시겠습니까?\n삭제 후에는 되돌릴 수 없습니다.`,
+            )
+          }
+        >
+          <DeleteRounded />
         </IconButton>
       </ListItem>
     </List>

@@ -1,11 +1,13 @@
-import Stack from '@mui/material/Stack'
-import { TitleContainer } from '@/common/components/TitleContainer'
-import { ContentContainer } from '@/common/ContentContainer'
-import Typography from '@mui/material/Typography'
 import { css } from '@emotion/react'
 import { useRouter } from 'next/router'
+
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
+
 import { member } from '@/data/member'
-import { Divider } from '@mui/material'
+import { TitleContainer } from '@/common/components/TitleContainer'
+import { ContentContainer } from '@/common/ContentContainer'
 
 type DataRowProps = {
   title: string
@@ -24,7 +26,10 @@ const DataRow = ({ title, content }: DataRowProps) => (
 const Detail = () => {
   const router = useRouter()
   const { idx } = router.query
-  const data = member[idx - 1]
+  if (!idx) return
+  const data = member[+idx - 1]
+
+  if (!data) return
 
   return (
     <Stack>

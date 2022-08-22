@@ -1,9 +1,6 @@
-import { css } from '@emotion/react'
 import Link from 'next/link'
-import { member } from '@/data/member'
-import { TitleContainer } from '@/common/components/TitleContainer'
-import { SearchInputContainer } from '@/common/components/SearchInputContianer'
-import { ContentContainer } from '@/common/ContentContainer'
+import { css } from '@emotion/react'
+
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Table from '@mui/material/Table'
@@ -13,6 +10,11 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableBody from '@mui/material/TableBody'
 import PersonRounded from '@mui/icons-material/PersonRounded'
+
+import { member } from '@/data/member'
+import { TitleContainer } from '@/common/components/TitleContainer'
+import { SearchInputContainer } from '@/common/components/SearchInputContianer'
+import { ContentContainer } from '@/common/ContentContainer'
 
 const Member = () => (
   <Stack>

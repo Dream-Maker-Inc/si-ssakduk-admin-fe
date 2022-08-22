@@ -26,7 +26,11 @@ const DataRow = ({ title, content }: DataRowProps) => (
 const Detail = () => {
   const router = useRouter()
   const { idx } = router.query
-  const data = member[idx - 1]
+  if (!idx) return
+
+  const data = member[+idx - 1]
+
+  if (!data) return
 
   return (
     <Stack>

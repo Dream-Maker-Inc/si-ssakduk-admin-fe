@@ -1,6 +1,8 @@
+import Link from 'next/link'
 import Stack from '@mui/material/Stack'
-import { TitleContainer } from '@/common/components/TitleContainer'
-import { ContentContainer } from '@/common/ContentContainer'
+
+import { css } from '@emotion/react'
+
 import Typography from '@mui/material/Typography'
 import TableContainer from '@mui/material/TableContainer'
 import Table from '@mui/material/Table'
@@ -8,9 +10,10 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import TableBody from '@mui/material/TableBody'
-import Link from 'next/link'
-import { css } from '@emotion/react'
+
 import { agreement } from '@/data/agreement'
+import { TitleContainer } from '@/common/components/TitleContainer'
+import { ContentContainer } from '@/common/ContentContainer'
 
 const Agreement = () => (
   <Stack>
