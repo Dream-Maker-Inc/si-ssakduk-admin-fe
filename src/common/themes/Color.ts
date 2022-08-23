@@ -1,15 +1,15 @@
-import { PaletteOptions } from "@mui/material";
+import { PaletteOptions } from '@mui/material'
 
 // 컬러 상수를 정의 합니다.
 export enum Colors {
-  Primary = "#2D82FFce",
+  Primary = '#2D82FFce',
 
-  Danger = "#E74C3C",
+  Danger = '#E74C3C',
 
-  Border = "#eee",
+  Border = '#eee',
 
-  MainContentBg = "#eee",
-  AppbarBg = "#2f2f37",
+  MainContentBg = '#eee',
+  AppbarBg = '#2f2f37',
 }
 
 // 테마에 적용될 컬러 팔레트를 정의 합니다.
@@ -21,4 +21,4 @@ export const palette: PaletteOptions = {
   error: {
     main: Colors.Danger,
   },
-};
+}

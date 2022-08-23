@@ -1,7 +1,7 @@
-import { createTheme } from "@mui/material/styles";
-import { Colors, palette } from "./Color";
-import { BreakPoints } from "./Limit";
-import { typographyOptions } from "./Typography";
+import { createTheme } from '@mui/material/styles'
+import { Colors, palette } from './Color'
+import { BreakPoints } from './Limit'
+import { typographyOptions } from './Typography'
 
 // MUI에 적용될 테마를 정의 합니다.
 export const theme = createTheme({
@@ -33,7 +33,7 @@ export const theme = createTheme({
       },
       styleOverrides: {
         root: {
-          textTransform: "none",
+          textTransform: 'none',
         },
       },
     },
@@ -50,10 +50,10 @@ export const theme = createTheme({
     MuiTypography: {
       styleOverrides: {
         root: {
-          textOverflow: "ellipsis",
-          display: "-webkit-box",
-          WebkitBoxOrient: "vertical",
-          whiteSpace: "pre-line",
+          textOverflow: 'ellipsis',
+          display: '-webkit-box',
+          WebkitBoxOrient: 'vertical',
+          whiteSpace: 'pre-line',
         },
       },
     },
@@ -69,4 +69,4 @@ export const theme = createTheme({
       },
     },
   },
-});
+})

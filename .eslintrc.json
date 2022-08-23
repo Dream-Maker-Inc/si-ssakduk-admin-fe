@@ -1,3 +1,22 @@
 {
-  "extends": "next/core-web-vitals"
+  "ecmaFeatures": {
+    "arrowFunctions": true,
+    "jsx": false,
+    "spread": true,
+    "classes": true,
+    "destructuring": true,
+    "modules": true
+  },
+  "extends": "next/core-web-vitals",
+  "root": true,
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
+  },
+  "env": {
+    "es6": true,
+    "node": true
+  }
 }
