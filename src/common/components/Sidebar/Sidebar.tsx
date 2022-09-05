@@ -9,7 +9,6 @@ import DashboardRounded from '@mui/icons-material/DashboardRounded'
 import PersonRounded from '@mui/icons-material/PersonRounded'
 import CancelRounded from '@mui/icons-material/CancelRounded'
 import PeopleRounded from '@mui/icons-material/PeopleRounded'
-import ForumRounded from '@mui/icons-material/ForumRounded'
 import { MediaQueries } from '@/common/themes/Limit'
 
 export const Sidebar = () => {
@@ -53,14 +52,6 @@ export const Sidebar = () => {
             <BookmarkRounded />
           </ListItemIcon>
           <ListItemText primary='라이프 관리' />
-        </ListItemButton>
-      </Link>
-      <Link href='/talk'>
-        <ListItemButton>
-          <ListItemIcon>
-            <ForumRounded />
-          </ListItemIcon>
-          <ListItemText primary='톡 관리' />
         </ListItemButton>
       </Link>
       <Link href='/agreement'>
