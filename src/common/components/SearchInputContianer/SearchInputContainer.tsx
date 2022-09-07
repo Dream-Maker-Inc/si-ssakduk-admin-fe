@@ -19,7 +19,7 @@ export const SearchInputContainer = ({
   inputPlaceholder,
 }: SearchContainerProps) => (
   <Stack>
-    <Typography variant='h2'>{containerTitle}</Typography>
+    <Typography variant='h6'>{containerTitle}</Typography>
     <section css={style.searchContainer}>
       <Paper css={style.searchBox}>
         <IconButton sx={{ p: '10px' }}>{inputStartIcon}</IconButton>

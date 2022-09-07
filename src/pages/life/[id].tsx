@@ -30,7 +30,7 @@ const Detail = () => {
 
       <ContentContainer>
         <Stack direction='row' justifyContent='space-between'>
-          <Typography variant='h2'>글 정보</Typography>
+          <Typography variant='h6'>글 정보</Typography>
           <Stack direction='row'>
             <Link href={`/life/${data.id}/edit`}>
               <IconButton>

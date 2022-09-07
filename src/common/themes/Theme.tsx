@@ -68,5 +68,16 @@ export const theme = createTheme({
         },
       },
     },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            '.MuiOutlinedInput-notchedOutline': {
+              borderColor: `${Colors.PrimaryWeak} !important`,
+            },
+          },
+        },
+      },
+    },
   },
 })

@@ -33,7 +33,6 @@ const Edit = () => {
       <ContentContainer>
         <article>
           <TextField
-            id='text'
             multiline
             fullWidth
             onChange={handleButtonClickable}

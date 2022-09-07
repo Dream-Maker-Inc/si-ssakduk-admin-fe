@@ -25,7 +25,7 @@ const Community = () => (
     />
 
     <ContentContainer>
-      <Typography variant='h2'>카테고리 선택</Typography>
+      <Typography variant='h6'>카테고리 선택</Typography>
       <Stack direction='row' spacing={1} marginTop={4}>
         <Chip label='직장 폭력' variant='outlined' />
         <Chip label='데이트 폭력' variant='outlined' />
@@ -54,7 +54,7 @@ const Community = () => (
     </ContentContainer>
 
     <ContentContainer>
-      <Typography variant='h2'>커뮤니티 목록</Typography>
+      <Typography variant='h6'>커뮤니티 목록</Typography>
 
       <TableContainer style={{ marginTop: 20 }}>
         <Table>

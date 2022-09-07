@@ -29,7 +29,7 @@ const Detail = () => {
 
       <ContentContainer>
         <Stack direction='row' justifyContent='space-between'>
-          <Typography variant='h2'>약관 정보</Typography>
+          <Typography variant='h6'>약관 정보</Typography>
           <Stack direction='row'>
             <Link href={`/agreement/${data.id}/edit`}>
               <IconButton>

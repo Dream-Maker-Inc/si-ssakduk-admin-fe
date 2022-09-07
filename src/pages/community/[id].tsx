@@ -31,7 +31,7 @@ const Detail = () => {
 
       <ContentContainer>
         <Stack direction='row' justifyContent='space-between'>
-          <Typography variant='h2'>글 정보</Typography>
+          <Typography variant='h6'>글 정보</Typography>
           <Link href={`/community/${data.id}/hide`}>
             <IconButton>
               <DeleteRounded aria-label='글 삭제하기' />
@@ -66,7 +66,7 @@ const Detail = () => {
       </ContentContainer>
 
       <ContentContainer>
-        <Typography variant='h2' style={{ marginBottom: 20 }}>
+        <Typography variant='h6' style={{ marginBottom: 20 }}>
           댓글 목록 (총 11개)
         </Typography>
 

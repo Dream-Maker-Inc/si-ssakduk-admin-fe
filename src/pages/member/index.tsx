@@ -33,7 +33,7 @@ const Member = () => (
     </ContentContainer>
 
     <ContentContainer>
-      <Typography variant='h2'>회원 목록</Typography>
+      <Typography variant='h6'>회원 목록</Typography>
       <TableContainer style={{ marginTop: 20 }}>
         <Table>
           <TableHead>

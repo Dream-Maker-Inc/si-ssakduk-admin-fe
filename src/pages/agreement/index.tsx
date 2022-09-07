@@ -20,7 +20,7 @@ const Agreement = () => (
     <TitleContainer title='약관 관리' breadcrumbStrings={['약관 관리']} />
 
     <ContentContainer>
-      <Typography variant='h2'>약관 목록</Typography>
+      <Typography variant='h6'>약관 목록</Typography>
 
       <TableContainer style={{ marginTop: 20 }}>
         <Table>

@@ -13,7 +13,7 @@ export const TitleContainer = ({
   breadcrumbStrings,
 }: TitleContainerProps) => (
   <Stack direction='row' justifyContent='space-between' alignItems='center'>
-    <Typography variant='h1'>{title}</Typography>
+    <Typography variant='h5'>{title}</Typography>
     <Breadcrumbs
       separator={<NavigateNextRounded color='action' fontSize='small' />}
     >

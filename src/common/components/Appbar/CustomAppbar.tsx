@@ -12,6 +12,7 @@ import logo from '../../../../public/logo.svg'
 import { PersonRounded } from '@mui/icons-material'
 import Stack from '@mui/material/Stack'
 import Link from 'next/link'
+import { RouterPath } from '@/common/router'
 
 export interface CustomAppbarProps {
   appbarProps?: AppBarProps
@@ -26,7 +27,7 @@ export const CustomAppbar = ({
     <AppBar position='static' {...appbarProps}>
       <Toolbar {...toolbarProps} disableGutters css={style.root}>
         <Stack direction='row' alignItems='center'>
-          <Link href={'/'}>
+          <Link href={RouterPath.Root}>
             <div css={style.logoWrapper}>
               <Image src={logo} alt={'싹둑'} layout={'fill'} />
             </div>

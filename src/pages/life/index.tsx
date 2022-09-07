@@ -32,7 +32,7 @@ const Life = () => (
 
     <ContentContainer>
       <Stack direction='row' justifyContent='space-between' alignItems='center'>
-        <Typography variant='h2'>라이프 목록</Typography>
+        <Typography variant='h6'>라이프 목록</Typography>
         <Link href='/life/new'>
           <Button variant='outlined' startIcon={<AddRounded />}>
             글 작성하기
