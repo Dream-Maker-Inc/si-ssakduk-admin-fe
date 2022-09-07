@@ -11,6 +11,7 @@ import Image from 'next/image'
 import logo from '../../../../public/logo.svg'
 import { PersonRounded } from '@mui/icons-material'
 import Stack from '@mui/material/Stack'
+import Link from 'next/link'
 
 export interface CustomAppbarProps {
   appbarProps?: AppBarProps
@@ -25,12 +26,17 @@ export const CustomAppbar = ({
     <AppBar position='static' {...appbarProps}>
       <Toolbar {...toolbarProps} disableGutters css={style.root}>
         <Stack direction='row' alignItems='center'>
-          <Image src={logo} alt={'싹둑'} height={20} width={60} />
+          <Link href={'/'}>
+            <div css={style.logoWrapper}>
+              <Image src={logo} alt={'싹둑'} layout={'fill'} />
+            </div>
+          </Link>
 
           <Typography variant={'subtitle1'} color='#fff'>
             싹둑 관리자페이지
           </Typography>
         </Stack>
+
         <IconButton aria-label='계정' size='large' css={style.myPageIcon}>
           <PersonRounded />
         </IconButton>
@@ -46,5 +52,12 @@ const style = {
   `,
   myPageIcon: css`
     color: white;
+  `,
+  logoWrapper: css`
+    position: relative;
+    display: flex;
+    width: 60px;
+    height: 20px;
+    cursor: pointer;
   `,
 }
