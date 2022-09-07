@@ -22,7 +22,7 @@ export const CustomAppbar = ({
 }: CustomAppbarProps) => {
   return (
     <AppBar position='static' {...appbarProps}>
-      <Toolbar {...toolbarProps} css={style.root}>
+      <Toolbar {...toolbarProps} disableGutters css={style.root}>
         <Stack direction='row' alignItems='center'>
           <Image src={logo} alt={'싹둑'} height={20} width={60} />
           싹둑 관리자페이지
