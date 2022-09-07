@@ -13,13 +13,15 @@ import { ContentContainer } from '@/common/ContentContainer'
 const Edit = () => {
   const router = useRouter()
 
-  const handleButtonClick = () => {
+  const [buttonClickable, setButtonClickable] = useState<boolean>(false)
+  const handleButtonClickable = () => setButtonClickable(true)
+
+  const handleSubmit = () => {
     alert('수정되었습니다.')
     router.push('/main')
   }
 
-  const [buttonClickable, setButtonClickable] = useState<boolean>(false)
-  const handleButtonClickable = () => setButtonClickable(true)
+  const handleCancel = () => router.back()
 
   return (
     <Stack>
@@ -47,15 +49,20 @@ const Edit = () => {
 여기 이곳에 두고 가시길`}
           />
         </article>
-        <Button
-          disabled={!buttonClickable}
-          variant='outlined'
-          endIcon={<SendRounded />}
-          css={style.button}
-          onClick={handleButtonClick}
-        >
-          수정하기
-        </Button>
+
+        <Stack direction='row' justifyContent={'flex-end'} gap={'8px'}>
+          <Button variant='outlined' css={style.button} onClick={handleCancel}>
+            취소
+          </Button>
+          <Button
+            disabled={!buttonClickable}
+            variant='contained'
+            css={style.button}
+            onClick={handleSubmit}
+          >
+            수정
+          </Button>
+        </Stack>
       </ContentContainer>
     </Stack>
   )

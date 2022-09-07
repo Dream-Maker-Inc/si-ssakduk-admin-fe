@@ -4,6 +4,7 @@ import {
   IconButton,
   Toolbar,
   ToolbarProps,
+  Typography,
 } from '@mui/material'
 import { css } from '@emotion/react'
 import Image from 'next/image'
@@ -25,7 +26,10 @@ export const CustomAppbar = ({
       <Toolbar {...toolbarProps} disableGutters css={style.root}>
         <Stack direction='row' alignItems='center'>
           <Image src={logo} alt={'싹둑'} height={20} width={60} />
-          싹둑 관리자페이지
+
+          <Typography variant={'subtitle1'} color='#fff'>
+            싹둑 관리자페이지
+          </Typography>
         </Stack>
         <IconButton aria-label='계정' size='large' css={style.myPageIcon}>
           <PersonRounded />

@@ -1,21 +1,15 @@
-import Link from 'next/link'
 import { css } from '@emotion/react'
+import Link from 'next/link'
 
+import EditRounded from '@mui/icons-material/EditRounded'
+import IconButton from '@mui/material/IconButton'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import EditRounded from '@mui/icons-material/EditRounded'
 
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
-import { Dialog } from '@mui/material'
-import { useState } from 'react'
 
 const Main = () => {
-  const [dialogOpen, setDialogOpen] = useState(false)
-  const openDialog = () => setDialogOpen(true)
-  const closeDialog = () => setDialogOpen(false)
-
   return (
     <Stack>
       <TitleContainer title='메인화면 관리' breadcrumbStrings={['메인화면']} />
@@ -23,7 +17,7 @@ const Main = () => {
       <ContentContainer>
         <Stack css={style.root}>
           <article css={style.content}>
-            <Typography variant='body2' onClick={() => openDialog()}>
+            <Typography variant='body2'>
               자책하지 말아요
               <br />
               당신의 잘못이 아닙니다
@@ -40,16 +34,12 @@ const Main = () => {
             </Typography>
           </article>
           <Link href='/main/edit'>
-            <IconButton aria-label='수정하기' size='large'>
+            <IconButton aria-label='수정하기' size='small'>
               <EditRounded />
             </IconButton>
           </Link>
         </Stack>
       </ContentContainer>
-
-      <Dialog open={dialogOpen} onClose={closeDialog}>
-        <Stack sx={{ height: '48px' }}>asdasdasdasdsa</Stack>
-      </Dialog>
     </Stack>
   )
 }

@@ -2,7 +2,7 @@ import { PaletteOptions } from '@mui/material'
 
 // 컬러 상수를 정의 합니다.
 export enum Colors {
-  Primary = '#2D82FFce',
+  Primary = '#34c759',
 
   Danger = '#E74C3C',
 

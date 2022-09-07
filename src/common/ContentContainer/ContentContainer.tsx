@@ -12,8 +12,9 @@ export const ContentContainer = ({ children }: ContentContainerProps) => (
 
 const style = {
   card: css`
-    border: 1px solid #ccc;
+    border: 1px solid #cccccccc;
     margin-top: 30px;
     padding: 40px;
+    border-radius: 8px;
   `,
 }
