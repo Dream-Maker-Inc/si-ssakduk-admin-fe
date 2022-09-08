@@ -1,16 +1,16 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { css } from '@emotion/react'
 
-import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
-import SendRounded from '@mui/icons-material/SendRounded'
 
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
+import { RouterPath } from '@/common/router'
+import { css } from '@emotion/react'
 
-const Edit = () => {
+const MainUpdatePage = () => {
   const router = useRouter()
 
   const [buttonClickable, setButtonClickable] = useState<boolean>(false)
@@ -22,12 +22,25 @@ const Edit = () => {
   }
 
   const handleCancel = () => router.back()
+  //'메인화면 관리', '메인화면 텍스트 수정'
+
+  const { Main, MainUpdate } = RouterPath
+  const breadcrumbModels = [
+    {
+      displayName: '메인화면 관리',
+      path: Main.path,
+    },
+    {
+      displayName: '메인화면 수정',
+      path: MainUpdate.path,
+    },
+  ]
 
   return (
     <Stack>
       <TitleContainer
         title={'메인화면 텍스트 수정'}
-        breadcrumbStrings={['메인화면 관리', '메인화면 텍스트 수정']}
+        breadcrumbModels={breadcrumbModels}
       />
 
       <ContentContainer>
@@ -74,4 +87,4 @@ const style = {
   `,
 }
 
-export default Edit
+export default MainUpdatePage

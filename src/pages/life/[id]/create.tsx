@@ -8,17 +8,17 @@ import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import TextField from '@mui/material/TextField'
-import Checkbox from '@mui/material/Checkbox'
-import FormControlLabel from '@mui/material/FormControlLabel'
 import Button from '@mui/material/Button'
 import SendRounded from '@mui/icons-material/SendRounded'
 
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
+import { RouterPath } from '@/common/router'
 
-const Edit = () => {
+const New = () => {
   const [title, setTitle] = useState<string>('')
   const [content, setContent] = useState<string>('')
+  const [sponsorLink, setSponsorLink] = useState<string>('')
 
   const handleTitleChanged = (event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value)
@@ -28,11 +28,27 @@ const Edit = () => {
     setContent(event.target.value)
   }
 
+  const handleSponsorLinkChanged = (event: ChangeEvent<HTMLInputElement>) => {
+    setSponsorLink(event.target.value)
+  }
+
+  const { LifePostings, LifePostingCreate } = RouterPath
+  const breadcrumbModels = [
+    {
+      displayName: '라이프 관리',
+      path: LifePostings.path,
+    },
+    {
+      displayName: '라이프 생성',
+      path: LifePostingCreate.createPath(`${1}`),
+    },
+  ]
+
   return (
     <Stack>
       <TitleContainer
-        title='약관 수정'
-        breadcrumbStrings={['약관 관리', '약관 글 상세', '약관 글 수정']}
+        title='라이프 글 작성'
+        breadcrumbModels={breadcrumbModels}
       />
 
       <ContentContainer>
@@ -71,9 +87,16 @@ const Edit = () => {
 
           <article css={style.root}>
             <Typography css={style.title} variant='body1'>
-              필수 동의 여부
+              스폰서 링크
             </Typography>
-            <FormControlLabel control={<Checkbox />} label='필수' />
+            <FormControl sx={{ m: 1, flex: 1 }}>
+              <InputLabel>스폰서 링크를 입력하세요.</InputLabel>
+              <OutlinedInput
+                value={sponsorLink}
+                onChange={handleSponsorLinkChanged}
+                label='스폰서 링크를 입력하세요'
+              />
+            </FormControl>
           </article>
           <Divider />
 
@@ -82,7 +105,7 @@ const Edit = () => {
             endIcon={<SendRounded />}
             css={style.button}
           >
-            약관 수정하기
+            게시물 등록하기
           </Button>
         </div>
       </ContentContainer>
@@ -117,4 +140,4 @@ const style = {
   `,
 }
 
-export default Edit
+export default New

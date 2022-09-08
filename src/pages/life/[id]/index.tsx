@@ -12,6 +12,7 @@ import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
 import { SingleDataRow } from '@/common/components/SingleDataRow'
 import { SingleImageRow } from '@/common/components/SingleImageRow'
+import { RouterPath } from '@/common/router'
 
 const Detail = () => {
   const router = useRouter()
@@ -21,11 +22,23 @@ const Detail = () => {
   const data = life[+id - 1]
   if (!data) return
 
+  const { LifePostings, LifePosting } = RouterPath
+  const breadcrumbModels = [
+    {
+      displayName: '라이프 관리',
+      path: LifePostings.path,
+    },
+    {
+      displayName: '라이프 상세',
+      path: LifePosting.createPath(`${id}`),
+    },
+  ]
+
   return (
     <Stack>
       <TitleContainer
         title={'라이프 상세'}
-        breadcrumbStrings={['라이프 관리', '라이프 상세']}
+        breadcrumbModels={breadcrumbModels}
       />
 
       <ContentContainer>

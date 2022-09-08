@@ -13,8 +13,9 @@ import { Colors } from '@/common/themes/Color'
 import { community } from '@/data/community'
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
+import { RouterPath } from '@/common/router'
 
-const Hide = () => {
+const PostingDeletePage = () => {
   const router = useRouter()
   const { id } = router.query
 
@@ -39,15 +40,27 @@ const Hide = () => {
     router.push('/community')
   }
 
+  const { Postings, Posting, PostingDelete } = RouterPath
+  const breadcrumbModels = [
+    {
+      displayName: '게시글 관리',
+      path: Postings.path,
+    },
+    {
+      displayName: '게시글 상세',
+      path: Posting.createPath(`${id}`),
+    },
+    {
+      displayName: '게시글 삭제',
+      path: PostingDelete.createPath(`${id}`),
+    },
+  ]
+
   return (
     <Stack>
       <TitleContainer
         title={'커뮤니티 글 숨김'}
-        breadcrumbStrings={[
-          '커뮤니티 관리',
-          '커뮤니티 상세',
-          '커뮤니티 글 숨김',
-        ]}
+        breadcrumbModels={breadcrumbModels}
       />
 
       <ContentContainer>
@@ -86,4 +99,4 @@ const style = {
   `,
 }
 
-export default Hide
+export default PostingDeletePage

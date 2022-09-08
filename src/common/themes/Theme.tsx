@@ -71,6 +71,12 @@ export const theme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
+          '& .MuiOutlinedInput-root': {},
+
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#e9e9e9',
+          },
+
           '&:hover': {
             '.MuiOutlinedInput-notchedOutline': {
               borderColor: `${Colors.PrimaryWeak} !important`,

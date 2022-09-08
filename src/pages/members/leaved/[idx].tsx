@@ -8,6 +8,7 @@ import Divider from '@mui/material/Divider'
 import { member } from '@/data/member'
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
+import { RouterPath } from '@/common/router'
 
 type DataRowProps = {
   title: string
@@ -31,11 +32,23 @@ const Detail = () => {
 
   if (!data) return
 
+  const { LeavedMembers, LeavedMember } = RouterPath
+  const breadcrumbModels = [
+    {
+      displayName: '탈퇴 회원 관리',
+      path: LeavedMembers.path,
+    },
+    {
+      displayName: '탈퇴 회원 상세',
+      path: LeavedMember.createPath(`${idx}`),
+    },
+  ]
+
   return (
     <Stack>
       <TitleContainer
         title={'탈퇴 회원 상세'}
-        breadcrumbStrings={['탈퇴 회원 관리', '탈퇴 회원 상세']}
+        breadcrumbModels={breadcrumbModels}
       />
 
       <ContentContainer>

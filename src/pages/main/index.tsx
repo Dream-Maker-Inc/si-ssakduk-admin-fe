@@ -8,11 +8,22 @@ import Typography from '@mui/material/Typography'
 
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
+import { RouterPath } from '@/common/router'
 
-const Main = () => {
+const MainPage = () => {
+  const breadcrumbModels = [
+    {
+      displayName: '메인화면 관리',
+      path: RouterPath.Main.path,
+    },
+  ]
+
   return (
     <Stack>
-      <TitleContainer title='메인화면 관리' breadcrumbStrings={['메인화면']} />
+      <TitleContainer
+        title='메인화면 관리'
+        breadcrumbModels={breadcrumbModels}
+      />
 
       <ContentContainer>
         <Stack css={style.root}>
@@ -56,4 +67,4 @@ const style = {
   `,
 }
 
-export default Main
+export default MainPage

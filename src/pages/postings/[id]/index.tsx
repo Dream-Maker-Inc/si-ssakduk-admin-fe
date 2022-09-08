@@ -12,8 +12,9 @@ import { SingleImageRow } from '@/common/components/SingleImageRow'
 import { CommentItem } from '@/common/components/CommentItem/CommentItem'
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
+import { RouterPath } from '@/common/router'
 
-const Detail = () => {
+const PostingDetailPage = () => {
   const router = useRouter()
   const { id } = router.query
   if (!id) return
@@ -22,11 +23,23 @@ const Detail = () => {
 
   if (!data) return
 
+  const { Postings, Posting } = RouterPath
+  const breadcrumbModels = [
+    {
+      displayName: '게시글 관리',
+      path: Postings.path,
+    },
+    {
+      displayName: '게시글 상세',
+      path: Posting.createPath(`${id}`),
+    },
+  ]
+
   return (
     <Stack>
       <TitleContainer
         title={'커뮤니티 상세'}
-        breadcrumbStrings={['커뮤니티 관리', '커뮤니티 상세']}
+        breadcrumbModels={breadcrumbModels}
       />
 
       <ContentContainer>
@@ -100,4 +113,4 @@ const Detail = () => {
   )
 }
 
-export default Detail
+export default PostingDetailPage

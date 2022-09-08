@@ -13,6 +13,7 @@ import { Colors } from '@/common/themes/Color'
 import { agreement } from '@/data/agreement'
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
+import { RouterPath } from '@/common/router'
 
 const Delete = () => {
   const router = useRouter()
@@ -38,12 +39,25 @@ const Delete = () => {
     router.push('/community')
   }
 
+  const { ServiceTerms, ServiceTerm } = RouterPath
+  const breadcrumbModels = [
+    {
+      displayName: '약관 관리',
+      path: ServiceTerms.path,
+    },
+    {
+      displayName: '약관 상세',
+      path: ServiceTerm.createPath(`${id}`),
+    },
+    {
+      displayName: '약관 수정',
+      path: ServiceTerm.createPath(`${id}`),
+    },
+  ]
+
   return (
     <Stack>
-      <TitleContainer
-        title={'약관 삭제'}
-        breadcrumbStrings={['약관 관리', '약관 상세', '약관 글 삭제']}
-      />
+      <TitleContainer title={'약관 삭제'} breadcrumbModels={breadcrumbModels} />
 
       <ContentContainer>
         <Typography variant='body1'>

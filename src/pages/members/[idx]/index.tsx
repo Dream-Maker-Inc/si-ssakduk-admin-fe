@@ -8,6 +8,7 @@ import { member } from '@/data/member'
 import { Divider, IconButton } from '@mui/material'
 import { CancelRounded } from '@mui/icons-material'
 import Link from 'next/link'
+import { RouterPath } from '@/common/router'
 
 type DataRowProps = {
   title: string
@@ -23,7 +24,7 @@ const DataRow = ({ title, content }: DataRowProps) => (
   </article>
 )
 
-const Detail = () => {
+const MemberDetail = () => {
   const router = useRouter()
   const { idx } = router.query
   if (!idx) return
@@ -32,16 +33,25 @@ const Detail = () => {
 
   if (!data) return
 
+  const { Members, Member, MemberDelete } = RouterPath
+  const breadcrumbModels = [
+    {
+      displayName: '회원 관리',
+      path: Members.path,
+    },
+    {
+      displayName: '회원 상세',
+      path: Member.createPath(`${idx}`),
+    },
+  ]
+
   return (
     <Stack>
-      <TitleContainer
-        title={'회원 상세'}
-        breadcrumbStrings={['회원 관리', '회원 상세']}
-      />
+      <TitleContainer title={'회원 상세'} breadcrumbModels={breadcrumbModels} />
 
       <ContentContainer>
         <Stack direction='row' justifyContent='flex-end'>
-          <Link href={`/member/${data.idx}/stop`}>
+          <Link href={MemberDelete.createPath(`${data.idx}`)}>
             <IconButton>
               <CancelRounded aria-label='활동 중지하기' />
             </IconButton>
@@ -97,4 +107,4 @@ const style = {
   `,
 }
 
-export default Detail
+export default MemberDetail

@@ -13,6 +13,7 @@ import { life } from '@/data/life'
 import { Colors } from '@/common/themes/Color'
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
+import { RouterPath } from '@/common/router'
 
 const Delete = () => {
   const router = useRouter()
@@ -38,11 +39,27 @@ const Delete = () => {
     router.push('/community')
   }
 
+  const { LifePostings, LifePosting, LifePostingDelete } = RouterPath
+  const breadcrumbModels = [
+    {
+      displayName: '라이프 관리',
+      path: LifePostings.path,
+    },
+    {
+      displayName: '라이프 상세',
+      path: LifePosting.createPath(`${id}`),
+    },
+    {
+      displayName: '라이프 삭제',
+      path: LifePostingDelete.createPath(`${id}`),
+    },
+  ]
+
   return (
     <Stack>
       <TitleContainer
         title={'라이프 글 삭제'}
-        breadcrumbStrings={['라이프 관리', '라이프 상세', '라이프 글 삭제']}
+        breadcrumbModels={breadcrumbModels}
       />
 
       <ContentContainer>
@@ -73,12 +90,3 @@ const Delete = () => {
     </Stack>
   )
 }
-
-const style = {
-  button: css`
-    float: right;
-    margin-top: 20px;
-  `,
-}
-
-export default Delete

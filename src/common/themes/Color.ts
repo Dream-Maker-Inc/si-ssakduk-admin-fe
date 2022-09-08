@@ -2,8 +2,10 @@ import { PaletteOptions } from '@mui/material'
 
 // 컬러 상수를 정의 합니다.
 export enum Colors {
-  Primary = '#34c759',
-  PrimaryWeak = '#34c75999',
+  Primary = '#02745d',
+  PrimaryWeak = '#02745d99',
+
+  Secondary = '#212121',
 
   Danger = '#E74C3C',
 
@@ -12,8 +14,13 @@ export enum Colors {
   MainContentBg = '#eee',
   AppbarBg = '#2f2f37',
 
-  TextPrimary = '#333',
-  TextSecondary = '#666',
+  TitlePrimary = '#333',
+  TextPrimary = '#757575',
+  TextSecondary = '#999',
+
+  BackgroundDefault = '#fafafa',
+
+  Info = '#000',
 }
 
 // 테마에 적용될 컬러 팔레트를 정의 합니다.
@@ -21,11 +28,20 @@ export const palette: PaletteOptions = {
   primary: {
     main: Colors.Primary,
   },
+  secondary: {
+    main: Colors.Secondary,
+  },
   text: {
     primary: Colors.TextPrimary,
     secondary: Colors.TextSecondary,
   },
+  background: {
+    default: Colors.BackgroundDefault,
+  },
   error: {
     main: Colors.Danger,
+  },
+  info: {
+    main: Colors.Info,
   },
 }

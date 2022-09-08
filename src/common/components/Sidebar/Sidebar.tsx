@@ -10,11 +10,14 @@ import PersonRounded from '@mui/icons-material/PersonRounded'
 import CancelRounded from '@mui/icons-material/CancelRounded'
 import PeopleRounded from '@mui/icons-material/PeopleRounded'
 import { MediaQueries } from '@/common/themes/Limit'
+import { RouterPath } from '@/common/router'
 
 export const Sidebar = () => {
+  const { Main, Members, LeavedMembers, Postings, ServiceTerms } = RouterPath
+
   return (
     <div css={st.root}>
-      <Link href='/main'>
+      <Link href={Main.path}>
         <ListItemButton>
           <ListItemIcon>
             <DashboardRounded />
@@ -22,7 +25,7 @@ export const Sidebar = () => {
           <ListItemText primary='메인화면 관리' />
         </ListItemButton>
       </Link>
-      <Link href='/member'>
+      <Link href={Members.path}>
         <ListItemButton>
           <ListItemIcon>
             <PersonRounded />
@@ -30,15 +33,15 @@ export const Sidebar = () => {
           <ListItemText primary='회원 관리' />
         </ListItemButton>
       </Link>
-      <Link href='/break-member'>
+      <Link href={LeavedMembers.path}>
         <ListItemButton>
           <ListItemIcon>
             <CancelRounded />
           </ListItemIcon>
-          <ListItemText primary='틸퇴 회원 관리' />
+          <ListItemText primary='탈퇴 회원 관리' />
         </ListItemButton>
       </Link>
-      <Link href='/community'>
+      <Link href={Postings.path}>
         <ListItemButton>
           <ListItemIcon>
             <PeopleRounded />
@@ -54,7 +57,7 @@ export const Sidebar = () => {
           <ListItemText primary='라이프 관리' />
         </ListItemButton>
       </Link>
-      <Link href='/agreement'>
+      <Link href={ServiceTerms.path}>
         <ListItemButton>
           <ListItemIcon>
             <DashboardRounded />

@@ -15,8 +15,9 @@ import { member } from '@/data/member'
 import { Colors } from '@/common/themes/Color'
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
+import { RouterPath } from '@/common/router'
 
-const Stop = () => {
+const MemberDeletePage = () => {
   const router = useRouter()
   const { idx } = router.query
   const [period, setPeriod] = useState<string>('')
@@ -37,11 +38,27 @@ const Stop = () => {
     router.push('/member')
   }
 
+  const { Members, Member, MemberDelete } = RouterPath
+  const breadcrumbModels = [
+    {
+      displayName: '회원 관리',
+      path: Members.path,
+    },
+    {
+      displayName: '회원 상세',
+      path: Member.createPath(`${idx}`),
+    },
+    {
+      displayName: '회원 활동 정지',
+      path: MemberDelete.createPath(`${idx}`),
+    },
+  ]
+
   return (
     <Stack>
       <TitleContainer
         title={'회원 활동 정지'}
-        breadcrumbStrings={['회원 관리', '회원 상세', '회원 활동 정지']}
+        breadcrumbModels={breadcrumbModels}
       />
 
       <ContentContainer>
@@ -90,4 +107,4 @@ const style = {
   `,
 }
 
-export default Stop
+export default MemberDeletePage

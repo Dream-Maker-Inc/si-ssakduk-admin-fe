@@ -11,8 +11,9 @@ import { agreement } from '@/data/agreement'
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
 import { SingleDataRow } from '@/common/components/SingleDataRow'
+import { RouterPath } from '@/common/router'
 
-const Detail = () => {
+const ServiceTermDetailPage = () => {
   const router = useRouter()
   const { id } = router.query
 
@@ -20,23 +21,33 @@ const Detail = () => {
 
   const data = agreement[+id - 1]
 
+  const { ServiceTerms, ServiceTerm, ServiceTermUpdate, ServiceTermDelete } =
+    RouterPath
+  const breadcrumbModels = [
+    {
+      displayName: '약관 관리',
+      path: ServiceTerms.path,
+    },
+    {
+      displayName: '약관 상세',
+      path: ServiceTerm.createPath(`${id}`),
+    },
+  ]
+
   return (
     <Stack>
-      <TitleContainer
-        title={'약관 상세'}
-        breadcrumbStrings={['약관 관리', '약관 상세']}
-      />
+      <TitleContainer title={'약관 상세'} breadcrumbModels={breadcrumbModels} />
 
       <ContentContainer>
         <Stack direction='row' justifyContent='space-between'>
           <Typography variant='h6'>약관 정보</Typography>
           <Stack direction='row'>
-            <Link href={`/agreement/${data.id}/edit`}>
+            <Link href={ServiceTermUpdate.createPath(`${data.id}`)}>
               <IconButton>
                 <EditRounded aria-label='약관 수정하기' />
               </IconButton>
             </Link>
-            <Link href={`/agreement/${data.id}/delete`}>
+            <Link href={ServiceTermDelete.createPath(`${data.id}`)}>
               <IconButton>
                 <DeleteRounded aria-label='약관 삭제하기' />
               </IconButton>
@@ -59,4 +70,4 @@ const Detail = () => {
   )
 }
 
-export default Detail
+export default ServiceTermDetailPage
