@@ -1,6 +1,9 @@
 import { RouterPath } from '@/common/router'
+import { MembersApi } from '@/data/members'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useMutation, useQuery } from 'react-query'
+import moment from 'moment'
 
 export const useMemberDeleteView = (id: string) => {
   const router = useRouter()
@@ -33,14 +36,40 @@ export const useMemberDeleteView = (id: string) => {
       label: '90일 (약 3달)',
     },
   ]
+
+  const fetchMemberResponse = useQuery(['member', id], () =>
+    MembersApi.findOne(id),
+  )
+
+  const { data: member } = fetchMemberResponse
+  const { mutate } = useMutation('ban-member', ({ id, suspendedAt }: any) =>
+    MembersApi.ban(id, suspendedAt),
+  )
+
+  const handleMemberBanSuccess = () => {
+    alert('해당 회원을 활동 정지 시켰습니다.')
+    router.push(RouterPath.Members.path)
+  }
+
+  // 정지기간
   const handlePeriodChange = (v: string) => setPeriod(v)
 
   // button
   const buttonDisabled = !period
   const handleButtonClick = () => {
-    alert('반영되었습니다.')
-    router.push('/member')
+    mutate(
+      { id, suspendedAt: moment().add(period, 'days').toDate() },
+      {
+        onSuccess: handleMemberBanSuccess,
+        onError: err => {
+          alert(err)
+          console.error(err)
+        },
+      },
+    )
   }
+
+  const handleCancelClick = () => router.back()
 
   //
   const { Members, Member, MemberDelete } = RouterPath
@@ -61,6 +90,10 @@ export const useMemberDeleteView = (id: string) => {
 
   return {
     data: {
+      member: {
+        name: member?.name,
+        nickname: member?.nickname,
+      },
       periodState: {
         items: periodItems,
         value: period,
@@ -70,6 +103,7 @@ export const useMemberDeleteView = (id: string) => {
         disabled: buttonDisabled,
         onClick: handleButtonClick,
       },
+      handleCancelClick,
       breadcrumbModels,
     },
   }

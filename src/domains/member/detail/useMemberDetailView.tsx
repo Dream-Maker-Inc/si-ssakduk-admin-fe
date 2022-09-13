@@ -3,13 +3,16 @@ import { MembersApi } from '@/data/members'
 import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
 
-export const useMemberDetailView = (id: number) => {
+export const useMemberDetailView = (id: string) => {
   const router = useRouter()
 
   // fetch member
-  const { isLoading, isError, data, error } = useQuery(['member', id], () =>
-    MembersApi.findOne(id),
-  )
+  const {
+    isLoading,
+    isError,
+    data: member,
+    error,
+  } = useQuery(['member', id], () => MembersApi.findOne(id))
 
   const result = {
     memberFetchState: {
@@ -20,7 +23,7 @@ export const useMemberDetailView = (id: number) => {
     data: null,
   }
 
-  if (!data) return result
+  if (!member) return result
 
   //
   const { Members, Member } = RouterPath
@@ -43,9 +46,13 @@ export const useMemberDetailView = (id: number) => {
     ...result,
     data: {
       memberData: {
-        ...data,
-        isStopped: false,
-        isLeaved: !!data.deletedAt,
+        ...member,
+        suspendedText: member.suspendedAt
+          ? `활동 정지 (~ ${member.suspendedAt.toLocaleString()})`
+          : '활동 중 (정상)',
+        leavedText: member.deletedAt
+          ? `탈퇴 (${member.deletedAt.toLocaleString()})`
+          : '활동 중 (정상)',
       },
       breadcrumbModels,
       handleMemberDelete,

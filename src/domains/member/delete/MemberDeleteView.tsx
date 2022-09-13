@@ -20,7 +20,13 @@ type MemberDeleteViewProps = {
 
 export const MemberDeleteView = ({ id }: MemberDeleteViewProps) => {
   const { data } = useMemberDeleteView(id)
-  const { periodState, buttonState, breadcrumbModels } = data
+  const {
+    periodState,
+    buttonState,
+    handleCancelClick,
+    breadcrumbModels,
+    member,
+  } = data
 
   return (
     <Stack gap={'16px'}>
@@ -38,8 +44,7 @@ export const MemberDeleteView = ({ id }: MemberDeleteViewProps) => {
       <ContentContainer>
         <div>
           <Typography variant='body1'>
-            {'data.name'}({'data.nickname'}) 님의 활동을 다음 기간 동안
-            제한합니다.
+            {`${member.name}(${member.nickname}) 님의 활동을 다음 기간 동안 제한합니다.`}
           </Typography>
 
           <Typography variant='body1' color={Colors.Danger}>
@@ -63,11 +68,7 @@ export const MemberDeleteView = ({ id }: MemberDeleteViewProps) => {
         </FormControl>
 
         <div css={st.buttonGroup}>
-          <Button
-            disabled={buttonState.disabled}
-            variant='outlined'
-            onClick={buttonState.onClick}
-          >
+          <Button variant='outlined' onClick={handleCancelClick}>
             취소
           </Button>
 

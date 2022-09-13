@@ -12,7 +12,7 @@ export class MembersApi {
     return res.data
   }
 
-  static async findOne(id: number): Promise<MemberDto> {
+  static async findOne(id: string): Promise<MemberDto> {
     const res = await axios.get<MemberDto>(
       `${ServerInfo.host}/api/v1/member/${id}`,
     )
@@ -21,14 +21,25 @@ export class MembersApi {
 
     return {
       ...data,
+      suspendedAt: new Date(data.suspendedAt),
       createdAt: new Date(data.createdAt),
       updatedAt: new Date(data.createdAt),
       deletedAt: new Date(data.createdAt),
     }
   }
 
-  static async remove(id: number) {
-    const res = await axios.delete(`${ServerInfo.host}/api/v1/member/${id}`)
+  static async ban(id: string, suspendedAt: Date) {
+    const res = await axios.patch(
+      `${ServerInfo.host}/api/v1/member/${id}/ban`,
+      { id, suspendedAt },
+      {
+        headers: {
+          Authorization:
+            'Bearer ' +
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjYzMDYyMjM0LCJleHAiOjE2NjU2NTQyMzR9.9cfLvDTFvvJTYUlEyrApIiS6e_iN-nVIN-TVXq49gbY',
+        },
+      },
+    )
     return res.data
   }
 }

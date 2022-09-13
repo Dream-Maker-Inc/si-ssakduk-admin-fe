@@ -1,3 +1,3 @@
 export const ServerInfo = {
-  host: 'http://localhost:3001',
+  host: 'http://localhost:3000',
 }

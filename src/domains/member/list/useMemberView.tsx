@@ -34,7 +34,7 @@ export const useMemberView = () => {
         },
       },
       {
-        minWidth: '200px',
+        minWidth: '300px',
         width: '200px',
         typographyProps: {
           children: '이름',
@@ -54,7 +54,12 @@ export const useMemberView = () => {
       },
     ],
     data:
-      data?.items?.map(it => [it.id, it.name, it.nickname, it.createdAt]) ?? [],
+      data?.items?.map(it => [
+        it.id,
+        it.name,
+        it.nickname,
+        new Date(it.createdAt).toLocaleString(),
+      ]) ?? [],
   }
 
   const handleDataRowClick = (id: number) =>

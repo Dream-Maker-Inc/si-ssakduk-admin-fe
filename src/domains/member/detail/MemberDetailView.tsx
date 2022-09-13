@@ -9,7 +9,7 @@ import { useMemberDetailView } from './useMemberDetailView'
 import { SubtitleContainer } from '@/common/components/SubtitleContainer'
 
 type MemberDetailViewProps = {
-  id: number
+  id: string
 }
 
 export const MemberDetailView = ({ id }: MemberDetailViewProps) => {
@@ -62,13 +62,10 @@ export const MemberDetailView = ({ id }: MemberDetailViewProps) => {
             />
             <DataRow
               title='활동 중지 여부'
-              content={memberData.isStopped ? '활동 중지' : '활동 중 (정상)'}
+              content={memberData.suspendedText}
               isBottomBorder
             />
-            <DataRow
-              title='회원 탈퇴 여부'
-              content={memberData.isLeaved ? '활동 중 (정상)' : '탈퇴한 회원'}
-            />
+            <DataRow title='회원 탈퇴 여부' content={memberData.leavedText} />
           </section>
         </div>
       </ContentContainer>
@@ -127,6 +124,9 @@ const DataRow = ({ title, content, isBottomBorder = false }: DataRowProps) => {
       width: 180px;
       font-weight: 500;
     `,
+    body: css`
+      opacity: 0.8;
+    `,
   }
 
   return (
@@ -135,7 +135,9 @@ const DataRow = ({ title, content, isBottomBorder = false }: DataRowProps) => {
         <Typography css={st.title} variant='subtitle1'>
           {title}
         </Typography>
-        <Typography variant='body2'>{content}</Typography>
+        <Typography variant='body2' css={st.body}>
+          {content}
+        </Typography>
       </div>
 
       {isBottomBorder && <Divider />}

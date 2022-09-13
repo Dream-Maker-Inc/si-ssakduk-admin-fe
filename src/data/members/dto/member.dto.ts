@@ -6,6 +6,7 @@ interface MemberDto {
   birthDay: string
   phone: string
   profileImageUrl: string
+  suspendedAt: Date
   createdAt: Date
   updatedAt: Date
   deletedAt?: Date

@@ -6,7 +6,7 @@ const MemberDetailPage = () => {
   const { idx } = query
   if (!idx) return
 
-  return <MemberDetailView id={+idx} />
+  return <MemberDetailView id={`${idx}`} />
 }
 
 export default MemberDetailPage

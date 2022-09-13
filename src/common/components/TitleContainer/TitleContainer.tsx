@@ -30,7 +30,9 @@ export const TitleContainer = ({
       >
         {breadcrumbModels.map((model, key) => (
           <Link key={key} href={model.path}>
-            <LinkTypo model={model} />
+            <div>
+              <LinkTypo model={model} />
+            </div>
           </Link>
         ))}
       </Breadcrumbs>
@@ -41,9 +43,6 @@ export const TitleContainer = ({
 const LinkTypo = ({ model }: { model: BreadcrumbModel }) => {
   const router = useRouter()
   const isEqualCurrentPath = (path: string) => router.asPath === path
-
-  console.log(router)
-  console.log(model.path)
 
   return (
     <Typography
