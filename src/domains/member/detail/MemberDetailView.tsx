@@ -1,13 +1,12 @@
+import React from 'react'
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
-import { Colors } from '@/common/themes/Color'
 import { css } from '@emotion/react'
-import { DeleteForeverRounded } from '@mui/icons-material'
-import { Button, Divider, Stack } from '@mui/material'
-
+import { Divider } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import Image from 'next/image'
 import { useMemberDetailView } from './useMemberDetailView'
+import { SubtitleContainer } from '@/common/components/SubtitleContainer'
 
 type MemberDetailViewProps = {
   id: number
@@ -141,39 +140,5 @@ const DataRow = ({ title, content, isBottomBorder = false }: DataRowProps) => {
 
       {isBottomBorder && <Divider />}
     </div>
-  )
-}
-
-//
-
-type SubtitleContainerProps = {
-  title: string
-  onDelete: () => void
-}
-
-const SubtitleContainer = ({ title, onDelete }: SubtitleContainerProps) => {
-  return (
-    <Stack direction='row' justifyContent='space-between' alignItems={'center'}>
-      <Typography
-        variant='h6'
-        fontWeight={600}
-        color={Colors.TitlePrimary}
-        sx={{ opacity: 0.7 }}
-      >
-        {title}
-      </Typography>
-
-      {onDelete && (
-        <Button
-          variant={'outlined'}
-          size={'small'}
-          color={'error'}
-          startIcon={<DeleteForeverRounded />}
-          onClick={onDelete}
-        >
-          삭제
-        </Button>
-      )}
-    </Stack>
   )
 }

@@ -26,4 +26,9 @@ export class MembersApi {
       deletedAt: new Date(data.createdAt),
     }
   }
+
+  static async remove(id: number) {
+    const res = await axios.delete(`${ServerInfo.host}/api/v1/member/${id}`)
+    return res.data
+  }
 }
