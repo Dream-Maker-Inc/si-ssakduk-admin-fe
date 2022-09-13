@@ -27,7 +27,7 @@ export const CustomAppbar = ({
     <AppBar position='static' {...appbarProps}>
       <Toolbar {...toolbarProps} disableGutters css={style.root}>
         <Stack direction='row' alignItems='center'>
-          <Link href={RouterPath.Root}>
+          <Link href={RouterPath.Root.path}>
             <div css={style.logoWrapper}>
               <Image src={logo} alt={'싹둑'} layout={'fill'} />
             </div>

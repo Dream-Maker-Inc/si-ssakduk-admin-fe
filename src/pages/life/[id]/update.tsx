@@ -33,10 +33,7 @@ const Edit = () => {
 
   return (
     <Stack>
-      <TitleContainer
-        title='라이프 글 수정'
-        breadcrumbStrings={['라이프 관리', '라이프 글 상세', '라이프 글 수정']}
-      />
+      <TitleContainer title='라이프 글 수정' breadcrumbModels={[]} />
 
       <ContentContainer>
         <div>
