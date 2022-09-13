@@ -11,10 +11,11 @@ export enum Colors {
 
   Border = '#eee',
 
-  MainContentBg = '#eee',
+  MainContentBg = '#f6f6f6',
   AppbarBg = '#2f2f37',
 
   TitlePrimary = '#333',
+  TitleSecondary = '#666',
   TextPrimary = '#757575',
   TextSecondary = '#999',
 

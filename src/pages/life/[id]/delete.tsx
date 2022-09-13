@@ -90,3 +90,12 @@ const Delete = () => {
     </Stack>
   )
 }
+
+const style = {
+  button: css`
+    float: right;
+    margin-top: 20px;
+  `,
+}
+
+export default Delete

@@ -4,21 +4,24 @@ import Typography from '@mui/material/Typography'
 import { DataTable } from '@/common/components/DataTable'
 import { SearchBar } from '@/common/components/SearchBar'
 import { TitleContainer } from '@/common/components/TitleContainer'
-import { Pagination } from '@mui/material'
-import { useMemberView } from './useMemberView'
 import { Colors } from '@/common/themes/Color'
 import { css } from '@emotion/react'
-import { RouterPath } from '@/common/router'
+import { Pagination } from '@mui/material'
+import { useMemberView } from './useMemberView'
 
-export const MemberView = () => {
-  const { dataTableModel, handleDataRowClick, keywordState } = useMemberView()
+export const MembersView = () => {
+  const {
+    membersFetchState,
+    dataTableModel,
+    handleDataRowClick,
+    keywordState,
+    paginationState,
+    breadcrumbModels,
+  } = useMemberView()
 
-  const breadcrumbModels = [
-    {
-      displayName: '회원 관리',
-      path: RouterPath.Members.path,
-    },
-  ]
+  const { isError, error } = membersFetchState
+
+  if (isError) alert(error)
 
   return (
     <Stack gap={'24px'}>
@@ -50,9 +53,9 @@ export const MemberView = () => {
           <Pagination
             color={'primary'}
             shape='rounded'
-            count={1}
-            page={1}
-            onChange={(_, page) => {}}
+            count={paginationState.count}
+            page={paginationState.page}
+            onChange={(_, page) => paginationState.onChange(page)}
           />
         </div>
       </div>

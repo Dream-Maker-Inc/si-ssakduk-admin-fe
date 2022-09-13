@@ -1,7 +1,7 @@
-import { MemberView } from '@/domains/member'
+import { MembersView } from '@/domains/member'
 
-const MemberPage = () => {
-  return <MemberView />
+const MembersPage = () => {
+  return <MembersView />
 }
 
-export default MemberPage
+export default MembersPage

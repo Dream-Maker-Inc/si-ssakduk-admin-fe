@@ -22,7 +22,7 @@ export const TitleContainer = ({
 }: TitleContainerProps) => {
   return (
     <Stack direction='row' justifyContent='space-between' alignItems='center'>
-      <Typography variant='h4' fontWeight={600} color={Colors.TitlePrimary}>
+      <Typography variant='h4' fontWeight={500} color={Colors.TitlePrimary}>
         {title}
       </Typography>
       <Breadcrumbs
