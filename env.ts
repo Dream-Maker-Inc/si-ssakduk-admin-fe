@@ -1,3 +1,7 @@
+// export const ServerInfo = {
+//   host: 'http://localhost:3000',
+// }
+
 export const ServerInfo = {
-  host: 'http://localhost:3000',
+  host: 'https://ssakduk-api.ureca.im',
 }
