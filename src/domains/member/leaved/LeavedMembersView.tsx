@@ -1,39 +1,34 @@
+import { css } from '@emotion/react'
+
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 
 import { DataTable } from '@/common/components/DataTable'
 import { SearchBar } from '@/common/components/SearchBar'
 import { TitleContainer } from '@/common/components/TitleContainer'
-import { Colors } from '@/common/themes/Color'
-import { css } from '@emotion/react'
 import { Pagination } from '@mui/material'
-import { useMembersView } from './useMembersView'
+import { useLeavedMembersView } from './useLeavedMembersView'
 
-export const MembersView = () => {
+export const LeavedMembersView = () => {
   const {
-    membersFetchState,
     dataTableModel,
     handleDataRowClick,
     keywordState,
     paginationState,
     breadcrumbModels,
-  } = useMembersView()
-
-  const { isError, error } = membersFetchState
-
-  if (isError) alert(error)
+  } = useLeavedMembersView()
 
   return (
     <Stack gap={'24px'}>
       <Stack gap={'8px'}>
         <TitleContainer
-          title={'회원 관리'}
+          title={'탈퇴 회원 관리'}
           breadcrumbModels={breadcrumbModels}
         />
 
         <div css={st.subTitleRow}>
-          <Typography variant='body2' color={Colors.TextSecondary}>
-            탈퇴 회원 정보는 탈퇴 회원 관리에서 조회가 가능합니다.
+          <Typography variant='caption' style={{ marginTop: 20 }}>
+            활동 중인 회원 정보는 회원 관리에서 조회가 가능합니다.
           </Typography>
 
           <SearchBar

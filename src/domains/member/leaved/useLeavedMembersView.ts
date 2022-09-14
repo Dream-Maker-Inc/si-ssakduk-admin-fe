@@ -4,23 +4,19 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 
-const PageSize = 10
-
-export const useMemberView = () => {
+export const useLeavedMembersView = () => {
   const router = useRouter()
 
   const [pageNumber, setPageNumber] = useState(1)
   const [searchWord, setSearchWord] = useState('')
 
   // fetch members
-  const { isLoading, isError, data, error } = useQuery(
-    ['members', pageNumber, searchWord],
-    () =>
-      MembersApi.findAll({
-        page: pageNumber,
-        size: PageSize,
-        keyword: searchWord,
-      }),
+  const { data } = useQuery('removed-members', () =>
+    MembersApi.findAllByRemoved({
+      page: 1,
+      size: 10,
+      keyword: '',
+    }),
   )
 
   // table
@@ -49,14 +45,7 @@ export const useMemberView = () => {
       },
       {
         typographyProps: {
-          children: '가입일',
-        },
-      },
-      {
-        minWidth: '200px',
-        width: '200px',
-        typographyProps: {
-          children: '정지 여부',
+          children: '탈퇴일',
         },
       },
     ],
@@ -65,13 +54,12 @@ export const useMemberView = () => {
         it.id,
         it.name,
         it.nickname,
-        it.createdDate.toLocaleString(),
-        it.suspendedText,
+        it.deletedDate?.toLocaleString(),
       ]) ?? [],
   }
 
   const handleDataRowClick = (id: number) =>
-    router.push(RouterPath.Member.createPath(`${id}`))
+    router.push(RouterPath.LeavedMember.createPath(`${id}`))
 
   // searchBar
   const [keyword, setKeyword] = useState('')
@@ -85,17 +73,12 @@ export const useMemberView = () => {
   // breadcrumbs
   const breadcrumbModels = [
     {
-      displayName: '회원 관리',
-      path: RouterPath.Members.path,
+      displayName: '탈퇴 회원 관리',
+      path: RouterPath.LeavedMembers.path,
     },
   ]
 
   return {
-    membersFetchState: {
-      isLoading,
-      isError,
-      error,
-    },
     dataTableModel,
     handleDataRowClick,
     keywordState: {

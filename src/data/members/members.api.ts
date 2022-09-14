@@ -1,7 +1,7 @@
 import { MemberEntity, MembersEntity } from '@/domains/member/models'
 import axios from 'axios'
 import { plainToClass } from 'class-transformer'
-import { ServerInfo } from 'env'
+import { ServerInfo, TempToken } from 'env'
 import { from, lastValueFrom, map, tap } from 'rxjs'
 import { BaseServerClient } from '../common'
 import { MembersParams } from './dto'
@@ -9,13 +9,21 @@ export class MembersApi {
   static async findAll(params: MembersParams) {
     return lastValueFrom(
       from(
-        BaseServerClient.get<MembersEntity>('/api/v1/member', {
+        BaseServerClient.get<MembersEntity>('/api/v1/member', { params }),
+      ).pipe(map(res => plainToClass(MembersEntity, res.data))),
+    )
+  }
+
+  static async findAllByRemoved(params: MembersParams) {
+    return lastValueFrom(
+      from(
+        BaseServerClient.get<MembersEntity>('/api/v1/member/removed', {
           params,
+          headers: {
+            Authorization: 'Bearer ' + TempToken,
+          },
         }),
-      ).pipe(
-        map(res => plainToClass(MembersEntity, res.data)),
-        tap(ok => console.log(ok)),
-      ),
+      ).pipe(map(res => plainToClass(MembersEntity, res.data))),
     )
   }
 
@@ -33,9 +41,7 @@ export class MembersApi {
       { id, suspendedAt },
       {
         headers: {
-          Authorization:
-            'Bearer ' +
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjYzMDYyMjM0LCJleHAiOjE2NjU2NTQyMzR9.9cfLvDTFvvJTYUlEyrApIiS6e_iN-nVIN-TVXq49gbY',
+          Authorization: 'Bearer ' + TempToken,
         },
       },
     )
