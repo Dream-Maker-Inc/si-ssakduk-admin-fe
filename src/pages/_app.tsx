@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { theme } from '@/common/themes/Theme'
 import { Layout } from '@/common/components/Layout'
 import { ReactQueryDevtools } from 'react-query/devtools'
+import 'reflect-metadata'
 
 const queryClient = new QueryClient()
 

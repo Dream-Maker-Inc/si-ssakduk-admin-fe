@@ -45,15 +45,7 @@ export const useMemberDetailView = (id: string) => {
   return {
     ...result,
     data: {
-      memberData: {
-        ...member,
-        suspendedText: member.suspendedAt
-          ? `활동 정지 (~ ${member.suspendedAt.toLocaleString()})`
-          : '활동 중 (정상)',
-        leavedText: member.deletedAt
-          ? `탈퇴 (${member.deletedAt.toLocaleString()})`
-          : '활동 중 (정상)',
-      },
+      memberData: member,
       breadcrumbModels,
       handleMemberDelete,
     },

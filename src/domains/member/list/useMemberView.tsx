@@ -35,7 +35,7 @@ export const useMemberView = () => {
       },
       {
         minWidth: '300px',
-        width: '200px',
+        width: '300px',
         typographyProps: {
           children: '이름',
         },
@@ -52,13 +52,21 @@ export const useMemberView = () => {
           children: '가입일',
         },
       },
+      {
+        minWidth: '200px',
+        width: '200px',
+        typographyProps: {
+          children: '정지 여부',
+        },
+      },
     ],
     data:
       data?.items?.map(it => [
         it.id,
         it.name,
         it.nickname,
-        new Date(it.createdAt).toLocaleString(),
+        it.createdDate.toLocaleString(),
+        it.suspendedText,
       ]) ?? [],
   }
 

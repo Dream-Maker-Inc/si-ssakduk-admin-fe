@@ -1,11 +1,4 @@
-import { MemberDto } from './member.dto'
-
-interface MembersDto {
-  items: MemberDto[]
-  metaData: MetaData
-}
-
-interface MetaData {
+export class PaginationResponse {
   offset: number
   pageSize: number
   pageNumber: number
@@ -15,5 +8,3 @@ interface MetaData {
   isFirst: boolean
   isLast: boolean
 }
-
-export type { MembersDto }

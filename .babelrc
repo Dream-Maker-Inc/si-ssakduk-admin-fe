@@ -1,8 +1,5 @@
 {
-  "presets": [
-    "next/babel",
-    "@emotion/babel-preset-css-prop"
-  ],
+  "presets": ["next/babel", "@emotion/babel-preset-css-prop"],
   "plugins": [
     [
       "@emotion",
@@ -19,6 +16,10 @@
         "camel2DashComponentName": false
       },
       "icons"
-    ]
+    ],
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose": true }],
+    ["@babel/plugin-proposal-private-methods", { "loose": true }],
+    ["@babel/plugin-proposal-private-property-in-object", { "loose": true }]
   ]
 }

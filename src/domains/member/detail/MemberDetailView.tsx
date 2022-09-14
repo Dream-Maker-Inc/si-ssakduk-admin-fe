@@ -57,12 +57,12 @@ export const MemberDetailView = ({ id }: MemberDetailViewProps) => {
             />
             <DataRow
               title='가입일자'
-              content={memberData.createdAt.toLocaleDateString()}
+              content={memberData.createdDate.toLocaleDateString()}
               isBottomBorder
             />
             <DataRow
               title='활동 중지 여부'
-              content={memberData.suspendedText}
+              content={memberData.suspendedTextWithDate}
               isBottomBorder
             />
             <DataRow title='회원 탈퇴 여부' content={memberData.leavedText} />
