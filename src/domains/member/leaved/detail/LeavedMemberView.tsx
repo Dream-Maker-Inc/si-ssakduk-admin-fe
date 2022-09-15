@@ -1,24 +1,23 @@
-import React from 'react'
+import { SubtitleContainer } from '@/common/components/SubtitleContainer'
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
 import { css } from '@emotion/react'
 import { Divider } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import Image from 'next/image'
-import { useMemberDetailView } from './useMemberDetailView'
-import { SubtitleContainer } from '@/common/components/SubtitleContainer'
+import { useLeavedMemberView } from './useLeavedMemberView'
+import React from 'react'
 
-type MemberDetailViewProps = {
+type LeavedMemberViewProps = {
   id: string
 }
 
-export const MemberDetailView = ({ id }: MemberDetailViewProps) => {
-  const { memberFetchState, data } = useMemberDetailView(id)
-  const { isError } = memberFetchState
+export const LeavedMemberView = ({ id }: LeavedMemberViewProps) => {
+  const { data } = useLeavedMemberView(id)
 
-  if (isError || !data) return <></>
+  if (!data) return <></>
 
-  const { memberData, breadcrumbModels, handleMemberDelete } = data
+  const { member, breadcrumbModels } = data
 
   return (
     <article css={st.root}>
@@ -28,14 +27,14 @@ export const MemberDetailView = ({ id }: MemberDetailViewProps) => {
           breadcrumbModels={breadcrumbModels}
         />
 
-        <SubtitleContainer title={'정보 보기'} onDelete={handleMemberDelete} />
+        <SubtitleContainer title={'정보 보기'} />
       </section>
 
       <ContentContainer>
         <div css={st.contentInner}>
           <div css={st.profileImageWrapper}>
             <Image
-              src={memberData.profileImage}
+              src={member.profileImage}
               alt={'profile image'}
               title={'profile image'}
               layout={'fill'}
@@ -45,27 +44,27 @@ export const MemberDetailView = ({ id }: MemberDetailViewProps) => {
           <section css={st.dataContainer}>
             <DataRow
               title='회원 번호'
-              content={`${memberData.id}`}
+              content={`${member.id}`}
               isBottomBorder
             />
-            <DataRow title='이름' content={memberData.name} isBottomBorder />
-            <DataRow title='이메일' content={memberData.email} isBottomBorder />
+            <DataRow title='이름' content={member.name} isBottomBorder />
+            <DataRow title='이메일' content={member.email} isBottomBorder />
             <DataRow
               title='휴대폰 번호'
-              content={memberData.phone}
+              content={member.phone}
               isBottomBorder
             />
             <DataRow
               title='가입일자'
-              content={memberData.createdDate.toLocaleDateString()}
+              content={member.createdDate.toLocaleDateString()}
               isBottomBorder
             />
             <DataRow
               title='활동 중지 여부'
-              content={memberData.suspendedTextWithDate}
+              content={member.suspendedTextWithDate}
               isBottomBorder
             />
-            <DataRow title='회원 탈퇴 여부' content={memberData.leavedText} />
+            <DataRow title='회원 탈퇴 여부' content={member.leavedText} />
           </section>
         </div>
       </ContentContainer>

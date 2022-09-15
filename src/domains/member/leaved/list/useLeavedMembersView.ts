@@ -4,6 +4,8 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 
+const PageSize = 10
+
 export const useLeavedMembersView = () => {
   const router = useRouter()
 
@@ -11,11 +13,11 @@ export const useLeavedMembersView = () => {
   const [searchWord, setSearchWord] = useState('')
 
   // fetch members
-  const { data } = useQuery('removed-members', () =>
+  const { data } = useQuery(['removed-members', pageNumber, searchWord], () =>
     MembersApi.findAllByRemoved({
-      page: 1,
-      size: 10,
-      keyword: '',
+      page: pageNumber,
+      size: PageSize,
+      keyword: searchWord,
     }),
   )
 

@@ -6,12 +6,16 @@ export class MemberEntity {
     public name: string,
     public birthDay: string,
     public phone: string,
-    public profileImageUrl: string,
+    private profileImageUrl: string,
     private suspendedAt: string,
     private createdAt: string,
     private updatedAt: string,
     private deletedAt?: string,
   ) {}
+
+  get profileImage() {
+    return this.profileImageUrl || '/images/place-holder.jpg'
+  }
 
   get createdDate() {
     return new Date(this.createdAt)
