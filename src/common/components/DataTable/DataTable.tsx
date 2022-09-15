@@ -56,6 +56,7 @@ const st = {
     align-items: center;
     width: 100%;
     height: 56px;
+    gap: 16px;
   `,
   dataRow: css`
     display: flex;
@@ -63,6 +64,8 @@ const st = {
     width: 100%;
     padding: 0;
     color: ${Colors.TextPrimary};
+    border-top: 1px solid #ddd;
+    gap: 16px;
   `,
 }
 

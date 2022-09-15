@@ -2,11 +2,10 @@ import React from 'react'
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
 import { css } from '@emotion/react'
-import { Divider } from '@mui/material'
-import Typography from '@mui/material/Typography'
 import Image from 'next/image'
 import { useMemberDetailView } from './useMemberDetailView'
 import { SubtitleContainer } from '@/common/components/SubtitleContainer'
+import { DataRow } from '@/common/components/DataRow'
 
 type MemberDetailViewProps = {
   id: string
@@ -101,46 +100,4 @@ const st = {
     border-radius: 8px;
     overflow: hidden;
   `,
-}
-
-type DataRowProps = {
-  title: string
-  content: string
-  isBottomBorder?: boolean
-}
-
-const DataRow = ({ title, content, isBottomBorder = false }: DataRowProps) => {
-  const st = {
-    root: css`
-      display: flex;
-      flex-direction: column;
-    `,
-    inner: css`
-      display: flex;
-      align-items: center;
-      padding: 16px 0;
-    `,
-    title: css`
-      width: 180px;
-      font-weight: 500;
-    `,
-    body: css`
-      opacity: 0.8;
-    `,
-  }
-
-  return (
-    <div css={st.root}>
-      <div css={st.inner}>
-        <Typography css={st.title} variant='subtitle1'>
-          {title}
-        </Typography>
-        <Typography variant='body2' css={st.body}>
-          {content}
-        </Typography>
-      </div>
-
-      {isBottomBorder && <Divider />}
-    </div>
-  )
 }

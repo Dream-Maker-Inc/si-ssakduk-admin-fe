@@ -1,3 +1,4 @@
+import { DataTableProps } from '@/common/components/DataTable'
 import { RouterPath } from '@/common/router'
 import { MembersApi } from '@/data/members'
 import { useRouter } from 'next/router'
@@ -24,54 +25,55 @@ export const useMembersView = () => {
   )
 
   // table
-  const dataTableModel = {
-    headers: [
-      {
-        minWidth: '100px',
-        width: '100px',
-        typographyProps: {
-          children: '번호',
+  const dataTableProps: DataTableProps = {
+    model: {
+      headers: [
+        {
+          minWidth: '100px',
+          width: '100px',
+          typographyProps: {
+            children: '번호',
+          },
         },
-      },
-      {
-        minWidth: '300px',
-        width: '300px',
-        typographyProps: {
-          children: '이름',
+        {
+          minWidth: '300px',
+          width: '300px',
+          typographyProps: {
+            children: '이름',
+          },
         },
-      },
-      {
-        minWidth: '200px',
-        width: '200px',
-        typographyProps: {
-          children: '닉네임',
+        {
+          minWidth: '200px',
+          width: '200px',
+          typographyProps: {
+            children: '닉네임',
+          },
         },
-      },
-      {
-        typographyProps: {
-          children: '가입일',
+        {
+          typographyProps: {
+            children: '가입일',
+          },
         },
-      },
-      {
-        minWidth: '200px',
-        width: '200px',
-        typographyProps: {
-          children: '정지 여부',
+        {
+          minWidth: '200px',
+          width: '200px',
+          typographyProps: {
+            children: '정지 여부',
+          },
         },
-      },
-    ],
-    data:
-      data?.items?.map(it => [
-        it.id,
-        it.name,
-        it.nickname,
-        it.createdDate.toLocaleString(),
-        it.suspendedText,
-      ]) ?? [],
+      ],
+      data:
+        data?.items?.map(it => [
+          it.id,
+          it.name,
+          it.nickname,
+          it.createdDate.toLocaleString(),
+          it.suspendedText,
+        ]) ?? [],
+    },
+    onDataRowClick: (id: number) =>
+      router.push(RouterPath.Member.createPath(`${id}`)),
   }
-
-  const handleDataRowClick = (id: number) =>
-    router.push(RouterPath.Member.createPath(`${id}`))
 
   // searchBar
   const [keyword, setKeyword] = useState('')
@@ -79,7 +81,7 @@ export const useMembersView = () => {
   const handleKeywordSubmit = () => setSearchWord(keyword)
 
   // pagination
-  const count = data?.metaData?.totalPageCount
+  const count = data?.metaData?.totalPageCount ?? 0
   const handleChangePageNumber = (page: number) => setPageNumber(page)
 
   // breadcrumbs
@@ -96,8 +98,7 @@ export const useMembersView = () => {
       isError,
       error,
     },
-    dataTableModel,
-    handleDataRowClick,
+    dataTableProps,
     keywordState: {
       value: keyword,
       onChange: handleKeywordChange,

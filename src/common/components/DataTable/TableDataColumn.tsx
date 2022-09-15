@@ -19,10 +19,19 @@ const TableDataColumn = ({
       overflow: 'hidden',
       alignItems: 'center',
       justifyContent: 'center',
-      borderTop: '1px solid #ddd',
     }}
   >
-    <Typography sx={{ opacity: 0.8 }} {...typographyProps} />
+    <Typography
+      sx={{
+        opacity: 0.8,
+        width: '100%',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        display: 'block',
+        whiteSpace: 'nowrap',
+      }}
+      {...typographyProps}
+    />
   </Stack>
 )
 

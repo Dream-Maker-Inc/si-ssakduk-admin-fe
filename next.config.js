@@ -12,7 +12,7 @@ const nextConfig = {
     ]
   },
   images: {
-    domains: ['cdn.pixabay.com'],
+    domains: ['cdn.pixabay.com', 'ureca.s3.ap-northeast-2.amazonaws.com'],
   },
 }
 
