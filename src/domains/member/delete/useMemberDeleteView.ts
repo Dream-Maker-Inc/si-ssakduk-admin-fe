@@ -12,27 +12,27 @@ export const useMemberDeleteView = (id: string) => {
   const [period, setPeriod] = useState('')
   const periodItems = [
     {
-      value: 7,
+      value: '7',
       label: '7일',
     },
     {
-      value: 14,
+      value: '14',
       label: '14일',
     },
     {
-      value: 21,
+      value: '21',
       label: '21일',
     },
     {
-      value: 30,
+      value: '30',
       label: '30일 (약 1달)',
     },
     {
-      value: 60,
+      value: '60',
       label: '60일 (약 2달)',
     },
     {
-      value: 90,
+      value: '90',
       label: '90일 (약 3달)',
     },
   ]

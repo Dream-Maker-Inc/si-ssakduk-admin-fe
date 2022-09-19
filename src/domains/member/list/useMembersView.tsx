@@ -1,9 +1,12 @@
 import { DataTableProps } from '@/common/components/DataTable'
+import { SearchDialogProps } from '@/common/components/dialogs'
+import { membersSearchAtom } from '@/common/recoil'
 import { RouterPath } from '@/common/router'
 import { MembersApi } from '@/data/members'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
+import { useRecoilState } from 'recoil'
 
 const PageSize = 10
 
@@ -11,17 +14,38 @@ export const useMembersView = () => {
   const router = useRouter()
 
   const [pageNumber, setPageNumber] = useState(1)
-  const [searchWord, setSearchWord] = useState('')
+  const [searchDialogOpen, setSearchDialogOpen] = useState(false)
+
+  const [membersSearchState, setMembersSearchState] =
+    useRecoilState(membersSearchAtom)
+  const { keyword, mode } = membersSearchState
+
+  const handleKeywordChange = (v: string) =>
+    setMembersSearchState({ ...membersSearchState, keyword: v })
+  const handleSearchModeChange = (value: string) =>
+    setMembersSearchState({ ...membersSearchState, mode: value })
 
   // fetch members
-  const { isLoading, isError, data, error } = useQuery(
-    ['members', pageNumber, searchWord],
-    () =>
-      MembersApi.findAll({
-        page: pageNumber,
-        size: PageSize,
-        keyword: searchWord,
-      }),
+  const { data, refetch } = useQuery(
+    ['members', pageNumber],
+    () => {
+      if (mode === '활동 유저')
+        return MembersApi.findAll({
+          page: pageNumber,
+          size: PageSize,
+          keyword,
+        })
+
+      if (mode === '탈퇴 유저')
+        return MembersApi.findAllByRemoved({
+          page: pageNumber,
+          size: PageSize,
+          keyword,
+        })
+    },
+    {
+      onSuccess: () => setSearchDialogOpen(false),
+    },
   )
 
   // table
@@ -58,7 +82,7 @@ export const useMembersView = () => {
           minWidth: '200px',
           width: '200px',
           typographyProps: {
-            children: '정지 여부',
+            children: '상태',
           },
         },
       ],
@@ -68,17 +92,40 @@ export const useMembersView = () => {
           it.name,
           it.nickname,
           it.createdDate.toLocaleString(),
-          it.suspendedText,
+          it.stateText,
         ]) ?? [],
     },
     onDataRowClick: (id: number) =>
       router.push(RouterPath.Member.createPath(`${id}`)),
   }
 
-  // searchBar
-  const [keyword, setKeyword] = useState('')
-  const handleKeywordChange = (v: string) => setKeyword(v)
-  const handleKeywordSubmit = () => setSearchWord(keyword)
+  // searchDialog props
+  const searchDialogProps: SearchDialogProps = {
+    open: searchDialogOpen,
+    onClose: () => setSearchDialogOpen(false),
+    filterModel: {
+      selectors: [],
+      radioGroup: {
+        value: mode,
+        onChange: handleSearchModeChange,
+        items: [
+          {
+            label: '활동 유저',
+            value: '활동 유저',
+          },
+          {
+            label: '탈퇴 유저',
+            value: '탈퇴 유저',
+          },
+        ],
+      },
+    },
+    keywordState: {
+      value: keyword,
+      onChange: handleKeywordChange,
+      onSubmit: () => refetch(),
+    },
+  }
 
   // pagination
   const count = data?.metaData?.totalPageCount ?? 0
@@ -93,22 +140,16 @@ export const useMembersView = () => {
   ]
 
   return {
-    membersFetchState: {
-      isLoading,
-      isError,
-      error,
+    data: {
+      dataTableProps,
+      paginationState: {
+        count,
+        page: pageNumber,
+        onChange: handleChangePageNumber,
+      },
+      breadcrumbModels,
+      searchDialogProps,
+      openSearchDialog: () => setSearchDialogOpen(true),
     },
-    dataTableProps,
-    keywordState: {
-      value: keyword,
-      onChange: handleKeywordChange,
-      onSubmit: handleKeywordSubmit,
-    },
-    paginationState: {
-      count,
-      page: pageNumber,
-      onChange: handleChangePageNumber,
-    },
-    breadcrumbModels,
   }
 }

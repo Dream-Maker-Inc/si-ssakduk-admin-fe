@@ -32,9 +32,6 @@ export const RouterPath = {
   Member: new QueryDetailRouter('회원 상세', '/members'),
   MemberDelete: new MutateRouter('회원 삭제', '/members', 'delete'),
 
-  LeavedMembers: new QueryRouter('탈퇴 회원 관리', '/members/leaved'),
-  LeavedMember: new QueryDetailRouter('탈퇴 회원 상세', '/members/leaved'),
-
   ServiceTerms: new QueryRouter('약관 관리', '/service-terms'),
   ServiceTerm: new QueryDetailRouter('약관 상세', '/service-terms'),
   ServiceTermUpdate: new MutateRouter('약관 수정', '/service-terms', 'update'),
@@ -42,7 +39,6 @@ export const RouterPath = {
 
   Postings: new QueryRouter('게시글 관리', '/postings'),
   Posting: new QueryDetailRouter('게시글 상세', '/postings'),
-  PostingDelete: new MutateRouter('게시글 삭제', '/postings', 'delete'),
 
   LifePostings: new QueryRouter('라이프 관리', '/life'),
   LifePosting: new QueryDetailRouter('라이프 상세', '/life'),

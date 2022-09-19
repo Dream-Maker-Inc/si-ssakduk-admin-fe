@@ -5,20 +5,24 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { theme } from '@/common/themes/Theme'
 import { Layout } from '@/common/components/Layout'
 import { ReactQueryDevtools } from 'react-query/devtools'
+import React from 'react'
+import { RecoilRoot } from 'recoil'
 import 'reflect-metadata'
 
 const queryClient = new QueryClient()
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <Layout>
-          <ReactQueryDevtools initialIsOpen={true} />
-          <Component {...pageProps} />
-        </Layout>
-      </ThemeProvider>
-    </QueryClientProvider>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <Layout>
+            <ReactQueryDevtools initialIsOpen={true} />
+            <Component {...pageProps} />
+          </Layout>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </RecoilRoot>
   )
 }
 

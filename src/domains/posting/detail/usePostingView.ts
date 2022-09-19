@@ -1,8 +1,11 @@
 import { RouterPath } from '@/common/router'
 import { PostingsApi } from '@/data/postings'
+import { useRouter } from 'next/router'
 import { useMutation, useQuery } from 'react-query'
 
 export const usePostingView = (id: string) => {
+  const router = useRouter()
+
   // fetch posting
   const { data: postingDetail, refetch } = useQuery(['posting', id], () =>
     PostingsApi.findOne(id),
@@ -10,7 +13,7 @@ export const usePostingView = (id: string) => {
 
   // blind posting
   const { mutate: mutatePostingBlind } = useMutation(
-    ['blind-posting'],
+    'blind-posting',
     (isBlind: boolean) => PostingsApi.modify(id, { isBlind }),
     {
       onSuccess: () => refetch(),
@@ -36,25 +39,12 @@ export const usePostingView = (id: string) => {
     },
   ]
 
-  //
-  const handleDeleteClick = () => {
-    alert('todo delete')
-  }
-
   const handleBlind = (isBlind: boolean) => mutatePostingBlind(isBlind)
 
   return {
     data: {
-      posting: {
-        ...postingDetail.posting,
-        createdDate: postingDetail.posting.createdDate,
-        updatedDate: postingDetail.posting.updatedDate,
-        authorName: postingDetail.member.nickname,
-        likedCount: postingDetail.likedCount,
-        commentCount: postingDetail.commentCount,
-      },
+      postingDetail,
       breadcrumbModels,
-      handleDeleteClick,
       handleBlind,
     },
   }

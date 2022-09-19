@@ -17,7 +17,8 @@ export const PostingView = ({ id }: PostingViewProps) => {
   const { data } = usePostingView(id)
   if (!data) return <></>
 
-  const { posting, breadcrumbModels, handleDeleteClick, handleBlind } = data
+  const { postingDetail, breadcrumbModels, handleBlind } = data
+  const { posting, likedCount, commentCount, member: author } = postingDetail
 
   return (
     <PageTemplate
@@ -33,17 +34,6 @@ export const PostingView = ({ id }: PostingViewProps) => {
             {'상세 보기'}
           </Typography>
         ),
-        right: (
-          <Button
-            variant={'outlined'}
-            size={'small'}
-            color={'error'}
-            startIcon={<DeleteForeverRounded />}
-            onClick={handleDeleteClick}
-          >
-            삭제
-          </Button>
-        ),
       }}
       breadcrumbModels={breadcrumbModels}
     >
@@ -58,32 +48,19 @@ export const PostingView = ({ id }: PostingViewProps) => {
             <DataRow title='제목' content={posting.title} isBottomBorder />
             <DataRow
               title='카테고리'
-              content={posting.category}
+              content={posting.categoryModel.label}
               isBottomBorder
             />
             <DataRow
               title={'작성자 이름(닉네임)'}
-              content={posting.authorName}
-              isBottomBorder
-            />
-            <DataRow
-              title='조회 수'
-              content={posting.viewCount}
+              content={author.name}
               isBottomBorder
             />
           </Stack>
 
           <Stack width={'100%'}>
-            <DataRow
-              title='좋아요 수'
-              content={posting.likedCount}
-              isBottomBorder
-            />
-            <DataRow
-              title='댓글 수'
-              content={posting.commentCount}
-              isBottomBorder
-            />
+            <DataRow title='좋아요 수' content={likedCount} isBottomBorder />
+            <DataRow title='댓글 수' content={commentCount} isBottomBorder />
             <DataRow
               title='등록 일자'
               content={posting.createdDate.toLocaleString()}
@@ -97,7 +74,9 @@ export const PostingView = ({ id }: PostingViewProps) => {
           </Stack>
         </Stack>
 
-        <Stack my={8}>
+        <Stack>
+          <DataRow title='조회 수' content={posting.viewCount} isBottomBorder />
+
           <DataRow title='내용' content={posting.content} isBottomBorder />
 
           <DataRow

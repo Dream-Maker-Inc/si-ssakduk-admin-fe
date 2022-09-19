@@ -1,7 +1,9 @@
+import { findPostingCategories, PostingCategories } from './posting.types'
+
 export class PostingEntity {
   id: number
   authorId: number
-  category: string
+  private category: string
   title: string
   content: string
   viewCount: number
@@ -10,6 +12,10 @@ export class PostingEntity {
   private createdAt: string
   private updatedAt: string
   private deletedAt?: any
+
+  get categoryModel() {
+    return findPostingCategories(this.category) ?? PostingCategories.All
+  }
 
   get createdDate() {
     return new Date(this.createdAt)
@@ -23,7 +29,10 @@ export class PostingEntity {
     return this.deletedAt ? new Date(this.deletedAt) : undefined
   }
 
-  get blindStateText() {
-    return this.isBlind ? '숨김' : '공개'
+  get stateText() {
+    if (!!this.deletedDate) return '삭제됨'
+    if (this.isBlind) return '숨김'
+
+    return '공개'
   }
 }

@@ -1,7 +1,7 @@
-import { PostingCategory } from '@/domains/posting'
+import { PostingCategoriesType } from '@/domains/posting'
 
 export class ModifyPostingDto {
-  category?: PostingCategory
+  category?: PostingCategoriesType
   title?: string
   content?: string
   isBlind?: boolean
