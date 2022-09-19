@@ -51,9 +51,7 @@ export const ListPageTemplate = (props: ListPageTemplateProps) => {
             {filterState && (
               <Select
                 size={'small'}
-                css={css`
-                  background-color: #fff;
-                `}
+                css={st.filter}
                 value={filterState.value}
                 onChange={e => filterState.onChange(e.target.value)}
               >
@@ -103,5 +101,8 @@ const st = {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  `,
+  filter: css`
+    background-color: #fff;
   `,
 }
