@@ -85,5 +85,22 @@ export const theme = createTheme({
         },
       },
     },
+    MuiSelect: {
+      defaultProps: {
+        sx: {
+          '& .MuiOutlinedInput-root': {},
+
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#e9e9e9',
+          },
+
+          '&:hover': {
+            '.MuiOutlinedInput-notchedOutline': {
+              borderColor: `${Colors.PrimaryWeak} !important`,
+            },
+          },
+        },
+      },
+    },
   },
 })

@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { Pagination } from '@mui/material'
+import { MenuItem, Pagination, Select, Stack } from '@mui/material'
 import { ReactNode } from 'react'
 import { DataTable, DataTableProps } from '../components/DataTable'
 import { SearchBar } from '../components/SearchBar'
@@ -23,12 +23,18 @@ export type ListPageTemplateProps = {
     page: number
     onChange: (v: number) => void
   }
+  filterState?: {
+    value: string
+    onChange: (v: string) => void
+    items: string[]
+  }
 }
 
 export const ListPageTemplate = (props: ListPageTemplateProps) => {
   const {
     pageTitle,
     pageSubtitle,
+    filterState,
     keywordState,
     dataTableProps,
     paginationState,
@@ -41,13 +47,31 @@ export const ListPageTemplate = (props: ListPageTemplateProps) => {
       subtitleModel={{
         label: pageSubtitle,
         right: (
-          <SearchBar
-            textFieldProps={{
-              value: keywordState.value,
-              onChange: e => keywordState.onChange(e.target.value),
-            }}
-            onEndIconClick={keywordState.onSubmit}
-          />
+          <Stack direction={'row'} gap={'8px'}>
+            {filterState && (
+              <Select
+                size={'small'}
+                css={css`
+                  background-color: #fff;
+                `}
+                value={filterState.value}
+                onChange={e => filterState.onChange(e.target.value)}
+              >
+                {filterState.items.map(it => (
+                  <MenuItem key={it} value={it}>
+                    {it}
+                  </MenuItem>
+                ))}
+              </Select>
+            )}
+            <SearchBar
+              textFieldProps={{
+                value: keywordState.value,
+                onChange: e => keywordState.onChange(e.target.value),
+              }}
+              onEndIconClick={keywordState.onSubmit}
+            />
+          </Stack>
         ),
       }}
       breadcrumbModels={breadcrumbModels}

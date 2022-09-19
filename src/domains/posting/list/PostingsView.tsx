@@ -8,8 +8,13 @@ export const PostingsView = () => {
   const { data } = usePostingsView()
   if (!data) return <></>
 
-  const { dataTableProps, keywordState, paginationState, breadcrumbModels } =
-    data
+  const {
+    dataTableProps,
+    categoryState,
+    keywordState,
+    paginationState,
+    breadcrumbModels,
+  } = data
 
   return (
     <ListPageTemplate
@@ -24,6 +29,7 @@ export const PostingsView = () => {
           {'게시글 목록'}
         </Typography>
       }
+      filterState={categoryState}
       keywordState={keywordState}
       dataTableProps={dataTableProps}
       paginationState={paginationState}

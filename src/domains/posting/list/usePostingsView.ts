@@ -13,16 +13,19 @@ export const usePostingsView = () => {
 
   const [pageNumber, setPageNumber] = useState(1)
   const [searchWord, setSearchWord] = useState('')
+  const [category, setCategory] = useState(PostingCategory.CorporateViolence)
   const [keyword, setKeyword] = useState('')
 
   // fetch postings
-  const { data } = useQuery(['postings', pageNumber, searchWord], () =>
-    PostingsApi.findAll({
-      page: pageNumber,
-      size: PageSize,
-      keyword: searchWord,
-      category: PostingCategory.CorporateViolence,
-    }),
+  const { data } = useQuery(
+    ['postings', pageNumber, searchWord, category],
+    () =>
+      PostingsApi.findAll({
+        page: pageNumber,
+        size: PageSize,
+        keyword: searchWord,
+        category: category,
+      }),
   )
 
   const result = { data: null }
@@ -80,6 +83,10 @@ export const usePostingsView = () => {
       router.push(RouterPath.Posting.createPath(`${id}`)),
   }
 
+  // search filter
+  const categoryItems = Object.values(PostingCategory)
+  const handleCategoryChange = (v: PostingCategory) => setCategory(v)
+
   // searchBar
   const handleKeywordChange = (v: string) => setKeyword(v)
   const handleKeywordSubmit = () => setSearchWord(keyword)
@@ -99,6 +106,11 @@ export const usePostingsView = () => {
   return {
     data: {
       dataTableProps,
+      categoryState: {
+        value: category,
+        onChange: handleCategoryChange,
+        items: categoryItems,
+      },
       keywordState: {
         value: keyword,
         onChange: handleKeywordChange,
