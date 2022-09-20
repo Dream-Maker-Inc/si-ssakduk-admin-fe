@@ -60,8 +60,6 @@ export const useCommentsView = () => {
     else mutateCancelBlindComment(id)
   }
 
-  console.log(data)
-
   const result = { data: null }
   if (!data) return result
 
