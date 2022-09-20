@@ -15,7 +15,8 @@ import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 
 export const Sidebar = () => {
-  const { Main, Members, Postings, ServiceTerms, LifePostings } = RouterPath
+  const { Main, Members, Postings, Comments, ServiceTerms, LifePostings } =
+    RouterPath
 
   const models = [
     {
@@ -39,6 +40,11 @@ export const Sidebar = () => {
           nodeId: 'posting-list',
           href: Postings.path,
           labelText: '게시글 목록',
+        },
+        {
+          nodeId: 'comment-list',
+          href: Comments.path,
+          labelText: '댓글 목록',
         },
       ],
     },

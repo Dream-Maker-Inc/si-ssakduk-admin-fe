@@ -2,12 +2,11 @@ import { DataRow } from '@/common/components/DataRow'
 import { ContentContainer } from '@/common/ContentContainer'
 import { PageTemplate } from '@/common/templates'
 import { Colors } from '@/common/themes/Color'
-import { DeleteForeverRounded } from '@mui/icons-material'
-import { Button, Card, Stack, Switch, Typography } from '@mui/material'
-import { usePostingView } from './usePostingView'
 import { css } from '@emotion/react'
+import { Card, Stack, Switch, Typography } from '@mui/material'
 import Image from 'next/image'
-import React from 'react'
+import { Fragment } from 'react'
+import { usePostingView } from './usePostingView'
 
 type PostingViewProps = {
   id: string
@@ -15,7 +14,7 @@ type PostingViewProps = {
 
 export const PostingView = ({ id }: PostingViewProps) => {
   const { data } = usePostingView(id)
-  if (!data) return <></>
+  if (!data) return <Fragment />
 
   const { postingDetail, breadcrumbModels, handleBlind } = data
   const { posting, likedCount, commentCount, member: author } = postingDetail

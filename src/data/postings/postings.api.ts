@@ -1,7 +1,6 @@
 import { PostingDetailEntity, PostingsEntity } from '@/domains/posting/models'
 import { plainToClass } from 'class-transformer'
-import { TempToken } from 'env'
-import { from, lastValueFrom, map, tap } from 'rxjs'
+import { from, lastValueFrom, map } from 'rxjs'
 import { BaseServerClient } from '../common'
 import { PostingsParams } from './dto'
 import { ModifyPostingDto } from './dto/modify-posting.dto'
@@ -26,10 +25,6 @@ export class PostingsApi {
   }
 
   static async modify(id: string, dto: ModifyPostingDto) {
-    return await BaseServerClient.patch(`/api/v1/posting/${id}/modify`, dto, {
-      headers: {
-        Authorization: 'Bearer ' + TempToken,
-      },
-    })
+    return await BaseServerClient.patch(`/api/v1/posting/${id}/modify`, dto)
   }
 }

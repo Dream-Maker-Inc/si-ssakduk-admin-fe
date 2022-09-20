@@ -18,7 +18,7 @@ export type SearchDialogProps = {
   open: boolean
   onClose: () => void
   filterModel: {
-    selectors: {
+    selectors?: {
       title: string
       value: string
       onChange: (v: string) => void
@@ -66,23 +66,24 @@ export const SearchDialog = (p: SearchDialogProps) => {
         </div>
 
         <div css={st.inner}>
-          {selectors.map(it => (
-            <div key={it.title} css={st.filterContainer}>
-              <Typography variant={'subtitle2'}>{it.title}</Typography>
+          {selectors &&
+            selectors.map(it => (
+              <div key={it.title} css={st.filterContainer}>
+                <Typography variant={'subtitle2'}>{it.title}</Typography>
 
-              <Select
-                size={'small'}
-                value={it.value}
-                onChange={e => it.onChange(e.target.value)}
-              >
-                {it.items.map(it => (
-                  <MenuItem key={it} value={it}>
-                    {it}
-                  </MenuItem>
-                ))}
-              </Select>
-            </div>
-          ))}
+                <Select
+                  size={'small'}
+                  value={it.value}
+                  onChange={e => it.onChange(e.target.value)}
+                >
+                  {it.items.map(it => (
+                    <MenuItem key={it} value={it}>
+                      {it}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </div>
+            ))}
 
           <div>
             <Typography variant={'subtitle2'}>{'옵션'}</Typography>

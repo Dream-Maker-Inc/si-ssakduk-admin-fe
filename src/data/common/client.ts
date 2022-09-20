@@ -1,6 +1,16 @@
 import axios from 'axios'
-import { ServerInfo } from 'env'
+import { ServerInfo, TempToken } from 'env'
 
-export const BaseServerClient = axios.create({
+const BaseServerClient = axios.create({
   baseURL: ServerInfo.host,
 })
+
+BaseServerClient.interceptors.request.use(req => {
+  req.headers = {
+    Authorization: 'Bearer ' + TempToken,
+  }
+
+  return req
+})
+
+export { BaseServerClient }

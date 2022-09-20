@@ -40,6 +40,9 @@ export const RouterPath = {
   Postings: new QueryRouter('게시글 관리', '/postings'),
   Posting: new QueryDetailRouter('게시글 상세', '/postings'),
 
+  Comments: new QueryRouter('댓글 관리', '/comments'),
+  Comment: new QueryDetailRouter('댓글 상세', '/comments'),
+
   LifePostings: new QueryRouter('라이프 관리', '/life'),
   LifePosting: new QueryDetailRouter('라이프 상세', '/life'),
   LifePostingCreate: new MutateRouter('라이프 생성', '/life', 'create'),

@@ -1,8 +1,8 @@
 import { MemberEntity, MembersEntity } from '@/domains/member/models'
 import axios from 'axios'
 import { plainToClass } from 'class-transformer'
-import { ServerInfo, TempToken } from 'env'
-import { from, lastValueFrom, map, tap } from 'rxjs'
+import { ServerInfo } from 'env'
+import { from, lastValueFrom, map } from 'rxjs'
 import { BaseServerClient } from '../common'
 import { MembersParams } from './dto'
 export class MembersApi {
@@ -19,9 +19,6 @@ export class MembersApi {
       from(
         BaseServerClient.get<MembersEntity>('/api/v1/member/removed', {
           params,
-          headers: {
-            Authorization: 'Bearer ' + TempToken,
-          },
         }),
       ).pipe(map(res => plainToClass(MembersEntity, res.data))),
     )
@@ -39,11 +36,6 @@ export class MembersApi {
     const res = await axios.patch(
       `${ServerInfo.host}/api/v1/member/${id}/ban`,
       { id, suspendedAt },
-      {
-        headers: {
-          Authorization: 'Bearer ' + TempToken,
-        },
-      },
     )
     return res.data
   }
