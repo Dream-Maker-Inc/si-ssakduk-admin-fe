@@ -4,7 +4,6 @@ import { PageTemplate } from '@/common/templates'
 import { Colors } from '@/common/themes/Color'
 import { css } from '@emotion/react'
 import { Pagination, Typography } from '@mui/material'
-import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 import { useCommentsView } from './useCommentsView'
 
@@ -13,10 +12,6 @@ export const CommentsViewQuery = {
 }
 
 export const CommentsView = () => {
-  const router = useRouter()
-
-  // console.log(router.query[CommentsViewQuery.PostingId])
-
   const { data } = useCommentsView()
   if (!data) return <Fragment />
 

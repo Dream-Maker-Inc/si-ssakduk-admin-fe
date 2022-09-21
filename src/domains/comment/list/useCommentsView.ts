@@ -1,19 +1,25 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   CommentFilters,
   CommentFiltersType,
   findCommentFilter,
+  findCommentFilterByValue,
 } from '@/domains/comment'
 import { CommentInfoBoxProps } from '@/common/components/CommentInfoBox/CommentInfoBox'
 import { SearchDialogProps } from '@/common/components/dialogs'
 import { useCommentsSearchState } from '@/common/recoil'
 import { RouterPath } from '@/common/router'
 import { CommentsApi } from '@/data/comments'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
+import { useRouter } from 'next/router'
 
 const PageSize = 2
 
 export const useCommentsView = () => {
+  const router = useRouter()
+  const { filter: queryFilter, postingId } = router.query
+
   const [pageNumber, setPageNumber] = useState(1)
   const [searchDialogOpen, setSearchDialogOpen] = useState(false)
 
@@ -24,6 +30,7 @@ export const useCommentsView = () => {
     handleKeywordChange,
     handleFilterChange,
     handleWithBlindChange,
+    handleFilterAndKeywordChange,
   } = useCommentsSearchState()
 
   const getFilterKeyword = (targetFilter: CommentFiltersType) =>
@@ -55,13 +62,23 @@ export const useCommentsView = () => {
     { onSuccess: () => refetch() },
   )
 
+  // init
+  useEffect(() => {
+    const filter = findCommentFilterByValue(`${queryFilter}`)
+
+    if (postingId && filter) {
+      handleFilterAndKeywordChange(filter, `${postingId}`)
+      refetch()
+    }
+  }, [queryFilter, postingId])
+
+  const result = { data: null }
+  if (!data) return result
+
   const handleBlindChange = (id: number, isBlind: boolean) => {
     if (isBlind) mutateBlindComment(id)
     else mutateCancelBlindComment(id)
   }
-
-  const result = { data: null }
-  if (!data) return result
 
   const commentInfoBoxProps: CommentInfoBoxProps[] = data.items.map(it => ({
     model: {
@@ -87,8 +104,8 @@ export const useCommentsView = () => {
         {
           value: filter.label,
           onChange: (v: string) => {
-            const filter = findCommentFilter(v) ?? CommentFilters.Content
-            handleFilterChange(filter)
+            const filter = findCommentFilter(v)
+            filter && handleFilterChange(filter)
           },
           items: Object.values(CommentFilters).map(it => it.label),
           title: '검색 대상',

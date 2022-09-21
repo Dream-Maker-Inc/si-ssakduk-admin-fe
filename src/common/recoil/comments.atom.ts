@@ -25,6 +25,11 @@ export const useCommentsSearchState = () => {
   const handleWithBlindChange = (checked: boolean) =>
     setCommentsSearchState({ ...commentsSearchState, withBlind: checked })
 
+  const handleFilterAndKeywordChange = (
+    filter: CommentFiltersType,
+    keyword: string,
+  ) => setCommentsSearchState({ ...commentsSearchState, filter, keyword })
+
   return {
     filter,
     keyword,
@@ -32,5 +37,6 @@ export const useCommentsSearchState = () => {
     handleKeywordChange,
     handleFilterChange,
     handleWithBlindChange,
+    handleFilterAndKeywordChange,
   }
 }

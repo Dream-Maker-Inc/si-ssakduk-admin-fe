@@ -11,5 +11,8 @@ export const CommentFilters = {
 export const findCommentFilter = (label: string) =>
   Object.values(CommentFilters).find(it => it.label === label)
 
+export const findCommentFilterByValue = (value: string) =>
+  Object.values(CommentFilters).find(it => it.value === value)
+
 export type CommentFiltersType =
   typeof CommentFilters[keyof typeof CommentFilters]
