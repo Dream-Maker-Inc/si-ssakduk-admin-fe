@@ -1,3 +1,5 @@
+import { BlindModel } from '@/data/common'
+import { Type } from 'class-transformer'
 import { findPostingCategories, PostingCategories } from './posting.types'
 
 export class PostingEntity {
@@ -8,10 +10,16 @@ export class PostingEntity {
   content: string
   viewCount: number
   attachments: any[]
-  isBlind: boolean
   private createdAt: string
   private updatedAt: string
   private deletedAt?: any
+
+  @Type(() => BlindModel)
+  blind: BlindModel
+
+  get isBlind() {
+    return !!this.blind
+  }
 
   get categoryModel() {
     return findPostingCategories(this.category) ?? PostingCategories.All

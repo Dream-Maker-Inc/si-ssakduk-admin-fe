@@ -74,7 +74,7 @@ export const useCommentsView = () => {
     blindState: {
       value: it.comment.isBlind,
       onChange: (b: boolean) => handleBlindChange(it.comment.id, b),
-      reason: it.comment.blindedAtText,
+      reason: it.comment.blind?.blindedAtText,
     },
   }))
 

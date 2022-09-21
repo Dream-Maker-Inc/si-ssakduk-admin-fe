@@ -1,4 +1,5 @@
 import { DataRow } from '@/common/components/DataRow'
+import { BlindDialogActionIcon } from '@/common/components/dialogs/BlindDialog'
 import { ContentContainer } from '@/common/ContentContainer'
 import { PageTemplate } from '@/common/templates'
 import { Colors } from '@/common/themes/Color'
@@ -16,7 +17,7 @@ export const PostingView = ({ id }: PostingViewProps) => {
   const { data } = usePostingView(id)
   if (!data) return <Fragment />
 
-  const { postingDetail, breadcrumbModels, handleBlind } = data
+  const { postingDetail, breadcrumbModels, blindDialogActionIconProps } = data
   const { posting, likedCount, commentCount, member: author } = postingDetail
 
   return (
@@ -33,6 +34,7 @@ export const PostingView = ({ id }: PostingViewProps) => {
             {'상세 보기'}
           </Typography>
         ),
+        right: <BlindDialogActionIcon {...blindDialogActionIconProps} />,
       }}
       breadcrumbModels={breadcrumbModels}
     >
@@ -102,13 +104,8 @@ export const PostingView = ({ id }: PostingViewProps) => {
           />
 
           <DataRow
-            title='게시글 숨김'
-            content={
-              <Switch
-                checked={posting.isBlind}
-                onChange={e => handleBlind(e.target.checked)}
-              />
-            }
+            title='블라인드'
+            content={posting.blind?.reasonDetail}
             isBottomBorder
           />
         </Stack>

@@ -25,6 +25,8 @@ export class PostingsApi {
   }
 
   static async modify(id: string, dto: ModifyPostingDto) {
+    console.log(dto)
+
     return await BaseServerClient.patch(`/api/v1/posting/${id}/modify`, dto)
   }
 }
