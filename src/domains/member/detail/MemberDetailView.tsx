@@ -1,11 +1,15 @@
-import React from 'react'
+import { DataRow } from '@/common/components/DataRow'
+import { SubtitleContainer } from '@/common/components/SubtitleContainer'
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
 import { css } from '@emotion/react'
+import { BlockRounded } from '@mui/icons-material'
+import { IconButton, Tooltip } from '@mui/material'
 import Image from 'next/image'
+import { Fragment } from 'react'
+import { MemberBlindCancelDialog } from '../blind/MemberBlindCancelDialog'
+import { MemberBlindDialog } from '../blind/MemberBlindDialog'
 import { useMemberDetailView } from './useMemberDetailView'
-import { SubtitleContainer } from '@/common/components/SubtitleContainer'
-import { DataRow } from '@/common/components/DataRow'
 
 type MemberDetailViewProps = {
   id: string
@@ -15,60 +19,80 @@ export const MemberDetailView = ({ id }: MemberDetailViewProps) => {
   const { memberFetchState, data } = useMemberDetailView(id)
   const { isError } = memberFetchState
 
-  if (isError || !data) return <></>
+  if (isError || !data) return <Fragment />
 
-  const { memberData, breadcrumbModels, handleMemberDelete } = data
+  const {
+    memberData,
+    breadcrumbModels,
+    memberDeleteDialogProps,
+    blockOptionIconProps,
+  } = data
 
   return (
-    <article css={st.root}>
-      <section css={st.headerSection}>
-        <TitleContainer
-          title={'회원 상세'}
-          breadcrumbModels={breadcrumbModels}
-        />
+    <Fragment>
+      <article css={st.root}>
+        <section css={st.headerSection}>
+          <TitleContainer
+            title={'회원 상세'}
+            breadcrumbModels={breadcrumbModels}
+          />
 
-        <SubtitleContainer title={'정보 보기'} onDelete={handleMemberDelete} />
-      </section>
+          <SubtitleContainer
+            title={'정보 보기'}
+            right={<BlockOptionIcon {...blockOptionIconProps} />}
+          />
+        </section>
 
-      <ContentContainer>
-        <div css={st.contentInner}>
-          <div css={st.profileImageWrapper}>
-            <Image
-              src={memberData.profileImage}
-              alt={'profile image'}
-              title={'profile image'}
-              layout={'fill'}
-            />
+        <ContentContainer>
+          <div css={st.contentInner}>
+            <div css={st.profileImageWrapper}>
+              <Image
+                src={memberData.profileImage}
+                alt={'profile image'}
+                title={'profile image'}
+                layout={'fill'}
+              />
+            </div>
+
+            <section css={st.dataContainer}>
+              <DataRow
+                title='회원 번호'
+                content={`${memberData.id}`}
+                isBottomBorder
+              />
+              <DataRow title='이름' content={memberData.name} isBottomBorder />
+              <DataRow
+                title='이메일'
+                content={memberData.email}
+                isBottomBorder
+              />
+              <DataRow
+                title='휴대폰 번호'
+                content={memberData.phone}
+                isBottomBorder
+              />
+              <DataRow
+                title='가입일자'
+                content={memberData.createdDate.toLocaleDateString()}
+                isBottomBorder
+              />
+              <DataRow
+                title='활동 중지 여부'
+                content={memberData.suspendedTextWithDate}
+                isBottomBorder
+              />
+              <DataRow title='회원 탈퇴 여부' content={memberData.leavedText} />
+            </section>
           </div>
+        </ContentContainer>
+      </article>
 
-          <section css={st.dataContainer}>
-            <DataRow
-              title='회원 번호'
-              content={`${memberData.id}`}
-              isBottomBorder
-            />
-            <DataRow title='이름' content={memberData.name} isBottomBorder />
-            <DataRow title='이메일' content={memberData.email} isBottomBorder />
-            <DataRow
-              title='휴대폰 번호'
-              content={memberData.phone}
-              isBottomBorder
-            />
-            <DataRow
-              title='가입일자'
-              content={memberData.createdDate.toLocaleDateString()}
-              isBottomBorder
-            />
-            <DataRow
-              title='활동 중지 여부'
-              content={memberData.suspendedTextWithDate}
-              isBottomBorder
-            />
-            <DataRow title='회원 탈퇴 여부' content={memberData.leavedText} />
-          </section>
-        </div>
-      </ContentContainer>
-    </article>
+      {memberData.isBlock ? (
+        <MemberBlindCancelDialog {...memberDeleteDialogProps} />
+      ) : (
+        <MemberBlindDialog {...memberDeleteDialogProps} />
+      )}
+    </Fragment>
   )
 }
 
@@ -100,4 +124,26 @@ const st = {
     border-radius: 8px;
     overflow: hidden;
   `,
+}
+
+type BlockOptionIconProps = {
+  isBlock: boolean
+  tooltip: string
+  onToggle: () => void
+}
+
+const BlockOptionIcon = ({
+  isBlock,
+  tooltip,
+  onToggle,
+}: BlockOptionIconProps) => {
+  const iconColor = isBlock ? 'error' : 'default'
+
+  return (
+    <Tooltip title={tooltip}>
+      <IconButton size={'small'} color={iconColor} onClick={onToggle}>
+        <BlockRounded />
+      </IconButton>
+    </Tooltip>
+  )
 }

@@ -1,19 +1,15 @@
 import { Colors } from '@/common/themes/Color'
-import { DeleteForeverRounded } from '@mui/icons-material'
-import { Button, Stack } from '@mui/material'
+import { Stack } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import React from 'react'
+import { ReactNode } from 'react'
 
 //
 type SubtitleContainerProps = {
   title: string
-  onDelete?: () => void
+  right?: ReactNode
 }
 
-export const SubtitleContainer = ({
-  title,
-  onDelete,
-}: SubtitleContainerProps) => {
+export const SubtitleContainer = ({ title, right }: SubtitleContainerProps) => {
   return (
     <Stack direction='row' justifyContent='space-between' alignItems={'center'}>
       <Typography
@@ -25,17 +21,7 @@ export const SubtitleContainer = ({
         {title}
       </Typography>
 
-      {onDelete && (
-        <Button
-          variant={'outlined'}
-          size={'small'}
-          color={'error'}
-          startIcon={<DeleteForeverRounded />}
-          onClick={onDelete}
-        >
-          삭제
-        </Button>
-      )}
+      {right}
     </Stack>
   )
 }

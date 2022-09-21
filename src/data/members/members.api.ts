@@ -1,7 +1,5 @@
 import { MemberEntity, MembersEntity } from '@/domains/member/models'
-import axios from 'axios'
 import { plainToClass } from 'class-transformer'
-import { ServerInfo } from 'env'
 import { from, lastValueFrom, map } from 'rxjs'
 import { BaseServerClient } from '../common'
 import { MembersParams } from './dto'
@@ -9,7 +7,9 @@ export class MembersApi {
   static async findAll(params: MembersParams) {
     return lastValueFrom(
       from(
-        BaseServerClient.get<MembersEntity>('/api/v1/member', { params }),
+        BaseServerClient.get<MembersEntity>('/api/v1/member', {
+          params: { ...params, withBlind: true },
+        }),
       ).pipe(map(res => plainToClass(MembersEntity, res.data))),
     )
   }
@@ -32,10 +32,18 @@ export class MembersApi {
     )
   }
 
-  static async ban(id: string, suspendedAt: Date) {
-    const res = await axios.patch(
-      `${ServerInfo.host}/api/v1/member/${id}/ban`,
-      { id, suspendedAt },
+  static async blind(id: string, endedAt: Date, reason: string) {
+    const res = await BaseServerClient.patch(`/api/v1/member/${id}/blind`, {
+      id,
+      endedAt,
+      reason,
+    })
+    return res.data
+  }
+
+  static async blindCancel(id: string) {
+    const res = await BaseServerClient.patch(
+      `/api/v1/member/${id}/blind-cancel`,
     )
     return res.data
   }

@@ -1,2 +1,2 @@
-export * from './SearchDialog'
-export * from './SearchDialogWithIcon'
+export * from "./SearchDialog";
+export * from "./SearchDialogWithIcon";
