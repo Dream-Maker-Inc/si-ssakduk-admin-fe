@@ -1,12 +1,4 @@
 {
-  "ecmaFeatures": {
-    "arrowFunctions": true,
-    "jsx": false,
-    "spread": true,
-    "classes": true,
-    "destructuring": true,
-    "modules": true
-  },
   "extends": "next/core-web-vitals",
   "root": true,
   "parserOptions": {
