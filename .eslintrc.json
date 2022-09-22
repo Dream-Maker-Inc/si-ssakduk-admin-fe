@@ -10,5 +10,12 @@
   "env": {
     "es6": true,
     "node": true
+  },
+  "rules": {
+    "react/no-unknown-property": [
+      'error', {
+        ignore: ['css'] 
+      }
+    ]
   }
 }
