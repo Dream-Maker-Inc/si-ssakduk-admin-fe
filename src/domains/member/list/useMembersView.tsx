@@ -105,19 +105,21 @@ export const useMembersView = () => {
     onClose: () => setSearchDialogOpen(false),
     filterModel: {
       selectors: [],
-      radioGroup: {
-        value: mode,
-        onChange: handleSearchModeChange,
-        items: [
-          {
-            label: '활동 유저',
-            value: '활동 유저',
-          },
-          {
-            label: '탈퇴 유저',
-            value: '탈퇴 유저',
-          },
-        ],
+      options: {
+        radioGroup: {
+          value: mode,
+          onChange: handleSearchModeChange,
+          items: [
+            {
+              label: '활동 유저',
+              value: '활동 유저',
+            },
+            {
+              label: '탈퇴 유저',
+              value: '탈퇴 유저',
+            },
+          ],
+        },
       },
     },
     keywordState: {

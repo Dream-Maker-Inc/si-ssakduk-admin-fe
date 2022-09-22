@@ -54,6 +54,7 @@ const st = {
   headerRow: css`
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     width: 100%;
     height: 56px;
     gap: 16px;
@@ -61,6 +62,7 @@ const st = {
   dataRow: css`
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     width: 100%;
     padding: 0;
     color: ${Colors.TextPrimary};

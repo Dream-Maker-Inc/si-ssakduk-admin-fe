@@ -1,12 +1,13 @@
 import { SearchDialogWithIcon } from '@/common/components/dialogs'
+import { CreateActionIcon } from '@/common/components/icons'
 import { ListPageTemplate2 } from '@/common/templates'
 import { Colors } from '@/common/themes/Color'
-import { Typography } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import { Fragment } from 'react'
-import { usePostingsView } from './usePostingsView'
+import { useLifePostingsView } from './useLifePostingsView'
 
-export const PostingsView = () => {
-  const { data } = usePostingsView()
+export const LifePostingsView = () => {
+  const { data } = useLifePostingsView()
   if (!data) return <Fragment />
 
   const {
@@ -15,11 +16,12 @@ export const PostingsView = () => {
     breadcrumbModels,
     searchDialogProps,
     openSearchDialog,
+    createActionIconProps,
   } = data
 
   return (
     <ListPageTemplate2
-      pageTitle='게시글 관리'
+      pageTitle='라이프 관리'
       subtitleModel={{
         label: (
           <Typography
@@ -28,14 +30,18 @@ export const PostingsView = () => {
             color={Colors.TitlePrimary}
             sx={{ opacity: 0.7 }}
           >
-            {'게시글 목록'}
+            {'라이프 목록'}
           </Typography>
         ),
         right: (
-          <SearchDialogWithIcon
-            openSearchDialog={openSearchDialog}
-            searchDialogProps={searchDialogProps}
-          />
+          <Stack direction={'row'} gap={'8px'}>
+            <SearchDialogWithIcon
+              openSearchDialog={openSearchDialog}
+              searchDialogProps={searchDialogProps}
+            />
+
+            <CreateActionIcon {...createActionIconProps} />
+          </Stack>
         ),
       }}
       dataTableProps={dataTableProps}

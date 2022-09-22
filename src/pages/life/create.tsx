@@ -40,7 +40,7 @@ const New = () => {
     },
     {
       displayName: '라이프 생성',
-      path: LifePostingCreate.createPath(`${1}`),
+      path: LifePostingCreate.path(`${1}`),
     },
   ]
 

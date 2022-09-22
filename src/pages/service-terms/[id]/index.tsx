@@ -42,12 +42,12 @@ const ServiceTermDetailPage = () => {
         <Stack direction='row' justifyContent='space-between'>
           <Typography variant='h6'>약관 정보</Typography>
           <Stack direction='row'>
-            <Link href={ServiceTermUpdate.createPath(`${data.id}`)}>
+            <Link href={ServiceTermUpdate.path(`${data.id}`)}>
               <IconButton>
                 <EditRounded aria-label='약관 수정하기' />
               </IconButton>
             </Link>
-            <Link href={ServiceTermDelete.createPath(`${data.id}`)}>
+            <Link href={ServiceTermDelete.path(`${data.id}`)}>
               <IconButton>
                 <DeleteRounded aria-label='약관 삭제하기' />
               </IconButton>

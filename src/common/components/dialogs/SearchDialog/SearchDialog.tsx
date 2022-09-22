@@ -24,20 +24,22 @@ export type SearchDialogProps = {
       onChange: (v: string) => void
       items: string[]
     }[]
-    radioGroup?: {
-      value: string
-      onChange: (v: string) => void
-      items: {
-        label: string
+    options?: {
+      radioGroup?: {
         value: string
+        onChange: (v: string) => void
+        items: {
+          label: string
+          value: string
+        }[]
+      }
+      checkBoxes?: {
+        checked: boolean
+        onChange: (checked: boolean) => void
+        label: string
+        tooltip?: string
       }[]
     }
-    checkBoxes?: {
-      checked: boolean
-      onChange: (checked: boolean) => void
-      label: string
-      tooltip?: string
-    }[]
   }
   keywordState: {
     value: string
@@ -48,8 +50,60 @@ export type SearchDialogProps = {
 
 export const SearchDialog = (p: SearchDialogProps) => {
   const { open, onClose, filterModel, keywordState } = p
-  const { selectors, radioGroup, checkBoxes } = filterModel
+  const { selectors, options } = filterModel
+  const { radioGroup, checkBoxes } = options ?? {}
 
+  const isBodyEmpty = !selectors && !options
+
+  //
+  const renderSelectorSection = () =>
+    selectors?.map(it => (
+      <div key={it.title} css={st.filterContainer}>
+        <Typography variant={'subtitle2'}>{it.title}</Typography>
+
+        <Select
+          size={'small'}
+          value={it.value}
+          onChange={e => it.onChange(e.target.value)}
+        >
+          {it.items.map(it => (
+            <MenuItem key={it} value={it}>
+              {it}
+            </MenuItem>
+          ))}
+        </Select>
+      </div>
+    ))
+
+  const renderRadioGroup = () =>
+    radioGroup && (
+      <RadioGroup
+        row
+        value={radioGroup.value}
+        onChange={(_, v) => radioGroup.onChange(v)}
+      >
+        {radioGroup.items.map(it => (
+          <FormControlLabel
+            key={it.label}
+            value={it.value}
+            control={<Radio size={'small'} />}
+            label={<Typography variant={'caption'}>{it.label}</Typography>}
+          />
+        ))}
+      </RadioGroup>
+    )
+
+  const renderCheckboxes = () =>
+    checkBoxes?.map(it => (
+      <Tooltip key={it.label} title={it.tooltip ?? ''}>
+        <FormControlLabel
+          checked={it.checked}
+          onChange={(_, checked) => it.onChange(checked)}
+          control={<Checkbox size='small' />}
+          label={<Typography variant={'caption'}>{it.label}</Typography>}
+        />
+      </Tooltip>
+    ))
   //
 
   return (
@@ -65,63 +119,20 @@ export const SearchDialog = (p: SearchDialogProps) => {
           </IconButton>
         </div>
 
-        <div css={st.inner}>
-          {selectors &&
-            selectors.map(it => (
-              <div key={it.title} css={st.filterContainer}>
-                <Typography variant={'subtitle2'}>{it.title}</Typography>
+        {!isBodyEmpty && (
+          <div css={st.inner}>
+            {selectors && renderSelectorSection()}
 
-                <Select
-                  size={'small'}
-                  value={it.value}
-                  onChange={e => it.onChange(e.target.value)}
-                >
-                  {it.items.map(it => (
-                    <MenuItem key={it} value={it}>
-                      {it}
-                    </MenuItem>
-                  ))}
-                </Select>
+            {options && (
+              <div>
+                <Typography variant={'subtitle2'}>{'옵션'}</Typography>
+
+                {radioGroup && renderRadioGroup()}
+                {checkBoxes && renderCheckboxes()}
               </div>
-            ))}
-
-          <div>
-            <Typography variant={'subtitle2'}>{'옵션'}</Typography>
-
-            {radioGroup && (
-              <RadioGroup
-                row
-                value={radioGroup.value}
-                onChange={(_, v) => radioGroup.onChange(v)}
-              >
-                {radioGroup.items.map(it => (
-                  <FormControlLabel
-                    key={it.label}
-                    value={it.value}
-                    control={<Radio size={'small'} />}
-                    label={
-                      <Typography variant={'caption'}>{it.label}</Typography>
-                    }
-                  />
-                ))}
-              </RadioGroup>
             )}
-
-            {checkBoxes &&
-              checkBoxes.map(it => (
-                <Tooltip key={it.label} title={it.tooltip ?? ''}>
-                  <FormControlLabel
-                    checked={it.checked}
-                    onChange={(_, checked) => it.onChange(checked)}
-                    control={<Checkbox size='small' />}
-                    label={
-                      <Typography variant={'caption'}>{it.label}</Typography>
-                    }
-                  />
-                </Tooltip>
-              ))}
           </div>
-        </div>
+        )}
 
         <div css={st.bottom}>
           <SearchBar

@@ -111,14 +111,16 @@ export const useCommentsView = () => {
           title: '검색 대상',
         },
       ],
-      checkBoxes: [
-        {
-          checked: withBlind,
-          onChange: handleWithBlindChange,
-          label: '비공개 포함',
-          tooltip: '삭제, 숨김, 정지 등으로 비노출 된 데이터를 포함하여 검색',
-        },
-      ],
+      options: {
+        checkBoxes: [
+          {
+            checked: withBlind,
+            onChange: handleWithBlindChange,
+            label: '비공개 포함',
+            tooltip: '삭제, 숨김, 정지 등으로 비노출 된 데이터를 포함하여 검색',
+          },
+        ],
+      },
     },
     keywordState: {
       value: keyword,

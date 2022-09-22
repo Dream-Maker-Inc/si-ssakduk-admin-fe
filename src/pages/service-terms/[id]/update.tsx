@@ -43,7 +43,7 @@ const Edit = () => {
     },
     {
       displayName: '약관 수정',
-      path: ServiceTermUpdate.createPath(`${id}`),
+      path: ServiceTermUpdate.path(`${id}`),
     },
   ]
 

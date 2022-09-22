@@ -51,7 +51,7 @@ const Delete = () => {
     },
     {
       displayName: '라이프 삭제',
-      path: LifePostingDelete.createPath(`${id}`),
+      path: LifePostingDelete.path(`${id}`),
     },
   ]
 

@@ -17,7 +17,23 @@ class MutateRouter {
     private commandPath: 'create' | 'update' | 'delete',
   ) {}
 
-  createPath(id: string) {
+  path(id: string = '') {
+    if (this.commandPath === 'create') return this.createPath()
+    if (this.commandPath === 'update') return this.updatePath(id)
+    if (this.commandPath === 'delete') return this.deletePath(id)
+
+    return ''
+  }
+
+  private createPath() {
+    return `${this.originPath}/${this.commandPath}`
+  }
+
+  private updatePath(id: string) {
+    return `${this.originPath}/${id}/${this.commandPath}`
+  }
+
+  private deletePath(id: string) {
     return `${this.originPath}/${id}/${this.commandPath}`
   }
 }
