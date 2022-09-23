@@ -23,15 +23,11 @@ export const DataRow = ({
     inner: css`
       display: flex;
       align-items: center;
-      padding: 16px 0;
     `,
     title: css`
       min-width: 180px;
       width: 180px;
       font-weight: 500;
-    `,
-    body: css`
-      opacity: 0.8;
     `,
   }
 
@@ -41,9 +37,7 @@ export const DataRow = ({
         <Typography css={st.title} variant='subtitle1'>
           {title}
         </Typography>
-        <Typography component={'div'} variant='body2' css={st.body}>
-          {content}
-        </Typography>
+        {content}
       </div>
 
       {isBottomBorder && <Divider />}

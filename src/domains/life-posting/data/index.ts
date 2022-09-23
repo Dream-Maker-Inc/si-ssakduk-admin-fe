@@ -1,2 +1,2 @@
-export * from "./dto";
-export * from "./life-posting.api";
+export * from './dto'
+export * from './life-posting.api'
