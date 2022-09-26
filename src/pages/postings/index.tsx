@@ -1,4 +1,4 @@
-import { PostingsView } from '@/domains/posting'
+import { PostingsView } from '@/domains/posting/views/list'
 
 const PostingsPage = () => {
   return <PostingsView />

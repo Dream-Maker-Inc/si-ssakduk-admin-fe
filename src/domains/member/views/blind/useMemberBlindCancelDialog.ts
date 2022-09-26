@@ -51,7 +51,7 @@ const mapToMember = (dto: MemberDto) => {
     id: dto.id,
     nickname: dto.nickname,
     name: dto.name,
-    blockedText: dto.isBlock
+    blockedText: dto.isBlind
       ? `활동 정지 (~ ${
           dto.blind?.endedDate?.toLocaleString() ?? '무기한'
         })\n정지 사유 (${dto.blind.reason})`

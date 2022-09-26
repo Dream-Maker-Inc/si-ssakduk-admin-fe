@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 
-import { PostingView } from '@/domains/posting/detail'
+import { PostingView } from '@/domains/posting/views/detail'
 
 const PostingDetailPage = () => {
   const router = useRouter()

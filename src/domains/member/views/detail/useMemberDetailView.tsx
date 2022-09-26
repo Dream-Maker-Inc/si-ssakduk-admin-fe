@@ -86,8 +86,8 @@ const mapToMember = (dto: MemberDto) => {
     phone: dto.phone,
     profileImage: dto.profileImage,
     createdAt: dto.createdDate.toLocaleDateString(),
-    isBlock: dto.isBlock,
-    blockedText: dto.isBlock
+    isBlock: dto.isBlind,
+    blockedText: dto.isBlind
       ? `활동 정지 (~ ${
           dto.blind?.endedDate?.toLocaleString() ?? '무기한'
         })\n정지 사유 (${dto.blind.reason})`

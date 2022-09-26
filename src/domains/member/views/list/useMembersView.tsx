@@ -166,7 +166,7 @@ export const useMembersView = () => {
 const mapToMembers = (dto: MembersDto) => {
   const getStateText = (memberDto: MemberDto) => {
     if (!!memberDto.deletedDate) return '탈퇴'
-    if (memberDto.isBlock) return '활동 정지'
+    if (memberDto.isBlind) return '활동 정지'
 
     return '공개'
   }

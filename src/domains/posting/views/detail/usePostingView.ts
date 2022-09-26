@@ -1,16 +1,16 @@
 import { BlindDialogActionIconProps } from '@/common/components/dialogs/BlindDialog'
 import { RouterPath } from '@/common/router'
 import { BlindModel } from '@/data/common'
-import { PostingsApi } from '@/data/postings'
 import { useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
+import { PostingDto, PostingsApi } from '../../data'
 
 export const usePostingView = (id: string) => {
   const [blindDialogOpen, setBlindDialogOpen] = useState(false)
   const [blindReason, setBlindReason] = useState('')
 
   // fetch posting
-  const { data: postingDetail, refetch } = useQuery(['posting', id], () =>
+  const { data: postingDto, refetch } = useQuery(['posting', id], () =>
     PostingsApi.findOne(id),
   )
 
@@ -22,6 +22,7 @@ export const usePostingView = (id: string) => {
       onSuccess: () => {
         refetch()
         setBlindDialogOpen(false)
+        alert('처리 되었습니다.')
       },
       onError: (err: any) => {
         console.error(err)
@@ -32,9 +33,10 @@ export const usePostingView = (id: string) => {
 
   // null guard
   const result = { data: null }
-  if (!postingDetail) return result
+  if (!postingDto) return result
 
-  const { posting } = postingDetail
+  //
+  const posting = mapToPosting(postingDto)
 
   // flow
 
@@ -63,7 +65,7 @@ export const usePostingView = (id: string) => {
         primaryText: posting.isBlind
           ? `'${posting.title}' 게시글을 블라인드 해제 합니다.`
           : `'${posting.title}' 게시글을 블라인드 합니다.`,
-        secondaryText: posting.blind?.blindedAtText || '',
+        secondaryText: '',
       },
       cancelButtonProps: {
         onClick: () => setBlindDialogOpen(false),
@@ -88,9 +90,38 @@ export const usePostingView = (id: string) => {
 
   return {
     data: {
-      postingDetail,
+      posting,
       breadcrumbModels,
       blindDialogActionIconProps,
+    },
+  }
+}
+
+//
+const mapToPosting = (dto: PostingDto) => {
+  const { blind } = dto
+
+  return {
+    id: dto.id,
+    title: dto.title,
+    content: dto.content,
+    category: dto.categoryType?.label,
+    attachments: dto.attachments,
+    viewCount: dto.viewCount,
+    likedCount: dto.likedCount,
+    commentCount: dto.commentCount,
+    createdAt: dto.createdDate.toLocaleString(),
+    updatedAt: dto.updatedDate.toLocaleString(),
+    author: {
+      id: dto.author.id,
+      name: dto.author.nickname,
+    },
+    isBlind: dto.isBlind,
+    blind: {
+      reason: blind
+        ? `기간: ~ ${blind.endedDate ?? '무기한'}
+        사유: (${blind.reason})`
+        : '',
     },
   }
 }

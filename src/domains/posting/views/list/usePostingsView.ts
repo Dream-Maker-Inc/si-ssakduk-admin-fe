@@ -1,6 +1,4 @@
-import { PostingsApi } from '@/data/postings'
 import { useQuery } from 'react-query'
-import { PostingCategories } from '../models'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { RouterPath } from '@/common/router'
@@ -8,6 +6,8 @@ import { DataTableProps } from '@/common/components/DataTable'
 import { SearchDialogProps } from '@/common/components/dialogs'
 import { useRecoilState } from 'recoil'
 import { postingsSearchAtom } from '@/common/recoil'
+import { PostingCategories } from '../../models'
+import { PostingDto, PostingsApi, PostingsDto } from '../../data'
 
 const PageSize = 10
 
@@ -33,7 +33,7 @@ export const usePostingsView = () => {
     setPostingsSearchState({ ...postingsSearchState, withBlind: checked })
 
   // fetch postings
-  const { data, refetch } = useQuery(
+  const { data: postingsDto, refetch } = useQuery(
     ['postings', pageNumber],
     () =>
       PostingsApi.findAll({
@@ -49,8 +49,10 @@ export const usePostingsView = () => {
   )
 
   const result = { data: null }
+  if (!postingsDto) return result
+  //
 
-  if (!data) return result
+  const { postings, metaData } = mapToPostings(postingsDto)
 
   // table
   const dataTableProps: DataTableProps = {
@@ -98,13 +100,13 @@ export const usePostingsView = () => {
         },
       ],
       data:
-        data?.items?.map(it => [
-          it.posting.id,
-          it.posting.categoryModel.label,
-          it.posting.title,
-          it.posting.content,
-          it.posting.viewCount,
-          it.posting.stateText,
+        postings.map(it => [
+          it.id,
+          it.category,
+          it.title,
+          it.content,
+          it.viewCount,
+          it.stateText,
         ]) ?? [],
     },
     onDataRowClick: (id: number) =>
@@ -144,7 +146,7 @@ export const usePostingsView = () => {
 
   // pagination
   const paginationState = {
-    count: data?.metaData?.totalPageCount,
+    count: metaData.totalPageCount,
     page: pageNumber,
     onChange: (page: number) => setPageNumber(page),
   }
@@ -165,5 +167,31 @@ export const usePostingsView = () => {
       searchDialogProps,
       openSearchDialog: () => setSearchDialogOpen(true),
     },
+  }
+}
+
+//
+const mapToPostings = (dto: PostingsDto) => {
+  const getStateText = (postingDto: PostingDto) => {
+    if (!!postingDto.deletedDate) return '삭제'
+    if (postingDto.isBlind) return '블라인드'
+
+    return '공개'
+  }
+
+  const { items, metaData } = dto
+
+  const postings = items.map(it => ({
+    id: it.id,
+    category: it.categoryType?.label,
+    title: it.title,
+    content: it.content,
+    viewCount: it.viewCount,
+    stateText: getStateText(it),
+  }))
+
+  return {
+    postings,
+    metaData,
   }
 }

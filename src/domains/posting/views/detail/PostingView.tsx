@@ -5,7 +5,7 @@ import { RouterPath } from '@/common/router'
 import { PageTemplate } from '@/common/templates'
 import { Colors } from '@/common/themes/Color'
 import { css } from '@emotion/react'
-import { Card, Stack, Switch, Typography } from '@mui/material'
+import { Card, Stack, Typography } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Fragment } from 'react'
@@ -19,8 +19,8 @@ export const PostingView = ({ id }: PostingViewProps) => {
   const { data } = usePostingView(id)
   if (!data) return <Fragment />
 
-  const { postingDetail, breadcrumbModels, blindDialogActionIconProps } = data
-  const { posting, likedCount, commentCount, member: author } = postingDetail
+  const { posting, breadcrumbModels, blindDialogActionIconProps } = data
+  const { author, blind } = posting
 
   return (
     <PageTemplate
@@ -51,11 +51,11 @@ export const PostingView = ({ id }: PostingViewProps) => {
             <DataRow title='제목' content={posting.title} isBottomBorder />
             <DataRow
               title='카테고리'
-              content={posting.categoryModel.label}
+              content={posting.category}
               isBottomBorder
             />
             <DataRow
-              title={'작성자 이름(닉네임)'}
+              title={'작성자 닉네임'}
               content={
                 <Link href={RouterPath.Member.createPath(`${author.id}`)}>
                   <div css={st.anchor}>{author.name}</div>
@@ -66,26 +66,30 @@ export const PostingView = ({ id }: PostingViewProps) => {
           </Stack>
 
           <Stack width={'100%'}>
-            <DataRow title='좋아요 수' content={likedCount} isBottomBorder />
+            <DataRow
+              title='좋아요 수'
+              content={posting.likedCount}
+              isBottomBorder
+            />
             <DataRow
               title='댓글 수'
               content={
                 <Link
                   href={`${RouterPath.Comments.path}?filter=postingId&postingId=${posting.id}`}
                 >
-                  <div css={st.anchor}>{commentCount}</div>
+                  <div css={st.anchor}>{posting.commentCount}</div>
                 </Link>
               }
               isBottomBorder
             />
             <DataRow
               title='등록 일자'
-              content={posting.createdDate.toLocaleString()}
+              content={posting.createdAt}
               isBottomBorder
             />
             <DataRow
               title='최종 수정 일자'
-              content={posting.updatedDate.toLocaleString()}
+              content={posting.updatedAt}
               isBottomBorder
             />
           </Stack>
@@ -121,7 +125,7 @@ export const PostingView = ({ id }: PostingViewProps) => {
 
           <DataRow
             title='블라인드'
-            content={posting.blind?.reasonDetail}
+            content={<Typography>{blind.reason}</Typography>}
             isBottomBorder
           />
         </Stack>
