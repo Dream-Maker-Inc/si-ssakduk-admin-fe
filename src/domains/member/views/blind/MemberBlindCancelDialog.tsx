@@ -3,6 +3,7 @@ import { Colors } from '@/common/themes/Color'
 import { css } from '@emotion/react'
 import { ReportRounded } from '@mui/icons-material'
 import { Button, Stack, Typography } from '@mui/material'
+import { Fragment } from 'react'
 import { MemberBlindDialogProps } from './MemberBlindDialog'
 import { useMemberBlindCancelDialog } from './useMemberBlindCancelDialog'
 
@@ -19,6 +20,8 @@ export const MemberBlindCancelDialog = ({
     onSuccess,
     onFailure,
   )
+  if (!data) return <Fragment />
+
   const { noticeText, warningText, handleButtonClick, handleCancelClick } = data
 
   return (
