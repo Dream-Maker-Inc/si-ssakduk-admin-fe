@@ -1,7 +1,8 @@
 import { RouterPath } from '@/common/router'
-import { MembersApi } from '@/data/members'
+import { MemberDto } from '@/domains/member/data/dto/member.dto'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
+import { MembersApi } from '../../data'
 import { MemberBlindDialogProps } from '../blind'
 
 export const useMemberDetailView = (id: string) => {
@@ -11,7 +12,7 @@ export const useMemberDetailView = (id: string) => {
   const {
     isLoading,
     isError,
-    data: member,
+    data: memberDto,
     error,
   } = useQuery(['member', id], () => MembersApi.findOne(id))
 
@@ -24,9 +25,11 @@ export const useMemberDetailView = (id: string) => {
     data: null,
   }
 
-  if (!member) return result
+  if (!memberDto) return result
 
   //
+  const member = mapToMember(memberDto)
+
   const { Members, Member } = RouterPath
   const breadcrumbModels = [
     {
@@ -66,10 +69,31 @@ export const useMemberDetailView = (id: string) => {
   return {
     ...result,
     data: {
-      memberData: member,
+      member,
       breadcrumbModels,
       memberDeleteDialogProps: memberBlindDialogProps,
       blockOptionIconProps,
     },
+  }
+}
+
+//
+const mapToMember = (dto: MemberDto) => {
+  return {
+    id: dto.id,
+    name: dto.name,
+    email: dto.email,
+    phone: dto.phone,
+    profileImage: dto.profileImage,
+    createdAt: dto.createdDate.toLocaleDateString(),
+    isBlock: dto.isBlock,
+    blockedText: dto.isBlock
+      ? `활동 정지 (~ ${
+          dto.blind?.endedDate?.toLocaleString() ?? '무기한'
+        })\n정지 사유 (${dto.blind.reason})`
+      : '활동 중 (정상)',
+    leavedText: dto.deletedDate
+      ? `탈퇴 (${dto.deletedDate?.toLocaleString()})`
+      : '활동 중 (정상)',
   }
 }

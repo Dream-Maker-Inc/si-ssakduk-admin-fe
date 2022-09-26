@@ -4,7 +4,7 @@ import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
 import { css } from '@emotion/react'
 import { BlockRounded } from '@mui/icons-material'
-import { IconButton, Tooltip } from '@mui/material'
+import { IconButton, Tooltip, Typography } from '@mui/material'
 import Image from 'next/image'
 import { Fragment } from 'react'
 import { MemberBlindCancelDialog } from '../blind/MemberBlindCancelDialog'
@@ -22,7 +22,7 @@ export const MemberDetailView = ({ id }: MemberDetailViewProps) => {
   if (isError || !data) return <Fragment />
 
   const {
-    memberData,
+    member,
     breadcrumbModels,
     memberDeleteDialogProps,
     blockOptionIconProps,
@@ -47,7 +47,7 @@ export const MemberDetailView = ({ id }: MemberDetailViewProps) => {
           <div css={st.contentInner}>
             <div css={st.profileImageWrapper}>
               <Image
-                src={memberData.profileImage}
+                src={member.profileImage}
                 alt={'profile image'}
                 title={'profile image'}
                 layout={'fill'}
@@ -57,37 +57,33 @@ export const MemberDetailView = ({ id }: MemberDetailViewProps) => {
             <section css={st.dataContainer}>
               <DataRow
                 title='회원 번호'
-                content={`${memberData.id}`}
+                content={`${member.id}`}
                 isBottomBorder
               />
-              <DataRow title='이름' content={memberData.name} isBottomBorder />
-              <DataRow
-                title='이메일'
-                content={memberData.email}
-                isBottomBorder
-              />
+              <DataRow title='이름' content={member.name} isBottomBorder />
+              <DataRow title='이메일' content={member.email} isBottomBorder />
               <DataRow
                 title='휴대폰 번호'
-                content={memberData.phone}
+                content={member.phone}
                 isBottomBorder
               />
               <DataRow
                 title='가입일자'
-                content={memberData.createdDate.toLocaleDateString()}
+                content={member.createdAt}
                 isBottomBorder
               />
               <DataRow
                 title='활동 중지 여부'
-                content={memberData.suspendedTextWithDate}
+                content={<Typography>{member.blockedText}</Typography>}
                 isBottomBorder
               />
-              <DataRow title='회원 탈퇴 여부' content={memberData.leavedText} />
+              <DataRow title='회원 탈퇴 여부' content={member.leavedText} />
             </section>
           </div>
         </ContentContainer>
       </article>
 
-      {memberData.isBlock ? (
+      {member.isBlock ? (
         <MemberBlindCancelDialog {...memberDeleteDialogProps} />
       ) : (
         <MemberBlindDialog {...memberDeleteDialogProps} />

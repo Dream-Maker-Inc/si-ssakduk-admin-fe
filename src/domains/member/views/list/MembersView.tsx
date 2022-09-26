@@ -1,6 +1,6 @@
 import { ListPageTemplate2 } from '@/common/templates'
 import { useMembersView } from './useMembersView'
-import React from 'react'
+import React, { Fragment } from 'react'
 import { SearchDialog } from '@/common/components/dialogs'
 import { IconButton, Tooltip, Typography } from '@mui/material'
 import { Colors } from '@/common/themes/Color'
@@ -9,6 +9,9 @@ import { css } from '@emotion/react'
 
 export const MembersView = () => {
   const { data } = useMembersView()
+
+  if (!data) return <Fragment />
+
   const {
     dataTableProps,
     paginationState,

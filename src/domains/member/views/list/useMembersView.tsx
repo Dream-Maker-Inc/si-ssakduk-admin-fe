@@ -2,11 +2,11 @@ import { DataTableProps } from '@/common/components/DataTable'
 import { SearchDialogProps } from '@/common/components/dialogs'
 import { membersSearchAtom } from '@/common/recoil'
 import { RouterPath } from '@/common/router'
-import { MembersApi } from '@/data/members'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { useRecoilState } from 'recoil'
+import { MemberDto, MembersApi, MembersDto } from '../../data'
 
 const PageSize = 10
 
@@ -26,7 +26,7 @@ export const useMembersView = () => {
     setMembersSearchState({ ...membersSearchState, mode: value })
 
   // fetch members
-  const { data, refetch } = useQuery(
+  const { data: membersDto, refetch } = useQuery(
     ['members', pageNumber],
     () => {
       if (mode === '활동 유저')
@@ -47,6 +47,12 @@ export const useMembersView = () => {
       onSuccess: () => setSearchDialogOpen(false),
     },
   )
+
+  const result = { data: null }
+  if (!membersDto) return result
+
+  //
+  const { members, metaData } = mapToMembers(membersDto)
 
   // table
   const dataTableProps: DataTableProps = {
@@ -87,11 +93,11 @@ export const useMembersView = () => {
         },
       ],
       data:
-        data?.items?.map(it => [
+        members.map(it => [
           it.id,
           it.name,
           it.nickname,
-          it.createdDate.toLocaleString(),
+          it.createdAt,
           it.stateText,
         ]) ?? [],
     },
@@ -130,7 +136,7 @@ export const useMembersView = () => {
   }
 
   // pagination
-  const count = data?.metaData?.totalPageCount ?? 0
+  const count = metaData.totalPageCount ?? 0
   const handleChangePageNumber = (page: number) => setPageNumber(page)
 
   // breadcrumbs
@@ -153,5 +159,30 @@ export const useMembersView = () => {
       searchDialogProps,
       openSearchDialog: () => setSearchDialogOpen(true),
     },
+  }
+}
+
+//
+const mapToMembers = (dto: MembersDto) => {
+  const getStateText = (memberDto: MemberDto) => {
+    if (!!memberDto.deletedDate) return '탈퇴'
+    if (memberDto.isBlock) return '활동 정지'
+
+    return '공개'
+  }
+
+  const { items, metaData } = dto
+
+  const members = items.map(it => ({
+    id: it.id,
+    name: it.name,
+    nickname: it.nickname,
+    createdAt: it.createdDate.toLocaleString(),
+    stateText: getStateText(it),
+  }))
+
+  return {
+    members,
+    metaData,
   }
 }

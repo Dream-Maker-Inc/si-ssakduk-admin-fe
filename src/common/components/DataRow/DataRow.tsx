@@ -23,6 +23,8 @@ export const DataRow = ({
     inner: css`
       display: flex;
       align-items: center;
+      padding: 12px;
+      white-space: pre-line;
     `,
     title: css`
       min-width: 180px;

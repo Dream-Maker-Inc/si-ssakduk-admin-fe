@@ -1,8 +1,9 @@
-import { MembersApi } from '@/data/members'
+import { BlindModel } from '@/data/common'
 import { TextFieldProps } from '@mui/material'
 import moment from 'moment'
 import { useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
+import { MembersApi } from '../../data'
 
 export const useMemberBlindDialog = (
   id: string,
@@ -53,7 +54,8 @@ export const useMemberBlindDialog = (
   const { data: member } = fetchMemberResponse
   const { mutate } = useMutation(
     'blind-member',
-    ({ id, endedAt, reason }: any) => MembersApi.blind(id, endedAt, reason),
+    ({ id, endedAt, reason }: any) =>
+      MembersApi.blind(id, new BlindModel(reason, endedAt)),
   )
 
   // button
