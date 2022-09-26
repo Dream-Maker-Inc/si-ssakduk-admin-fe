@@ -98,7 +98,11 @@ export const PostingView = ({ id }: PostingViewProps) => {
         <Stack>
           <DataRow title='조회 수' content={posting.viewCount} isBottomBorder />
 
-          <DataRow title='내용' content={posting.content} isBottomBorder />
+          <DataRow
+            title='내용'
+            content={<Typography>{posting.content}</Typography>}
+            isBottomBorder
+          />
 
           <DataRow
             title='첨부 파일'
