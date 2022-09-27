@@ -13,9 +13,10 @@ const nextConfig = {
   },
   images: {
     loader: 'akamai',
-    path: '/',
+    path: '',
   },
   assetPrefix: '/',
+  trailingSlash: true,
 }
 
 module.exports = nextConfig

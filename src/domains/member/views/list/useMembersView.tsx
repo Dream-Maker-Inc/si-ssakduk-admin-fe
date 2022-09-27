@@ -102,7 +102,7 @@ export const useMembersView = () => {
         ]) ?? [],
     },
     onDataRowClick: (id: number) =>
-      router.push(RouterPath.Member.createPath(`${id}`)),
+      router.push(RouterPath.Member.createPathWithId(`${id}`)),
   }
 
   // searchDialog props

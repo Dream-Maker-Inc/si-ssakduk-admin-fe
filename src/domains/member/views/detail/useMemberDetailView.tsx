@@ -38,7 +38,7 @@ export const useMemberDetailView = (id: string) => {
     },
     {
       displayName: '회원 상세',
-      path: Member.createPath(`${id}`),
+      path: Member.createPathWithId(`${id}`),
     },
   ]
 

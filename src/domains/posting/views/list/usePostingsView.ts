@@ -110,7 +110,7 @@ export const usePostingsView = () => {
         ]) ?? [],
     },
     onDataRowClick: (id: number) =>
-      router.push(RouterPath.Posting.createPath(`${id}`)),
+      router.push(RouterPath.Posting.createPathWithId(`${id}`)),
   }
 
   // searchDialog props

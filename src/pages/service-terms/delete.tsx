@@ -47,11 +47,11 @@ const Delete = () => {
     },
     {
       displayName: '약관 상세',
-      path: ServiceTerm.createPath(`${id}`),
+      path: ServiceTerm.createPathWithId(`${id}`),
     },
     {
       displayName: '약관 수정',
-      path: ServiceTerm.createPath(`${id}`),
+      path: ServiceTerm.createPathWithId(`${id}`),
     },
   ]
 

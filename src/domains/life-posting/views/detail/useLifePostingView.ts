@@ -61,7 +61,7 @@ export const useLifePostingView = (id: number) => {
     },
     {
       displayName: '라이프 상세',
-      path: RouterPath.LifePosting.createPath(`${id}`),
+      path: RouterPath.LifePosting.createPathWithId(`${id}`),
     },
   ]
 

@@ -46,7 +46,7 @@ export const usePostingView = (id: string) => {
     },
     {
       displayName: '게시글 상세',
-      path: RouterPath.Posting.createPath(id),
+      path: RouterPath.Posting.createPathWithId(id),
     },
   ]
 

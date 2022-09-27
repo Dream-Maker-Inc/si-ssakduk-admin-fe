@@ -1,10 +1,10 @@
-import { useRouter } from 'next/router'
-import { ButtonProps, TextFieldProps } from '@mui/material'
 import { RouterPath } from '@/common/router'
+import { ButtonProps, TextFieldProps } from '@mui/material'
+import { AxiosError } from 'axios'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useMutation } from 'react-query'
 import { CreateLifePostingDto, LifePostingApi } from './../../data'
-import { AxiosError } from 'axios'
 
 type FormModel = {
   title: string
@@ -53,7 +53,7 @@ export const useCreateLifePostingView = () => {
     },
     {
       displayName: '라이프 작성',
-      path: RouterPath.LifePostingCreate.path(),
+      path: RouterPath.LifePostingCreate.path,
     },
   ]
 
