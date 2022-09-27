@@ -7,6 +7,8 @@ import { RouterPath } from '@/common/router'
 import { SearchDialogProps } from '@/common/components/dialogs'
 import { useState } from 'react'
 import { CreateActionIconProps } from '@/common/components/icons'
+import { LifePostingDto, LifePostingsDto } from '../../data'
+
 const PageSize = 10
 
 export const useLifePostingsView = () => {
@@ -17,7 +19,7 @@ export const useLifePostingsView = () => {
 
   const { keyword, handleKeywordChange } = useLifePostingsSearchState()
 
-  const { data, refetch } = useQuery(['life-postings'], () =>
+  const { data: lifePostingsDto, refetch } = useQuery(['life-postings'], () =>
     LifePostingApi.findAll({
       page: 1,
       size: PageSize,
@@ -25,8 +27,12 @@ export const useLifePostingsView = () => {
     }),
   )
 
+  // null guard
   const result = { data: null }
-  if (!data) return result
+  if (!lifePostingsDto) return result
+
+  //
+  const { lifePostings, metaData } = mapToLifePosting(lifePostingsDto)
 
   // table
   const dataTableProps: DataTableProps = {
@@ -59,10 +65,10 @@ export const useLifePostingsView = () => {
         },
       ],
       data:
-        data?.items?.map(it => [
+        lifePostings.map(it => [
           it.id,
           it.title,
-          it.createdDate.toLocaleString(),
+          it.createdAt,
           it.viewCount,
           it.stateText,
         ]) ?? [],
@@ -96,7 +102,7 @@ export const useLifePostingsView = () => {
 
   // pagination
   const paginationState = {
-    count: data?.metaData?.totalPageCount,
+    count: metaData.totalPageCount,
     page: pageNumber,
     onChange: (page: number) => setPageNumber(page),
   }
@@ -105,7 +111,7 @@ export const useLifePostingsView = () => {
   const breadcrumbModels = [
     {
       displayName: '라이프 관리',
-      path: RouterPath.Postings.path,
+      path: RouterPath.LifePostings.path,
     },
   ]
 
@@ -118,5 +124,26 @@ export const useLifePostingsView = () => {
       openSearchDialog: () => setSearchDialogOpen(true),
       createActionIconProps,
     },
+  }
+}
+
+//
+const mapToLifePosting = (dto: LifePostingsDto) => {
+  const { items, metaData } = dto
+
+  const getStateText = (dto: LifePostingDto) =>
+    !!dto.deletedDate ? '삭제' : '공개'
+
+  const lifePostings = items.map(it => ({
+    id: it.id,
+    title: it.title,
+    createdAt: it.createdDate.toLocaleString(),
+    viewCount: it.viewCount,
+    stateText: getStateText(it),
+  }))
+
+  return {
+    lifePostings,
+    metaData,
   }
 }

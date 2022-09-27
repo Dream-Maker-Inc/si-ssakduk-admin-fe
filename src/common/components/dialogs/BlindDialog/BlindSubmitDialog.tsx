@@ -19,7 +19,7 @@ export type BlindSubmitDialogProps = {
     primaryText: string
     secondaryText?: string
   }
-  reasonTextFieldProps: TextFieldProps
+  reasonTextFieldProps?: TextFieldProps
   cancelButtonProps: ButtonProps
   confirmButtonProps: ButtonProps
 }
@@ -48,9 +48,11 @@ export const BlindSubmitDialog = ({
         </Stack>
 
         <div>
-          <div css={style.form}>
-            <TextField {...reasonTextFieldProps} />
-          </div>
+          {reasonTextFieldProps && (
+            <div css={style.form}>
+              <TextField {...reasonTextFieldProps} />
+            </div>
+          )}
 
           <div css={style.buttonGroup}>
             <Button variant='outlined' {...cancelButtonProps} />
