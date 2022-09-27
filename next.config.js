@@ -11,12 +11,12 @@ const nextConfig = {
       },
     ]
   },
-  images: {
-    loader: 'akamai',
-    path: '',
-  },
-  assetPrefix: '/',
-  trailingSlash: true,
+  // images: {
+  //   loader: 'akamai',
+  //   path: '',
+  // },
+  // assetPrefix: '/',
+  // trailingSlash: true,
 }
 
 module.exports = nextConfig
