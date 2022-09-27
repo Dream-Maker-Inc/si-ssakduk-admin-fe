@@ -1,2 +1,3 @@
-export * from './list'
+export * from './data'
 export * from './models'
+export * from './views'

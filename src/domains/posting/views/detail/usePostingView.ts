@@ -38,8 +38,6 @@ export const usePostingView = (id: string) => {
   //
   const posting = mapToPosting(postingDto)
 
-  // flow
-
   // breadcrumbs
   const breadcrumbModels = [
     {
