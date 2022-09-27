@@ -1,6 +1,5 @@
 import { BlockRounded } from '@mui/icons-material'
 import { ButtonProps, IconButton, TextFieldProps, Tooltip } from '@mui/material'
-import { useState } from 'react'
 import { BlindDialog } from './BlindDialog'
 
 export type BlindDialogActionIconProps = {

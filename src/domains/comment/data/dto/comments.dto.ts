@@ -1,10 +1,10 @@
 import { PaginationResponse } from '@/data/common'
-import { MemberEntity } from '@/domains/member/models'
 import { Type } from 'class-transformer'
+import { CommentDto } from './comment.dto'
 
-export class MembersEntity {
-  @Type(() => MemberEntity)
-  items: MemberEntity[]
+export class CommentsDto {
+  @Type(() => CommentDto)
+  items: CommentDto[]
 
   @Type(() => PaginationResponse)
   metaData: PaginationResponse

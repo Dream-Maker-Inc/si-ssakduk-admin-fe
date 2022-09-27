@@ -5,4 +5,5 @@ export type CommentsParams = {
   postingId?: string
   authorId?: string
   withBlind?: boolean
+  withDeleted?: boolean
 } & PaginationRequest

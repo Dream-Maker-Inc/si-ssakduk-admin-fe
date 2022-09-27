@@ -1,5 +1,6 @@
 import { CommentInfoBox } from '@/common/components/CommentInfoBox'
 import { SearchDialogWithIcon } from '@/common/components/dialogs'
+import { BlindDialog } from '@/common/components/dialogs/BlindDialog/BlindDialog'
 import { PageTemplate } from '@/common/templates'
 import { Colors } from '@/common/themes/Color'
 import { css } from '@emotion/react'
@@ -19,6 +20,7 @@ export const CommentsView = () => {
     commentInfoBoxProps,
     openSearchDialog,
     searchDialogProps,
+    blindDialogProps,
     breadcrumbModels,
     paginationState,
   } = data
@@ -63,6 +65,8 @@ export const CommentsView = () => {
           />
         </div>
       </PageTemplate>
+
+      <BlindDialog {...blindDialogProps} />
     </Fragment>
   )
 }

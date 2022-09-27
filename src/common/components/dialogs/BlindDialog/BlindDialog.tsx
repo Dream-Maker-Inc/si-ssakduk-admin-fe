@@ -6,6 +6,22 @@ export type BlindDialogProps = {
   props: BlindSubmitDialogProps | BlindCancelDialogProps
 }
 
+export const blindDialogDefaultProps: BlindDialogProps = {
+  isTypeBlind: false,
+  props: {
+    open: false,
+    onClose: () => {},
+    model: {
+      title: '',
+      primaryText: '',
+      secondaryText: '',
+    },
+    cancelButtonProps: {},
+    confirmButtonProps: {},
+    reasonTextFieldProps: {},
+  },
+}
+
 export const BlindDialog = ({ isTypeBlind, props }: BlindDialogProps) => {
   return isTypeBlind ? (
     <BlindSubmitDialog {...(props as BlindSubmitDialogProps)} />
