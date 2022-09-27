@@ -1,18 +1,30 @@
 import { BaseServerClient } from '@/data/common'
 import { plainToClass } from 'class-transformer'
-import { from, lastValueFrom, map } from 'rxjs'
-import { LifePostingsEntity } from '../models/life-postings.entity'
-import { LifePostingsParams } from './dto'
+import { from, lastValueFrom, map, tap } from 'rxjs'
+import { LifePostingDto, LifePostingsDto, LifePostingsParams } from './dto'
 import { CreateLifePostingDto } from './dto/create-life-posting.dto'
 
 export class LifePostingApi {
   static async findAll(params: LifePostingsParams) {
     return lastValueFrom(
       from(
-        BaseServerClient.get<LifePostingsEntity>('/api/v1/life-posting', {
-          params: { ...params, withDeleted: true },
+        BaseServerClient.get('/api/v1/life-posting', {
+          params,
         }),
-      ).pipe(map(res => plainToClass(LifePostingsEntity, res.data))),
+      ).pipe(map(res => plainToClass(LifePostingsDto, res.data))),
+    )
+  }
+
+  static async findOne(id: number) {
+    return lastValueFrom(
+      from(BaseServerClient.get(`/api/v1/life-posting/${id}`)).pipe(
+        tap(res => {
+          if (res.data.statusCode) {
+            throw new Error(res.data.message)
+          }
+        }),
+        map(res => plainToClass(LifePostingDto, res.data)),
+      ),
     )
   }
 
@@ -21,6 +33,14 @@ export class LifePostingApi {
       from(
         BaseServerClient.post('/api/v1/life-posting', dto.toFormData()),
       ).pipe(map(res => res.data)),
+    )
+  }
+
+  static async delete(id: number) {
+    return lastValueFrom(
+      from(BaseServerClient.delete(`/api/v1/life-posting/${id}`)).pipe(
+        map(res => res.data),
+      ),
     )
   }
 }

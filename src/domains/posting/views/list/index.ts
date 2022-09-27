@@ -1,2 +1,2 @@
-export * from './PostingsView'
-export * from './usePostingsView'
+export * from "./PostingsView";
+export * from "./usePostingsView";

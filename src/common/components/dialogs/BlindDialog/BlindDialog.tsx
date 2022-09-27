@@ -18,7 +18,6 @@ export const blindDialogDefaultProps: BlindDialogProps = {
     },
     cancelButtonProps: {},
     confirmButtonProps: {},
-    reasonTextFieldProps: {},
   },
 }
 

@@ -1,4 +1,4 @@
-import { CreateLifePostingView } from '@/domains/life-posting/views/create/createLifePostingView'
+import { CreateLifePostingView } from '@/domains/life-posting'
 
 const CreateLifePostingPage = () => {
   return <CreateLifePostingView />
