@@ -1,68 +1,36 @@
-class QueryRouter {
-  constructor(public value: string, public path: string) {}
-}
+class Router {
+  constructor(public path: string) {}
 
-class QueryDetailRouter {
-  constructor(public value: string, private originPath: string) {}
-
-  createPath(id: string) {
-    return `${this.originPath}/${id}`
-  }
-}
-
-class MutateRouter {
-  constructor(
-    public value: string,
-    private originPath: string,
-    private commandPath: 'create' | 'update' | 'delete',
-  ) {}
-
-  path(id: string = '') {
-    if (this.commandPath === 'create') return this.createPath()
-    if (this.commandPath === 'update') return this.updatePath(id)
-    if (this.commandPath === 'delete') return this.deletePath(id)
-
-    return ''
-  }
-
-  private createPath() {
-    return `${this.originPath}/${this.commandPath}`
-  }
-
-  private updatePath(id: string) {
-    return `${this.originPath}/${id}/${this.commandPath}`
-  }
-
-  private deletePath(id: string) {
-    return `${this.originPath}/${id}/${this.commandPath}`
+  createPathWithId(id: string) {
+    return `${this.path}?id=${id}`
   }
 }
 
 export const RouterPath = {
-  Root: new QueryRouter('root', '/'),
+  Root: new Router('/'),
 
-  Main: new QueryRouter('main', '/main'),
-  MainUpdate: new QueryRouter('main update', '/main/update'),
+  Main: new Router('/main'),
+  MainUpdate: new Router('/main/update'),
 
-  Members: new QueryRouter('회원 관리', '/members'),
-  Member: new QueryDetailRouter('회원 상세', '/members'),
-  MemberDelete: new MutateRouter('회원 삭제', '/members', 'delete'),
+  Members: new Router('/members'),
+  Member: new Router('/members/detail'),
+  MemberDelete: new Router('/members/delete'),
 
-  ServiceTerms: new QueryRouter('약관 관리', '/service-terms'),
-  ServiceTerm: new QueryDetailRouter('약관 상세', '/service-terms'),
-  ServiceTermUpdate: new MutateRouter('약관 수정', '/service-terms', 'update'),
-  ServiceTermDelete: new MutateRouter('약관 삭제', '/service-terms', 'delete'),
+  ServiceTerms: new Router('/service-terms'),
+  ServiceTerm: new Router('/service-terms/detail'),
+  ServiceTermUpdate: new Router('/service-terms/update'),
+  ServiceTermDelete: new Router('/service-terms/delete'),
 
-  Postings: new QueryRouter('게시글 관리', '/postings'),
-  Posting: new QueryDetailRouter('게시글 상세', '/postings'),
+  Postings: new Router('/postings'),
+  Posting: new Router('/postings/detail'),
 
-  Comments: new QueryRouter('댓글 관리', '/comments'),
+  Comments: new Router('/comments'),
 
-  LifePostings: new QueryRouter('라이프 관리', '/life'),
-  LifePosting: new QueryDetailRouter('라이프 상세', '/life'),
-  LifePostingCreate: new MutateRouter('라이프 생성', '/life', 'create'),
-  LifePostingUpdate: new MutateRouter('라이프 수정', '/life', 'update'),
-  LifePostingDelete: new MutateRouter('라이프 삭제', '/life', 'delete'),
+  LifePostings: new Router('/life'),
+  LifePosting: new Router('/life/detail'),
+  LifePostingCreate: new Router('/life/create'),
+  LifePostingUpdate: new Router('/life/update'),
+  LifePostingDelete: new Router('/life/delete'),
 }
 
 export type RouterPathType = typeof RouterPath[keyof typeof RouterPath]

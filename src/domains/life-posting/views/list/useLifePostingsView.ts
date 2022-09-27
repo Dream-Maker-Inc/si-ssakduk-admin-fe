@@ -74,7 +74,7 @@ export const useLifePostingsView = () => {
         ]) ?? [],
     },
     onDataRowClick: (id: number) =>
-      router.push(RouterPath.LifePosting.createPath(`${id}`)),
+      router.push(RouterPath.LifePosting.createPathWithId(`${id}`)),
   }
 
   // searchDialog props
@@ -96,7 +96,7 @@ export const useLifePostingsView = () => {
   const createActionIconProps: CreateActionIconProps = {
     tooltip: '글 작성',
     iconButtonProps: {
-      onClick: () => router.push(RouterPath.LifePostingCreate.path()),
+      onClick: () => router.push(RouterPath.LifePostingCreate.path),
     },
   }
 

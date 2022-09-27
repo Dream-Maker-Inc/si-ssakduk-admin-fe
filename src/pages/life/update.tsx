@@ -1,27 +1,23 @@
-import { ChangeEvent, useState } from 'react'
 import { css } from '@emotion/react'
-
 import Stack from '@mui/material/Stack'
-import Typography from '@mui/material/Typography'
+import { ChangeEvent, useState } from 'react'
+
+import SendRounded from '@mui/icons-material/SendRounded'
+import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import TextField from '@mui/material/TextField'
-import Checkbox from '@mui/material/Checkbox'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Button from '@mui/material/Button'
-import SendRounded from '@mui/icons-material/SendRounded'
+import Typography from '@mui/material/Typography'
 
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
-import { RouterPath } from '@/common/router'
 
 const Edit = () => {
-  const id = 1
-
   const [title, setTitle] = useState<string>('')
   const [content, setContent] = useState<string>('')
+  const [sponsorLink, setSponsorLink] = useState<string>('')
 
   const handleTitleChanged = (event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value)
@@ -31,25 +27,13 @@ const Edit = () => {
     setContent(event.target.value)
   }
 
-  const { ServiceTerms, ServiceTerm, ServiceTermUpdate } = RouterPath
-  const breadcrumbModels = [
-    {
-      displayName: '약관 관리',
-      path: ServiceTerms.path,
-    },
-    {
-      displayName: '약관 상세',
-      path: ServiceTerm.createPath(`${id}`),
-    },
-    {
-      displayName: '약관 수정',
-      path: ServiceTermUpdate.path(`${id}`),
-    },
-  ]
+  const handleSponsorLinkChanged = (event: ChangeEvent<HTMLInputElement>) => {
+    setSponsorLink(event.target.value)
+  }
 
   return (
     <Stack>
-      <TitleContainer title='약관 수정' breadcrumbModels={breadcrumbModels} />
+      <TitleContainer title='라이프 글 수정' breadcrumbModels={[]} />
 
       <ContentContainer>
         <div>
@@ -87,9 +71,16 @@ const Edit = () => {
 
           <article css={style.root}>
             <Typography css={style.title} variant='body1'>
-              필수 동의 여부
+              스폰서 링크
             </Typography>
-            <FormControlLabel control={<Checkbox />} label='필수' />
+            <FormControl sx={{ m: 1, flex: 1 }}>
+              <InputLabel>스폰서 링크를 입력하세요.</InputLabel>
+              <OutlinedInput
+                value={sponsorLink}
+                onChange={handleSponsorLinkChanged}
+                label='스폰서 링크를 입력하세요'
+              />
+            </FormControl>
           </article>
           <Divider />
 
@@ -98,7 +89,7 @@ const Edit = () => {
             endIcon={<SendRounded />}
             css={style.button}
           >
-            약관 수정하기
+            게시물 수정하기
           </Button>
         </div>
       </ContentContainer>

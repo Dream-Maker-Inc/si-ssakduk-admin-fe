@@ -57,7 +57,7 @@ export const PostingView = ({ id }: PostingViewProps) => {
             <DataRow
               title={'작성자 닉네임'}
               content={
-                <Link href={RouterPath.Member.createPath(`${author.id}`)}>
+                <Link href={RouterPath.Member.createPathWithId(`${author.id}`)}>
                   <div css={st.anchor}>{author.name}</div>
                 </Link>
               }
