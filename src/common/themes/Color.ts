@@ -21,6 +21,8 @@ export enum Colors {
 
   BackgroundDefault = '#fafafa',
 
+  WeakItem = '#bbb',
+
   Info = '#000',
 }
 

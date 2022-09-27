@@ -1,2 +1,2 @@
-export * from './list/MembersView'
-export * from './detail/MemberDetailView'
+export * from './models'
+export * from './views'

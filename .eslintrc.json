@@ -13,8 +13,9 @@
   },
   "rules": {
     "react/no-unknown-property": [
-      'error', {
-        ignore: ['css'] 
+      "error",
+      {
+        "ignore": ["css"]
       }
     ]
   }

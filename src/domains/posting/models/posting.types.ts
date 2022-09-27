@@ -1,4 +1,4 @@
-class PostingCategory {
+export class PostingCategory {
   constructor(public label: string, public value: string) {}
 }
 
@@ -12,12 +12,16 @@ export const PostingCategories = {
   CyberViolence: new PostingCategory('사이버 폭력', '사이버 폭력'),
   Depression: new PostingCategory('우울증', '우울증'),
   Secret: new PostingCategory('비밀', '비밀'),
-  Worry: new PostingCategory('걱정', '걱정'),
+  Hobby: new PostingCategory('취미 공유', '취미 공유'),
+  Worry: new PostingCategory('고민', '고민'),
   Misc: new PostingCategory('기타', '기타'),
 }
 
 export const findPostingCategories = (v: string) =>
   Object.values(PostingCategories).find(it => it.label === v)
+
+export const findPostingCategoriesByValue = (v: string) =>
+  Object.values(PostingCategories).find(it => it.value === v)
 
 export type PostingCategoriesType =
   typeof PostingCategories[keyof typeof PostingCategories]

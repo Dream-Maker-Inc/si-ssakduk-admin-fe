@@ -1,3 +1,6 @@
+import { Type } from 'class-transformer'
+import { BaseModel } from './base-model'
+
 export class BlindModel {
   constructor(
     public reason: string = '',
@@ -13,11 +16,19 @@ export class BlindModel {
     return this.endedAt && new Date(this.endedAt)
   }
 
-  get reasonDetail() {
-    return `( ${this?.startedDate?.toLocaleString()} ${this.reason} )`
-  }
-
+  /**
+   * @deprecated
+   */
   get blindedAtText() {
-    return `${this.reasonDetail}으로 인해 블라인드 처리 되었습니다.`
+    return ``
+  }
+}
+
+export class BaseModelWithBlind extends BaseModel {
+  @Type(() => BlindModel)
+  blind: BlindModel
+
+  get isBlind() {
+    return !!this.blind
   }
 }
