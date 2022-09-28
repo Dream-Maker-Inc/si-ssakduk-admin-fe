@@ -89,11 +89,16 @@ export const useLifePostingView = (id: number) => {
     },
   }
 
+  //
+  const handleEditClick = () =>
+    router.push(RouterPath.LifePostingUpdate.createPathWithId(`${id}`))
+
   return {
     data: {
       lifePosting,
       breadcrumbModels,
       blindDialogActionIconProps,
+      handleEditClick,
     },
   }
 }

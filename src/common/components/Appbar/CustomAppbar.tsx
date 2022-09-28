@@ -8,11 +8,11 @@ import {
 } from '@mui/material'
 import { css } from '@emotion/react'
 import Image from 'next/image'
-import logo from '../../../../public/logo.svg'
 import { PersonRounded } from '@mui/icons-material'
 import Stack from '@mui/material/Stack'
 import Link from 'next/link'
 import { RouterPath } from '@/common/router'
+import logo from '@/logo.svg'
 
 export interface CustomAppbarProps {
   appbarProps?: AppBarProps

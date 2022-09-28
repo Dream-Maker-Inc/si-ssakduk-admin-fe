@@ -1,2 +1,2 @@
-export * from './LifePostingView'
-export * from './useLifePostingView'
+export * from "./LifePostingView";
+export * from "./useLifePostingView";

@@ -1,16 +1,40 @@
 import { RouterPath } from '@/common/router'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
-import { useMutation } from 'react-query'
+import { useEffect } from 'react'
+import { useMutation, useQuery } from 'react-query'
 import {
   FormModel,
   LifePostingFormProps,
   useLifePostingForm,
 } from '../../components/life-posting-form'
-import { CreateLifePostingDto, LifePostingApi } from './../../data'
+import { LifePostingApi, LifePostingDto } from '../../data'
+import { UpdateLifePostingDto } from '../../data/dto/update-life-posting.dto'
 
-export const useCreateLifePostingView = () => {
+export const useUpdateLifePostingView = (id: number) => {
   const router = useRouter()
+
+  // fetch posting
+  const { data: lifePostingDto, refetch } = useQuery(
+    ['life-posting', id],
+    () => LifePostingApi.findOne(+id),
+    {
+      onError: (err: Error) => {
+        alert(err.message)
+        router.back()
+      },
+      enabled: false,
+      retry: 0,
+    },
+  )
+
+  const { data: attachments } = useQuery([lifePostingDto], () =>
+    lifePostingDto?.fetchAttachmentFiles(),
+  )
+
+  useEffect(() => {
+    refetch()
+  }, [id, refetch])
 
   const {
     title,
@@ -21,12 +45,19 @@ export const useCreateLifePostingView = () => {
     handleSponsorLinkChange,
     handleAttachmentsChange,
     formModel,
-  } = useLifePostingForm()
+  } = useLifePostingForm({
+    defaultModel: {
+      title: lifePostingDto?.title ?? '',
+      content: lifePostingDto?.content ?? '',
+      sponsorLink: lifePostingDto?.link ?? '',
+      attachments: [],
+    },
+  })
 
   const { mutate } = useMutation(
     ({ title, content, sponsorLink, attachments }: FormModel) =>
-      LifePostingApi.create(
-        new CreateLifePostingDto(title, content, sponsorLink, attachments),
+      LifePostingApi.update(
+        new UpdateLifePostingDto(title, content, sponsorLink, attachments),
       ),
     {
       onSuccess: res => {
@@ -40,6 +71,10 @@ export const useCreateLifePostingView = () => {
     },
   )
 
+  // null guard
+  const result = { data: null }
+  if (!lifePostingDto) return result
+
   const isValidFormModel = title && content
 
   // breadcrumbs
@@ -49,8 +84,8 @@ export const useCreateLifePostingView = () => {
       path: RouterPath.LifePostings.path,
     },
     {
-      displayName: '라이프 작성',
-      path: RouterPath.LifePostingCreate.path,
+      displayName: '라이프 수정',
+      path: RouterPath.LifePostingUpdate.createPathWithId(`${id}`),
     },
   ]
 
@@ -94,5 +129,18 @@ export const useCreateLifePostingView = () => {
       breadcrumbModels,
       formProps,
     },
+  }
+}
+
+//
+const mapToPosting = (dto: LifePostingDto) => {
+  return {
+    id: dto.id,
+    title: dto.title,
+    content: dto.content,
+    attachments: dto.attachments,
+    viewCount: dto.viewCount,
+    createdAt: dto.createdDate.toLocaleString(),
+    updatedAt: dto.updatedDate.toLocaleString(),
   }
 }

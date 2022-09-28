@@ -11,12 +11,13 @@ const nextConfig = {
       },
     ]
   },
-  // images: {
-  //   loader: 'akamai',
-  //   path: '',
-  // },
-  // assetPrefix: '/',
-  // trailingSlash: true,
+  images: {
+    domains: ['ssakduk-admin-fe.s3.ap-northeast-2.amazonaws.com'],
+    loader: 'akamai',
+    path: '',
+  },
+  assetPrefix: '/',
+  exportTrailingSlash: true,
 }
 
 module.exports = nextConfig

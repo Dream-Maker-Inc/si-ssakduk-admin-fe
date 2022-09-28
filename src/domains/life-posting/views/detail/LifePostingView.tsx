@@ -4,7 +4,8 @@ import { ContentContainer } from '@/common/ContentContainer'
 import { PageTemplate } from '@/common/templates'
 import { Colors } from '@/common/themes/Color'
 import { css } from '@emotion/react'
-import { Card, Stack, Typography } from '@mui/material'
+import { DeleteForeverRounded, EditRounded } from '@mui/icons-material'
+import { Card, IconButton, Stack, Tooltip, Typography } from '@mui/material'
 import Image from 'next/image'
 import { Fragment } from 'react'
 import { useLifePostingView } from './useLifePostingView'
@@ -17,11 +18,16 @@ export const LifePostingView = ({ id }: LifePostingViewProps) => {
   const { data } = useLifePostingView(+id)
   if (!data) return <Fragment />
 
-  const { lifePosting, breadcrumbModels, blindDialogActionIconProps } = data
+  const {
+    lifePosting,
+    breadcrumbModels,
+    blindDialogActionIconProps,
+    handleEditClick,
+  } = data
 
   return (
     <PageTemplate
-      pageTitle='게시글 상세'
+      pageTitle='라이프 상세'
       subtitleModel={{
         label: (
           <Typography
@@ -33,7 +39,20 @@ export const LifePostingView = ({ id }: LifePostingViewProps) => {
             {'상세 보기'}
           </Typography>
         ),
-        right: <BlindDialogActionIcon {...blindDialogActionIconProps} />,
+        right: (
+          <Stack direction={'row'}>
+            <Tooltip title={'수정'}>
+              <IconButton size={'small'} onClick={handleEditClick}>
+                <EditRounded />
+              </IconButton>
+            </Tooltip>
+
+            <BlindDialogActionIcon
+              {...blindDialogActionIconProps}
+              icon={<DeleteForeverRounded />}
+            />
+          </Stack>
+        ),
       }}
       breadcrumbModels={breadcrumbModels}
     >

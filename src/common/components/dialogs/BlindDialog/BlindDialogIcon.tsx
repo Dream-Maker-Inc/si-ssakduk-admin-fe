@@ -1,11 +1,13 @@
 import { BlockRounded } from '@mui/icons-material'
 import { ButtonProps, IconButton, TextFieldProps, Tooltip } from '@mui/material'
+import { ReactNode } from 'react'
 import { BlindDialog } from './BlindDialog'
 
 export type BlindDialogActionIconProps = {
   tooltip: string
   type: 'blind' | 'cancel'
   onClick: () => void
+  icon?: ReactNode
   dialogProps: {
     open: boolean
     onClose: () => void
@@ -24,6 +26,7 @@ export const BlindDialogActionIcon = ({
   tooltip,
   type,
   onClick,
+  icon = <BlockRounded />,
   dialogProps,
 }: BlindDialogActionIconProps) => {
   const isTypeBlind = type === 'blind'
@@ -33,7 +36,7 @@ export const BlindDialogActionIcon = ({
     <div>
       <Tooltip title={tooltip}>
         <IconButton size={'small'} color={iconColor} onClick={onClick}>
-          <BlockRounded />
+          {icon}
         </IconButton>
       </Tooltip>
 
