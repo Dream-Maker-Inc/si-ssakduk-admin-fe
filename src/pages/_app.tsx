@@ -8,6 +8,7 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import React from 'react'
 import { RecoilRoot } from 'recoil'
 import 'reflect-metadata'
+import 'antd/dist/antd.css'
 
 const queryClient = new QueryClient()
 
