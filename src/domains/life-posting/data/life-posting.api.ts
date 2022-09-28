@@ -3,6 +3,7 @@ import { plainToClass } from 'class-transformer'
 import { from, lastValueFrom, map, tap } from 'rxjs'
 import { LifePostingDto, LifePostingsDto, LifePostingsParams } from './dto'
 import { CreateLifePostingDto } from './dto/create-life-posting.dto'
+import { UpdateLifePostingDto } from './dto/update-life-posting.dto'
 
 export class LifePostingApi {
   static async findAll(params: LifePostingsParams) {
@@ -32,6 +33,14 @@ export class LifePostingApi {
     return lastValueFrom(
       from(
         BaseServerClient.post('/api/v1/life-posting', dto.toFormData()),
+      ).pipe(map(res => res.data)),
+    )
+  }
+
+  static async update(dto: UpdateLifePostingDto) {
+    return lastValueFrom(
+      from(
+        BaseServerClient.patch('/api/v1/life-posting', dto.toFormData()),
       ).pipe(map(res => res.data)),
     )
   }

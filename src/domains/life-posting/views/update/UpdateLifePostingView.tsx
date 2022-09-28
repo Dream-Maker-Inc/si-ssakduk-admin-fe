@@ -2,16 +2,23 @@ import { ContentContainer } from '@/common/ContentContainer'
 import { PageTemplate } from '@/common/templates'
 import { Colors } from '@/common/themes/Color'
 import { Typography } from '@mui/material'
+import { Fragment } from 'react'
 import { LifePostingForm } from '../../components/life-posting-form'
-import { useCreateLifePostingView } from './useCreateLifePostingView'
+import { useUpdateLifePostingView } from './useUpdateLifePostingView'
 
-export const CreateLifePostingView = () => {
-  const { data } = useCreateLifePostingView()
+export type UpdateLifePostingViewProps = {
+  id: number
+}
+
+export const UpdateLifePostingView = ({ id }: UpdateLifePostingViewProps) => {
+  const { data } = useUpdateLifePostingView(id)
+  if (!data) return <Fragment />
+
   const { breadcrumbModels, formProps } = data
 
   return (
     <PageTemplate
-      pageTitle={'라이프 글 작성'}
+      pageTitle={'라이프 글 수정'}
       subtitleModel={{
         label: (
           <Typography
