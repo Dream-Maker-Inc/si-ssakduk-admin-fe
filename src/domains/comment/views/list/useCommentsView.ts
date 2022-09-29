@@ -151,7 +151,10 @@ export const useCommentsView = () => {
     keywordState: {
       value: keyword,
       onChange: handleKeywordChange,
-      onSubmit: () => refetch(),
+      onSubmit: () => {
+        setSearchDialogOpen(false)
+        refetch()
+      },
     },
   }
 
