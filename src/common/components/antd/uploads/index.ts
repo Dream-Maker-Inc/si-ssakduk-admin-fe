@@ -1,2 +1,2 @@
-export * from './helper/AntdUploadFileManager'
+export * from './helper/AntdUploadFileHelper'
 export * from './local'

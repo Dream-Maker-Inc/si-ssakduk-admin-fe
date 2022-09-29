@@ -1,3 +1,7 @@
+import {
+  LocalUploadView,
+  LocalUploadViewProps,
+} from '@/common/components/antd/uploads'
 import { DataRow } from '@/common/components/DataRow'
 import { Colors } from '@/common/themes/Color'
 import { css } from '@emotion/react'
@@ -7,9 +11,7 @@ export type LifePostingFormProps = {
   titleTextFieldProps: TextFieldProps
   contentTextFieldProps: TextFieldProps
   sponsorLinkProps: TextFieldProps
-  attachmentsInputProps: {
-    onChange: (fileList: FileList | null) => void
-  }
+  attachmentsProps: LocalUploadViewProps
   cancelButtonProps: ButtonProps
   submitButtonProps: ButtonProps
 }
@@ -19,7 +21,7 @@ export const LifePostingForm = (p: LifePostingFormProps) => {
     titleTextFieldProps,
     contentTextFieldProps,
     sponsorLinkProps,
-    attachmentsInputProps,
+    attachmentsProps,
     cancelButtonProps,
     submitButtonProps,
   } = p
@@ -48,13 +50,7 @@ export const LifePostingForm = (p: LifePostingFormProps) => {
         />
         <DataRow
           title='파일 첨부 (최대 2개)'
-          content={
-            <input
-              type={'file'}
-              multiple
-              onChange={e => attachmentsInputProps.onChange(e.target.files)}
-            />
-          }
+          content={<LocalUploadView {...attachmentsProps} />}
         />
       </div>
 

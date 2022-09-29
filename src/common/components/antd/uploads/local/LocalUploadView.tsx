@@ -1,13 +1,15 @@
 import { Upload } from 'antd'
 import { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface'
+import React from 'react'
 
-type LocalUploadViewProps = {
+export type LocalUploadViewProps = {
   files: UploadFile[]
   onChange: (files: UploadFile[]) => void
   maxSize?: number
   multiple?: boolean
 }
-export const LocalUploadView = ({
+
+const _LocalUploadView = ({
   files,
   onChange,
   maxSize = 1,
@@ -46,3 +48,5 @@ export const LocalUploadView = ({
     </Upload>
   )
 }
+
+export const LocalUploadView = React.memo(_LocalUploadView)

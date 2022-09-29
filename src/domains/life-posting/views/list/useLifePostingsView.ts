@@ -8,6 +8,7 @@ import { SearchDialogProps } from '@/common/components/dialogs'
 import { useState } from 'react'
 import { CreateActionIconProps } from '@/common/components/icons'
 import { LifePostingDto, LifePostingsDto } from '../../data'
+import { BreadcrumbModel } from '@/common/components/TitleContainer'
 
 const PageSize = 10
 
@@ -108,10 +109,11 @@ export const useLifePostingsView = () => {
   }
 
   // breadcrumbs
-  const breadcrumbModels = [
+  const breadcrumbModels: BreadcrumbModel[] = [
     {
       displayName: '라이프 관리',
       path: RouterPath.LifePostings.path,
+      accent: true,
     },
   ]
 

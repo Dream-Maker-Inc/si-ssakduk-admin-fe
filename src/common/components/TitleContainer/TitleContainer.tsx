@@ -4,11 +4,11 @@ import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 
-type BreadcrumbModel = {
+export type BreadcrumbModel = {
   displayName: string
   path: string
+  accent?: boolean
 }
 
 type TitleContainerProps = {
@@ -28,8 +28,8 @@ export const TitleContainer = ({
       <Breadcrumbs
         separator={<NavigateNextRounded color='action' fontSize='small' />}
       >
-        {breadcrumbModels.map((model, key) => (
-          <Link key={key} href={model.path}>
+        {breadcrumbModels.map((model, index) => (
+          <Link key={index} href={model.path}>
             <div>
               <LinkTypo model={model} />
             </div>
@@ -41,14 +41,11 @@ export const TitleContainer = ({
 }
 
 const LinkTypo = ({ model }: { model: BreadcrumbModel }) => {
-  const router = useRouter()
-  const isEqualCurrentPath = (path: string) => router.asPath === path
-
   return (
     <Typography
       variant='caption'
-      fontWeight={isEqualCurrentPath(model.path) ? '600' : 'unset'}
-      color={isEqualCurrentPath(model.path) ? Colors.TextPrimary : 'unset'}
+      fontWeight={model.accent ? '600' : 'unset'}
+      color={model.accent ? Colors.TextPrimary : 'unset'}
       sx={{ cursor: 'pointer' }}
     >
       {model.displayName}

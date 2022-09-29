@@ -1,1 +1,1 @@
-export * from './AntdUploadFileManager'
+export * from './AntdUploadFileHelper'
