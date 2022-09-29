@@ -1,15 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { antdUploadFileHelper } from '@/common/components/antd/uploads'
+import { BreadcrumbModel } from '@/common/components/TitleContainer'
 import { RouterPath } from '@/common/router'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useMutation, useQuery } from 'react-query'
 import {
-  FormModel,
   LifePostingFormProps,
   useLifePostingForm,
 } from '../../components/life-posting-form'
-import { LifePostingApi, LifePostingDto } from '../../data'
-import { UpdateLifePostingDto } from '../../data/dto/update-life-posting.dto'
+import { LifePostingApi, UpdateLifePostingDto } from '../../data'
 
 export const useUpdateLifePostingView = (id: number) => {
   const router = useRouter()
@@ -28,14 +29,6 @@ export const useUpdateLifePostingView = (id: number) => {
     },
   )
 
-  const { data: attachments } = useQuery([lifePostingDto], () =>
-    lifePostingDto?.fetchAttachmentFiles(),
-  )
-
-  useEffect(() => {
-    refetch()
-  }, [id, refetch])
-
   const {
     title,
     handleTitleChange,
@@ -43,24 +36,19 @@ export const useUpdateLifePostingView = (id: number) => {
     handleContentChange,
     sponsorLink,
     handleSponsorLinkChange,
+    attachments,
     handleAttachmentsChange,
-    formModel,
-  } = useLifePostingForm({
-    defaultModel: {
-      title: lifePostingDto?.title ?? '',
-      content: lifePostingDto?.content ?? '',
-      sponsorLink: lifePostingDto?.link ?? '',
-      attachments: [],
-    },
-  })
+    formResult: formResult,
+    setFormDefault,
+  } = useLifePostingForm()
+
+  const isValidFormModel = title && content
 
   const { mutate } = useMutation(
-    ({ title, content, sponsorLink, attachments }: FormModel) =>
-      LifePostingApi.update(
-        new UpdateLifePostingDto(title, content, sponsorLink, attachments),
-      ),
+    ({ id, dto }: { id: number; dto: UpdateLifePostingDto }) =>
+      LifePostingApi.update(id, dto),
     {
-      onSuccess: res => {
+      onSuccess: () => {
         alert('라이프 등록에 성공 했습니다.')
         router.back()
       },
@@ -71,14 +59,44 @@ export const useUpdateLifePostingView = (id: number) => {
     },
   )
 
+  // effects
+  useEffect(() => {
+    refetch()
+  }, [id, refetch])
+
+  useEffect(() => {
+    if (!lifePostingDto) return
+
+    const { title, content, link, attachments: resourceUrls } = lifePostingDto
+    const attachments = antdUploadFileHelper.fromUrls(resourceUrls, 'image/png')
+
+    setFormDefault({
+      title,
+      content,
+      sponsorLink: link,
+      attachments,
+    })
+  }, [lifePostingDto])
+
   // null guard
   const result = { data: null }
   if (!lifePostingDto) return result
 
-  const isValidFormModel = title && content
+  // functions
+  const submitForm = () => {
+    const { title, content, sponsorLink, attachments } = formResult
+    const dto = new UpdateLifePostingDto(
+      title,
+      content,
+      sponsorLink,
+      attachments,
+    )
+
+    mutate({ id, dto })
+  }
 
   // breadcrumbs
-  const breadcrumbModels = [
+  const breadcrumbModels: BreadcrumbModel[] = [
     {
       displayName: '라이프 관리',
       path: RouterPath.LifePostings.path,
@@ -86,6 +104,7 @@ export const useUpdateLifePostingView = (id: number) => {
     {
       displayName: '라이프 수정',
       path: RouterPath.LifePostingUpdate.createPathWithId(`${id}`),
+      accent: true,
     },
   ]
 
@@ -105,13 +124,10 @@ export const useUpdateLifePostingView = (id: number) => {
       onChange: e => handleSponsorLinkChange(e.target.value),
       placeholder: '스폰서 링크를 입력해주세요.',
     },
-    attachmentsInputProps: {
-      onChange: (fileList: FileList | null) => {
-        const files = fileList && Array.from(fileList)
-        if (!files) return
-
-        handleAttachmentsChange(files)
-      },
+    attachmentsProps: {
+      files: attachments,
+      onChange: handleAttachmentsChange,
+      maxSize: 2,
     },
     cancelButtonProps: {
       onClick: () => router.back(),
@@ -119,7 +135,7 @@ export const useUpdateLifePostingView = (id: number) => {
     },
     submitButtonProps: {
       disabled: !isValidFormModel,
-      onClick: () => mutate(formModel),
+      onClick: submitForm,
       children: '등록',
     },
   }
@@ -129,18 +145,5 @@ export const useUpdateLifePostingView = (id: number) => {
       breadcrumbModels,
       formProps,
     },
-  }
-}
-
-//
-const mapToPosting = (dto: LifePostingDto) => {
-  return {
-    id: dto.id,
-    title: dto.title,
-    content: dto.content,
-    attachments: dto.attachments,
-    viewCount: dto.viewCount,
-    createdAt: dto.createdDate.toLocaleString(),
-    updatedAt: dto.updatedDate.toLocaleString(),
   }
 }

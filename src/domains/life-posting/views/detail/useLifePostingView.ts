@@ -6,6 +6,7 @@ import { useMutation, useQuery } from 'react-query'
 import { LifePostingDto } from '../../data'
 import { LifePostingApi } from './../../data/life-posting.api'
 import { AxiosError } from 'axios'
+import { BreadcrumbModel } from '@/common/components/TitleContainer'
 
 export const useLifePostingView = (id: number) => {
   const router = useRouter()
@@ -54,7 +55,7 @@ export const useLifePostingView = (id: number) => {
   const lifePosting = mapToPosting(lifePostingDto)
 
   // breadcrumbs
-  const breadcrumbModels = [
+  const breadcrumbModels: BreadcrumbModel[] = [
     {
       displayName: '라이프 관리',
       path: RouterPath.LifePostings.path,
@@ -62,6 +63,7 @@ export const useLifePostingView = (id: number) => {
     {
       displayName: '라이프 상세',
       path: RouterPath.LifePosting.createPathWithId(`${id}`),
+      accent: true,
     },
   ]
 

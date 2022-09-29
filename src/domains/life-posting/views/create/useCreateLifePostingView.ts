@@ -1,9 +1,9 @@
+import { BreadcrumbModel } from '@/common/components/TitleContainer'
 import { RouterPath } from '@/common/router'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useMutation } from 'react-query'
 import {
-  FormModel,
   LifePostingFormProps,
   useLifePostingForm,
 } from '../../components/life-posting-form'
@@ -19,17 +19,15 @@ export const useCreateLifePostingView = () => {
     handleContentChange,
     sponsorLink,
     handleSponsorLinkChange,
+    attachments,
     handleAttachmentsChange,
-    formModel,
+    formResult: result,
   } = useLifePostingForm()
 
   const { mutate } = useMutation(
-    ({ title, content, sponsorLink, attachments }: FormModel) =>
-      LifePostingApi.create(
-        new CreateLifePostingDto(title, content, sponsorLink, attachments),
-      ),
+    (dto: CreateLifePostingDto) => LifePostingApi.create(dto),
     {
-      onSuccess: res => {
+      onSuccess: () => {
         alert('라이프 등록에 성공 했습니다.')
         router.back()
       },
@@ -42,8 +40,20 @@ export const useCreateLifePostingView = () => {
 
   const isValidFormModel = title && content
 
+  // functions
+  const submitForm = () => {
+    const { title, content, sponsorLink, attachments } = result
+    const dto = new CreateLifePostingDto(
+      title,
+      content,
+      sponsorLink,
+      attachments,
+    )
+    mutate(dto)
+  }
+
   // breadcrumbs
-  const breadcrumbModels = [
+  const breadcrumbModels: BreadcrumbModel[] = [
     {
       displayName: '라이프 관리',
       path: RouterPath.LifePostings.path,
@@ -51,6 +61,7 @@ export const useCreateLifePostingView = () => {
     {
       displayName: '라이프 작성',
       path: RouterPath.LifePostingCreate.path,
+      accent: true,
     },
   ]
 
@@ -70,13 +81,10 @@ export const useCreateLifePostingView = () => {
       onChange: e => handleSponsorLinkChange(e.target.value),
       placeholder: '스폰서 링크를 입력해주세요.',
     },
-    attachmentsInputProps: {
-      onChange: (fileList: FileList | null) => {
-        const files = fileList && Array.from(fileList)
-        if (!files) return
-
-        handleAttachmentsChange(files)
-      },
+    attachmentsProps: {
+      files: attachments,
+      onChange: handleAttachmentsChange,
+      maxSize: 2,
     },
     cancelButtonProps: {
       onClick: () => router.back(),
@@ -84,7 +92,7 @@ export const useCreateLifePostingView = () => {
     },
     submitButtonProps: {
       disabled: !isValidFormModel,
-      onClick: () => mutate(formModel),
+      onClick: submitForm,
       children: '등록',
     },
   }

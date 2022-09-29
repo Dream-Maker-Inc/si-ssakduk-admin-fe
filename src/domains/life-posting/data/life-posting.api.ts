@@ -37,10 +37,10 @@ export class LifePostingApi {
     )
   }
 
-  static async update(dto: UpdateLifePostingDto) {
+  static async update(id: number, dto: UpdateLifePostingDto) {
     return lastValueFrom(
       from(
-        BaseServerClient.patch('/api/v1/life-posting', dto.toFormData()),
+        BaseServerClient.patch(`/api/v1/life-posting/${id}`, dto.toFormData()),
       ).pipe(map(res => res.data)),
     )
   }
