@@ -120,6 +120,7 @@ export const useUpdateTermsView = (id: number) => {
     submitButtonProps: {
       disabled: !isValidFormModel,
       onClick: submitForm,
+      children: '등록',
     },
   }
 

@@ -18,8 +18,7 @@ export const useServiceTermsView = () => {
   const [pageNumber, setPageNumber] = useState(1)
   const [searchDialogOpen, setSearchDialogOpen] = useState(false)
 
-  const { keyword, withDeleted, handleKeywordChange, handleWithDeletedChange } =
-    useServiceTermsSearchState()
+  const { keyword, handleKeywordChange } = useServiceTermsSearchState()
 
   // fetch
   const { data: serviceTermsDto, refetch } = useQuery(
@@ -29,7 +28,7 @@ export const useServiceTermsView = () => {
         page: pageNumber,
         size: PageSize,
         keyword,
-        withDeleted,
+        withDeleted: false,
       }),
   )
 
@@ -87,7 +86,7 @@ export const useServiceTermsView = () => {
         ]) ?? [],
     },
     onDataRowClick: (id: number) => {
-      // router.push(RouterPath.Posting.createPathWithId(`${id}`))
+      router.push(RouterPath.ServiceTerm.createPathWithId(`${id}`))
     },
   }
 
@@ -95,18 +94,7 @@ export const useServiceTermsView = () => {
   const searchDialogProps: SearchDialogProps = {
     open: searchDialogOpen,
     onClose: () => setSearchDialogOpen(false),
-    filterModel: {
-      options: {
-        checkBoxes: [
-          {
-            checked: withDeleted,
-            onChange: handleWithDeletedChange,
-            label: '삭제 포함',
-            tooltip: '삭제된 데이터를 포함하여 검색',
-          },
-        ],
-      },
-    },
+    filterModel: {},
     keywordState: {
       value: keyword,
       onChange: handleKeywordChange,
