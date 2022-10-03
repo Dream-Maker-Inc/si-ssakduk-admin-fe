@@ -18,6 +18,7 @@ export const RouterPath = {
 
   ServiceTerms: new Router('/service-terms'),
   ServiceTerm: new Router('/service-terms/detail'),
+  ServiceTermCreate: new Router('/service-terms/create'),
   ServiceTermUpdate: new Router('/service-terms/update'),
   ServiceTermDelete: new Router('/service-terms/delete'),
 

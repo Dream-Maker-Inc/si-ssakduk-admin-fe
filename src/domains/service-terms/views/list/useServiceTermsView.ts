@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { DataTableProps } from '@/common/components/DataTable'
 import { SearchDialogProps } from '@/common/components/dialogs'
 import { CreateActionIconProps } from '@/common/components/icons'
@@ -12,6 +13,8 @@ import { ServiceTermsApi } from './../../data/service-terms.api'
 const PageSize = 10
 
 export const useServiceTermsView = () => {
+  const router = useRouter()
+
   const [pageNumber, setPageNumber] = useState(1)
   const [searchDialogOpen, setSearchDialogOpen] = useState(false)
 
@@ -119,7 +122,7 @@ export const useServiceTermsView = () => {
     tooltip: '글 작성',
     iconButtonProps: {
       onClick: () => {
-        // router.push(RouterPath.LifePostingCreate.path)
+        router.push(RouterPath.ServiceTermCreate.path)
       },
     },
   }
