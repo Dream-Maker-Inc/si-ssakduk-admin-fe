@@ -8,6 +8,7 @@ import { useRecoilState } from 'recoil'
 import { postingsSearchAtom } from '@/common/recoil'
 import { PostingCategories } from '../../models'
 import { PostingDto, PostingsApi, PostingsDto } from '../../data'
+import { BreadcrumbModel } from '@/common/components/TitleContainer'
 
 const PageSize = 10
 
@@ -152,10 +153,11 @@ export const usePostingsView = () => {
   }
 
   // breadcrumbs
-  const breadcrumbModels = [
+  const breadcrumbModels: BreadcrumbModel[] = [
     {
       displayName: '게시글 관리',
       path: RouterPath.Postings.path,
+      accent: true,
     },
   ]
 
