@@ -3,23 +3,21 @@ import { BlindDialogActionIcon } from '@/common/components/dialogs/BlindDialog'
 import { ContentContainer } from '@/common/ContentContainer'
 import { PageTemplate } from '@/common/templates'
 import { Colors } from '@/common/themes/Color'
-import { css } from '@emotion/react'
 import { DeleteForeverRounded, EditRounded } from '@mui/icons-material'
-import { Card, IconButton, Stack, Tooltip, Typography } from '@mui/material'
-import Image from 'next/image'
+import { IconButton, Stack, Tooltip, Typography } from '@mui/material'
 import { Fragment } from 'react'
-import { useLifePostingView } from './useLifePostingView'
+import { useServiceTermView } from './useServiceTermView'
 
-type LifePostingViewProps = {
-  id: string
+type ServiceTermView = {
+  id: number
 }
 
-export const LifePostingView = ({ id }: LifePostingViewProps) => {
-  const { data } = useLifePostingView(+id)
+export const ServiceTermView = ({ id }: ServiceTermView) => {
+  const { data } = useServiceTermView(id)
   if (!data) return <Fragment />
 
   const {
-    lifePosting,
+    term,
     breadcrumbModels,
     blindDialogActionIconProps,
     handleEditClick,
@@ -27,7 +25,7 @@ export const LifePostingView = ({ id }: LifePostingViewProps) => {
 
   return (
     <PageTemplate
-      pageTitle='라이프 상세'
+      pageTitle='이용약관 상세'
       subtitleModel={{
         label: (
           <Typography
@@ -61,59 +59,39 @@ export const LifePostingView = ({ id }: LifePostingViewProps) => {
           <Stack width={'100%'}>
             <DataRow
               title={'게시글 번호'}
-              content={lifePosting.id}
+              content={<Typography>{term.id}</Typography>}
               isBottomBorder
             />
-            <DataRow title='제목' content={lifePosting.title} isBottomBorder />
+            <DataRow
+              title='제목'
+              content={<Typography>{term.title}</Typography>}
+              isBottomBorder
+            />
           </Stack>
 
           <Stack width={'100%'}>
             <DataRow
               title='등록 일자'
-              content={lifePosting.createdAt}
+              content={<Typography>{term.createdAt}</Typography>}
               isBottomBorder
             />
             <DataRow
               title='최종 수정 일자'
-              content={lifePosting.updatedAt}
+              content={<Typography>{term.updatedAt}</Typography>}
               isBottomBorder
             />
           </Stack>
         </Stack>
 
-        <Stack>
-          <DataRow
-            title='조회 수'
-            content={lifePosting.viewCount}
-            isBottomBorder
-          />
-
+        <Stack width={'100%'}>
           <DataRow
             title='내용'
-            content={<Typography>{lifePosting.content}</Typography>}
+            content={<Typography>{term.content}</Typography>}
             isBottomBorder
           />
-
           <DataRow
-            title='첨부 파일'
-            content={
-              <Stack direction={'row'} gap={'16px'}>
-                {lifePosting.attachments?.map(it => (
-                  <Card
-                    key={it}
-                    css={css`
-                      position: relative;
-                      width: 80px;
-                      aspect-ratio: 1;
-                      border-radius: 4px;
-                      overflow: hidden;
-                    `}
-                  >
-                    <Image src={it} alt={'첨부 파일'} layout={'fill'} />
-                  </Card>
-                ))}
-              </Stack>
-            }
+            title='필수 여부'
+            content={<Typography>{term.isRequiredText}</Typography>}
             isBottomBorder
           />
         </Stack>
