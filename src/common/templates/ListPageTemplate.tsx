@@ -4,7 +4,7 @@ import { ReactNode } from 'react'
 import { DataTable, DataTableProps } from '../components/DataTable'
 import { PageTemplate } from './PageTemplate'
 
-export type ListPageTemplateProps2 = {
+export type ListPageTemplateProps = {
   pageTitle: string
   subtitleModel: {
     label: ReactNode
@@ -22,7 +22,7 @@ export type ListPageTemplateProps2 = {
   }
 }
 
-export const ListPageTemplate2 = (props: ListPageTemplateProps2) => {
+export const ListPageTemplate = (props: ListPageTemplateProps) => {
   const {
     pageTitle,
     subtitleModel,

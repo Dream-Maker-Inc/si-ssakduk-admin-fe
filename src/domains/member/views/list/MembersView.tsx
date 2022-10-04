@@ -1,4 +1,4 @@
-import { ListPageTemplate2 } from '@/common/templates'
+import { ListPageTemplate } from '@/common/templates'
 import { useMembersView } from './useMembersView'
 import React, { Fragment } from 'react'
 import { SearchDialog } from '@/common/components/dialogs'
@@ -22,7 +22,7 @@ export const MembersView = () => {
 
   return (
     <>
-      <ListPageTemplate2
+      <ListPageTemplate
         pageTitle='회원 관리'
         subtitleModel={{
           label: (

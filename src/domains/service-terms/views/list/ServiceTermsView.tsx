@@ -1,6 +1,6 @@
 import { useServiceTermsView } from './useServiceTermsView'
 import { Fragment } from 'react'
-import { ListPageTemplate2 } from '@/common/templates'
+import { ListPageTemplate } from '@/common/templates'
 import { SearchDialogWithIcon } from '@/common/components/dialogs'
 import { Stack, Typography } from '@mui/material'
 import { Colors } from '@/common/themes/Color'
@@ -20,7 +20,7 @@ export const ServiceTermsView = () => {
   } = data
 
   return (
-    <ListPageTemplate2
+    <ListPageTemplate
       pageTitle='이용약관 관리'
       subtitleModel={{
         label: (
