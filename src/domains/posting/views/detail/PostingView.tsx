@@ -45,20 +45,26 @@ export const PostingView = ({ id }: PostingViewProps) => {
           <Stack width={'100%'}>
             <DataRow
               title={'게시글 번호'}
-              content={posting.id}
+              content={<Typography>{posting.id}</Typography>}
               isBottomBorder
             />
-            <DataRow title='제목' content={posting.title} isBottomBorder />
+            <DataRow
+              title='제목'
+              content={<Typography>{posting.title}</Typography>}
+              isBottomBorder
+            />
             <DataRow
               title='카테고리'
-              content={posting.category}
+              content={<Typography>{posting.category}</Typography>}
               isBottomBorder
             />
             <DataRow
               title={'작성자 닉네임'}
               content={
                 <Link href={RouterPath.Member.createPathWithId(`${author.id}`)}>
-                  <div css={st.anchor}>{author.name}</div>
+                  <div css={st.anchor}>
+                    <Typography>{author.name}</Typography>
+                  </div>
                 </Link>
               }
               isBottomBorder
@@ -68,7 +74,7 @@ export const PostingView = ({ id }: PostingViewProps) => {
           <Stack width={'100%'}>
             <DataRow
               title='좋아요 수'
-              content={posting.likedCount}
+              content={<Typography>{posting.likedCount}</Typography>}
               isBottomBorder
             />
             <DataRow
@@ -77,26 +83,32 @@ export const PostingView = ({ id }: PostingViewProps) => {
                 <Link
                   href={`${RouterPath.Comments.path}?filter=postingId&postingId=${posting.id}`}
                 >
-                  <div css={st.anchor}>{posting.commentCount}</div>
+                  <div css={st.anchor}>
+                    <Typography>{posting.commentCount}</Typography>
+                  </div>
                 </Link>
               }
               isBottomBorder
             />
             <DataRow
               title='등록 일자'
-              content={posting.createdAt}
+              content={<Typography>{posting.createdAt}</Typography>}
               isBottomBorder
             />
             <DataRow
               title='최종 수정 일자'
-              content={posting.updatedAt}
+              content={<Typography>{posting.updatedAt}</Typography>}
               isBottomBorder
             />
           </Stack>
         </Stack>
 
         <Stack>
-          <DataRow title='조회 수' content={posting.viewCount} isBottomBorder />
+          <DataRow
+            title='조회 수'
+            content={<Typography>{posting.viewCount}</Typography>}
+            isBottomBorder
+          />
 
           <DataRow
             title='내용'

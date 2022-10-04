@@ -57,19 +57,27 @@ export const MemberDetailView = ({ id }: MemberDetailViewProps) => {
             <section css={st.dataContainer}>
               <DataRow
                 title='회원 번호'
-                content={`${member.id}`}
+                content={<Typography>{`${member.id}`}</Typography>}
                 isBottomBorder
               />
-              <DataRow title='이름' content={member.name} isBottomBorder />
-              <DataRow title='이메일' content={member.email} isBottomBorder />
+              <DataRow
+                title='이름'
+                content={<Typography>{member.name}</Typography>}
+                isBottomBorder
+              />
+              <DataRow
+                title='이메일'
+                content={<Typography>{member.email}</Typography>}
+                isBottomBorder
+              />
               <DataRow
                 title='휴대폰 번호'
-                content={member.phone}
+                content={<Typography>{member.phone}</Typography>}
                 isBottomBorder
               />
               <DataRow
                 title='가입일자'
-                content={member.createdAt}
+                content={<Typography>{member.createdAt}</Typography>}
                 isBottomBorder
               />
               <DataRow
@@ -77,7 +85,10 @@ export const MemberDetailView = ({ id }: MemberDetailViewProps) => {
                 content={<Typography>{member.blockedText}</Typography>}
                 isBottomBorder
               />
-              <DataRow title='회원 탈퇴 여부' content={member.leavedText} />
+              <DataRow
+                title='회원 탈퇴 여부'
+                content={<Typography>{member.leavedText}</Typography>}
+              />
             </section>
           </div>
         </ContentContainer>
