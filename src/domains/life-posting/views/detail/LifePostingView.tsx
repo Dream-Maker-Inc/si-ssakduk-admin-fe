@@ -61,21 +61,25 @@ export const LifePostingView = ({ id }: LifePostingViewProps) => {
           <Stack width={'100%'}>
             <DataRow
               title={'게시글 번호'}
-              content={lifePosting.id}
+              content={<Typography>{lifePosting.id}</Typography>}
               isBottomBorder
             />
-            <DataRow title='제목' content={lifePosting.title} isBottomBorder />
+            <DataRow
+              title='제목'
+              content={<Typography>{lifePosting.title}</Typography>}
+              isBottomBorder
+            />
           </Stack>
 
           <Stack width={'100%'}>
             <DataRow
               title='등록 일자'
-              content={lifePosting.createdAt}
+              content={<Typography>{lifePosting.createdAt}</Typography>}
               isBottomBorder
             />
             <DataRow
               title='최종 수정 일자'
-              content={lifePosting.updatedAt}
+              content={<Typography>{lifePosting.updatedAt}</Typography>}
               isBottomBorder
             />
           </Stack>
@@ -84,7 +88,7 @@ export const LifePostingView = ({ id }: LifePostingViewProps) => {
         <Stack>
           <DataRow
             title='조회 수'
-            content={lifePosting.viewCount}
+            content={<Typography>{lifePosting.viewCount}</Typography>}
             isBottomBorder
           />
 
