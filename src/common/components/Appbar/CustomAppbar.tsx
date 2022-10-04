@@ -15,9 +15,9 @@ import Stack from '@mui/material/Stack'
 import Link from 'next/link'
 import { RouterPath } from '@/common/router'
 import logo from '@/logo.svg'
-import { useUserAuthentication } from '@/common/recoil'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { useUserAuthentication } from '@/common/recoil'
 
 export interface CustomAppbarProps {
   appbarProps?: AppBarProps
@@ -32,7 +32,7 @@ export const CustomAppbar = ({
     <AppBar position='static' {...appbarProps}>
       <Toolbar {...toolbarProps} disableGutters css={style.root}>
         <Stack direction='row' alignItems='center'>
-          <Link href={RouterPath.Root.path}>
+          <Link href={RouterPath.Main.path}>
             <div css={style.logoWrapper}>
               <Image src={logo} alt={'싹둑'} layout={'fill'} />
             </div>
