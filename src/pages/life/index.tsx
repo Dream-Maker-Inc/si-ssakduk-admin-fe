@@ -1,7 +1,8 @@
+import { withAuth } from '@/common/router'
 import { LifePostingsView } from '@/domains/life-posting'
 
-const Life = () => {
+const LifePage = () => {
   return <LifePostingsView />
 }
 
-export default Life
+export default withAuth(LifePage)

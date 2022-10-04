@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography'
 
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
-import { RouterPath } from '@/common/router'
+import { RouterPath, withAuth } from '@/common/router'
 
 const MainPage = () => {
   const breadcrumbModels = [
@@ -67,4 +67,4 @@ const style = {
   `,
 }
 
-export default MainPage
+export default withAuth(MainPage)

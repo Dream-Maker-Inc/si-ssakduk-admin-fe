@@ -32,6 +32,8 @@ export const RouterPath = {
   LifePostingCreate: new Router('/life/create'),
   LifePostingUpdate: new Router('/life/update'),
   LifePostingDelete: new Router('/life/delete'),
+
+  Login: new Router('/login'),
 }
 
 export type RouterPathType = typeof RouterPath[keyof typeof RouterPath]
