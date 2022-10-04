@@ -1,3 +1,4 @@
+import { withAuth } from '@/common/router'
 import { UpdateLifePostingView } from '@/domains/life-posting'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
@@ -10,4 +11,4 @@ const CreateLifePostingPage = () => {
   return <UpdateLifePostingView id={+id} />
 }
 
-export default CreateLifePostingPage
+export default withAuth(CreateLifePostingPage)

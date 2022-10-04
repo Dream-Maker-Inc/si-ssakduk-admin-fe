@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField'
 
 import { TitleContainer } from '@/common/components/TitleContainer'
 import { ContentContainer } from '@/common/ContentContainer'
-import { RouterPath } from '@/common/router'
+import { RouterPath, withAuth } from '@/common/router'
 import { css } from '@emotion/react'
 
 const MainUpdatePage = () => {
@@ -87,4 +87,4 @@ const style = {
   `,
 }
 
-export default MainUpdatePage
+export default withAuth(MainUpdatePage)
