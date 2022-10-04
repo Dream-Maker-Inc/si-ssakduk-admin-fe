@@ -1,6 +1,6 @@
 import { SearchDialogWithIcon } from '@/common/components/dialogs'
 import { CreateActionIcon } from '@/common/components/icons'
-import { ListPageTemplate2 } from '@/common/templates'
+import { ListPageTemplate } from '@/common/templates'
 import { Colors } from '@/common/themes/Color'
 import { Stack, Typography } from '@mui/material'
 import { Fragment } from 'react'
@@ -20,7 +20,7 @@ export const LifePostingsView = () => {
   } = data
 
   return (
-    <ListPageTemplate2
+    <ListPageTemplate
       pageTitle='라이프 관리'
       subtitleModel={{
         label: (

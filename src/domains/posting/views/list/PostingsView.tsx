@@ -1,5 +1,5 @@
 import { SearchDialogWithIcon } from '@/common/components/dialogs'
-import { ListPageTemplate2 } from '@/common/templates'
+import { ListPageTemplate } from '@/common/templates'
 import { Colors } from '@/common/themes/Color'
 import { Typography } from '@mui/material'
 import { Fragment } from 'react'
@@ -18,7 +18,7 @@ export const PostingsView = () => {
   } = data
 
   return (
-    <ListPageTemplate2
+    <ListPageTemplate
       pageTitle='게시글 관리'
       subtitleModel={{
         label: (
