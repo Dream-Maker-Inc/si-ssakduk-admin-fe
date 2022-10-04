@@ -1,16 +1,32 @@
-import { atom } from 'recoil'
+import { atom, useRecoilState } from 'recoil'
 import { recoilPersist } from 'recoil-persist'
+
+type User = {
+  accessToken: string
+}
 
 const sessionStorage =
   typeof window !== 'undefined' ? window.sessionStorage : undefined
 
 const { persistAtom } = recoilPersist({
-  key: 'accessToken',
+  key: 'user',
   storage: sessionStorage,
 })
 
-export const userAtom = atom({
+const userAtom = atom<User>({
   key: 'user',
   default: { accessToken: '' },
   effects_UNSTABLE: [persistAtom],
 })
+
+export const useUserAuthentication = () => {
+  const [user, setUser] = useRecoilState(userAtom)
+
+  const removeUser = () => sessionStorage?.removeItem('user')
+
+  return {
+    user,
+    setUser,
+    removeUser,
+  }
+}

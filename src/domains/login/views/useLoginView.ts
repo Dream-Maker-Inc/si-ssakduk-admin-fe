@@ -1,11 +1,10 @@
-import { useRouter } from 'next/router'
-import { AxiosError } from 'axios'
-import { useMutation } from 'react-query'
-import { useState } from 'react'
-import { LoginApi, RequestLoginDto } from '../data'
-import { useRecoilState } from 'recoil'
-import { userAtom } from '@/common/recoil'
+import { useUserAuthentication } from '@/common/recoil'
 import { RouterPath } from '@/common/router'
+import { AxiosError } from 'axios'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { useMutation } from 'react-query'
+import { LoginApi, RequestLoginDto } from '../data'
 export const useLoginView = () => {
   const router = useRouter()
 
@@ -23,7 +22,7 @@ export const useLoginView = () => {
     },
   )
 
-  const [_, setUser] = useRecoilState(userAtom)
+  const { setUser } = useUserAuthentication()
 
   const handleLoginSuccess = (accessToken: string) => {
     setUser({ accessToken })

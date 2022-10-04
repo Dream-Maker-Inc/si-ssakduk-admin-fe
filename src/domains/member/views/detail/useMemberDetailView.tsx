@@ -1,3 +1,4 @@
+import { BreadcrumbModel } from '@/common/components/TitleContainer'
 import { RouterPath } from '@/common/router'
 import { MemberDto } from '@/domains/member/data/dto/member.dto'
 import { useState } from 'react'
@@ -31,7 +32,7 @@ export const useMemberDetailView = (id: string) => {
   const member = mapToMember(memberDto)
 
   const { Members, Member } = RouterPath
-  const breadcrumbModels = [
+  const breadcrumbModels: BreadcrumbModel[] = [
     {
       displayName: '회원 관리',
       path: Members.path,
@@ -39,6 +40,7 @@ export const useMemberDetailView = (id: string) => {
     {
       displayName: '회원 상세',
       path: Member.createPathWithId(`${id}`),
+      accent: true,
     },
   ]
 

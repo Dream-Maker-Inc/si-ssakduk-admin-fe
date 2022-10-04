@@ -20,6 +20,7 @@ import { useEffect, useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
 import { CommentsApi, CommentsDto } from '../../data'
 import _ from 'lodash'
+import { BreadcrumbModel } from '@/common/components/TitleContainer'
 
 const PageSize = 5
 
@@ -208,10 +209,11 @@ export const useCommentsView = () => {
   }
 
   // breadcrumbs
-  const breadcrumbModels = [
+  const breadcrumbModels: BreadcrumbModel[] = [
     {
       displayName: '댓글 관리',
       path: RouterPath.Comments.path,
+      accent: true,
     },
   ]
 

@@ -1,4 +1,5 @@
 import { BlindDialogActionIconProps } from '@/common/components/dialogs/BlindDialog'
+import { BreadcrumbModel } from '@/common/components/TitleContainer'
 import { RouterPath } from '@/common/router'
 import { BlindModel } from '@/data/common'
 import { useState } from 'react'
@@ -39,7 +40,7 @@ export const usePostingView = (id: string) => {
   const posting = mapToPosting(postingDto)
 
   // breadcrumbs
-  const breadcrumbModels = [
+  const breadcrumbModels: BreadcrumbModel[] = [
     {
       displayName: '게시글 관리',
       path: RouterPath.Postings.path,
@@ -47,6 +48,7 @@ export const usePostingView = (id: string) => {
     {
       displayName: '게시글 상세',
       path: RouterPath.Posting.createPathWithId(id),
+      accent: true,
     },
   ]
 

@@ -1,5 +1,6 @@
 import { DataTableProps } from '@/common/components/DataTable'
 import { SearchDialogProps } from '@/common/components/dialogs'
+import { BreadcrumbModel } from '@/common/components/TitleContainer'
 import { membersSearchAtom } from '@/common/recoil'
 import { RouterPath } from '@/common/router'
 import { useRouter } from 'next/router'
@@ -140,10 +141,11 @@ export const useMembersView = () => {
   const handleChangePageNumber = (page: number) => setPageNumber(page)
 
   // breadcrumbs
-  const breadcrumbModels = [
+  const breadcrumbModels: BreadcrumbModel[] = [
     {
       displayName: '회원 관리',
       path: RouterPath.Members.path,
+      accent: true,
     },
   ]
 

@@ -1,5 +1,6 @@
 import { NextComponentType, NextPageContext } from 'next'
 import { useRouter } from 'next/router'
+import { useUserAuthentication } from '../recoil'
 import { RouterPath } from './router.path'
 
 export const withAuth = (
@@ -9,7 +10,7 @@ export const withAuth = (
     const router = useRouter()
 
     if (typeof window !== 'undefined') {
-      const accessToken = sessionStorage.getItem('accessToken')
+      const accessToken = sessionStorage.getItem('user')
 
       // If there is no access token we redirect to "/" page.
       if (!accessToken) {
