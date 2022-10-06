@@ -1,3 +1,4 @@
+import { findCommentFilter } from './../../models/comment.filter'
 /* eslint-disable react-hooks/exhaustive-deps */
 import { CommentInfoBoxProps } from '@/common/components/CommentInfoBox/CommentInfoBox'
 import { SearchDialogProps } from '@/common/components/dialogs'
@@ -6,40 +7,34 @@ import {
   blindDialogDefaultProps,
   BlindDialogProps,
 } from '@/common/components/dialogs/BlindDialog/BlindDialog'
-import { useCommentsSearchState } from '@/common/recoil'
+import { BreadcrumbModel } from '@/common/components/TitleContainer'
 import { RouterPath } from '@/common/router'
 import { BlindModel } from '@/data/common'
-import {
-  CommentFilters,
-  CommentFiltersType,
-  findCommentFilter,
-  findCommentFilterByValue,
-} from '@/domains/comment'
+import { CommentFilters, CommentFiltersType } from '@/domains/comment'
+import _ from 'lodash'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
 import { CommentsApi, CommentsDto } from '../../data'
-import _ from 'lodash'
-import { BreadcrumbModel } from '@/common/components/TitleContainer'
 
 const PageSize = 5
 
 export const useCommentsView = () => {
   const router = useRouter()
-  const { filter: queryFilter, postingId } = router.query
 
   const [pageNumber, setPageNumber] = useState(1)
   const [searchDialogOpen, setSearchDialogOpen] = useState(false)
 
   const {
-    filter,
-    keyword,
-    withBlind,
+    queryBuffer,
+    query,
     handleKeywordChange,
     handleFilterChange,
     handleWithBlindChange,
-    handleFilterAndKeywordChange,
-  } = useCommentsSearchState()
+  } = useCommentsQuery()
+
+  const { filter, withBlind, keyword } = queryBuffer
+  const filterModel = findCommentFilter(filter) ?? CommentFilters.Content
 
   const {
     blindDialogOpen,
@@ -51,13 +46,15 @@ export const useCommentsView = () => {
 
   const [targetCommentId, setTargetCommentId] = useState(0)
 
-  const getFilterKeyword = (targetFilter: CommentFiltersType) =>
-    filter === targetFilter ? keyword : ''
-
   const { data: commentsDto, refetch } = useQuery(
-    ['comments', pageNumber],
-    () =>
-      CommentsApi.findAll({
+    ['comments', pageNumber, query],
+    () => {
+      const { withBlind, filter, keyword } = query
+
+      const getFilterKeyword = (targetFilter: CommentFiltersType) =>
+        filter === targetFilter.label ? keyword : ''
+
+      return CommentsApi.findAll({
         page: pageNumber,
         size: PageSize,
         keyword: getFilterKeyword(CommentFilters.Content),
@@ -65,7 +62,8 @@ export const useCommentsView = () => {
         authorId: getFilterKeyword(CommentFilters.AuthorId),
         withBlind: withBlind,
         withDeleted: withBlind,
-      }),
+      })
+    },
   )
 
   const { mutate: mutateBlindComment } = useMutation(
@@ -84,16 +82,6 @@ export const useCommentsView = () => {
       },
     },
   )
-
-  // init
-  useEffect(() => {
-    const filter = findCommentFilterByValue(`${queryFilter}`)
-
-    if (postingId && filter) {
-      handleFilterAndKeywordChange(filter, `${postingId}`)
-      refetch()
-    }
-  }, [queryFilter, postingId])
 
   // null guard
   const result = { data: null }
@@ -129,11 +117,8 @@ export const useCommentsView = () => {
     filterModel: {
       selectors: [
         {
-          value: filter.label,
-          onChange: (v: string) => {
-            const filter = findCommentFilter(v)
-            filter && handleFilterChange(filter)
-          },
+          value: filterModel.label,
+          onChange: handleFilterChange,
           items: Object.values(CommentFilters).map(it => it.label),
           title: '검색 대상',
         },
@@ -154,7 +139,7 @@ export const useCommentsView = () => {
       onChange: handleKeywordChange,
       onSubmit: () => {
         setSearchDialogOpen(false)
-        refetch()
+        router.push(`${router.pathname}`, { query: { ...queryBuffer } })
       },
     },
   }
@@ -226,6 +211,63 @@ export const useCommentsView = () => {
       breadcrumbModels,
       paginationState,
     },
+  }
+}
+
+//
+const useCommentsQuery = () => {
+  const router = useRouter()
+
+  const [queryBuffer, setQueryBuffer] = useState({
+    postingId: 0,
+    filter: '',
+    keyword: '',
+    withBlind: false,
+  })
+
+  const [query, setQuery] = useState({
+    postingId: 0,
+    filter: '',
+    keyword: '',
+    withBlind: false,
+  })
+
+  const handleFilterChange = (v: string) => {
+    setQueryBuffer({ ...queryBuffer, filter: v })
+  }
+  const handleKeywordChange = (v: string) =>
+    setQueryBuffer({ ...queryBuffer, keyword: v })
+  const handleWithBlindChange = (checked: boolean) =>
+    setQueryBuffer({ ...queryBuffer, withBlind: checked })
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const postingId = params.get('postingId') ?? 0
+    const keyword = params.get('keyword') ?? ''
+    const filter = params.get('filter') ?? ''
+    const withBlind: boolean = JSON.parse(params.get('withBlind') ?? 'false')
+
+    setQueryBuffer({
+      postingId: +postingId,
+      keyword,
+      filter,
+      withBlind,
+    })
+
+    setQuery({
+      postingId: +postingId,
+      keyword,
+      filter,
+      withBlind,
+    })
+  }, [router.asPath])
+
+  return {
+    queryBuffer,
+    query,
+    handleKeywordChange,
+    handleFilterChange,
+    handleWithBlindChange,
   }
 }
 
