@@ -4,7 +4,7 @@ import { BreadcrumbModel } from '@/common/components/TitleContainer'
 import { membersSearchAtom } from '@/common/recoil'
 import { RouterPath } from '@/common/router'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { useRecoilState } from 'recoil'
 import { MemberDto, MembersApi, MembersDto } from '../../data'
@@ -17,19 +17,16 @@ export const useMembersView = () => {
   const [pageNumber, setPageNumber] = useState(1)
   const [searchDialogOpen, setSearchDialogOpen] = useState(false)
 
-  const [membersSearchState, setMembersSearchState] =
-    useRecoilState(membersSearchAtom)
-  const { keyword, mode } = membersSearchState
-
-  const handleKeywordChange = (v: string) =>
-    setMembersSearchState({ ...membersSearchState, keyword: v })
-  const handleSearchModeChange = (value: string) =>
-    setMembersSearchState({ ...membersSearchState, mode: value })
+  const { queryBuffer, query, handleKeywordChange, handleSearchModeChange } =
+    useMembersQuery()
+  const { mode, keyword } = queryBuffer
 
   // fetch members
-  const { data: membersDto, refetch } = useQuery(
-    ['members', pageNumber],
+  const { data: membersDto } = useQuery(
+    ['members', pageNumber, query],
     () => {
+      const { mode, keyword } = query
+
       if (mode === '활동 유저')
         return MembersApi.findAll({
           page: pageNumber,
@@ -49,10 +46,11 @@ export const useMembersView = () => {
     },
   )
 
+  // guard
   const result = { data: null }
   if (!membersDto) return result
 
-  //
+  // mapping
   const { members, metaData } = mapToMembers(membersDto)
 
   // table
@@ -132,7 +130,10 @@ export const useMembersView = () => {
     keywordState: {
       value: keyword,
       onChange: handleKeywordChange,
-      onSubmit: () => refetch(),
+      onSubmit: () => {
+        setSearchDialogOpen(false)
+        router.push(`${router.pathname}`, { query: { ...queryBuffer } })
+      },
     },
   }
 
@@ -161,6 +162,50 @@ export const useMembersView = () => {
       searchDialogProps,
       openSearchDialog: () => setSearchDialogOpen(true),
     },
+  }
+}
+
+//
+const useMembersQuery = () => {
+  const router = useRouter()
+
+  const [queryBuffer, setQueryBuffer] = useState({
+    keyword: '',
+    mode: '활동 유저',
+  })
+
+  const [query, setQuery] = useState({
+    keyword: '',
+    mode: '활동 유저',
+  })
+
+  const handleKeywordChange = (v: string) =>
+    setQueryBuffer({ ...queryBuffer, keyword: v })
+
+  const handleSearchModeChange = (v: string) =>
+    setQueryBuffer({ ...queryBuffer, mode: v })
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const keyword = params.get('keyword') ?? ''
+    const mode = params.get('mode') ?? '활동 유저'
+
+    setQueryBuffer({
+      keyword,
+      mode,
+    })
+
+    setQuery({
+      keyword,
+      mode,
+    })
+  }, [router.asPath])
+
+  return {
+    queryBuffer,
+    query,
+    handleKeywordChange,
+    handleSearchModeChange,
   }
 }
 

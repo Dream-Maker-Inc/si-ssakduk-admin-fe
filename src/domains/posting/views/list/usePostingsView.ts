@@ -1,14 +1,13 @@
-import { useQuery } from 'react-query'
-import { useState } from 'react'
-import { useRouter } from 'next/router'
-import { RouterPath } from '@/common/router'
+/* eslint-disable react-hooks/exhaustive-deps */
 import { DataTableProps } from '@/common/components/DataTable'
 import { SearchDialogProps } from '@/common/components/dialogs'
-import { useRecoilState } from 'recoil'
-import { postingsSearchAtom } from '@/common/recoil'
-import { PostingCategories } from '../../models'
-import { PostingDto, PostingsApi, PostingsDto } from '../../data'
 import { BreadcrumbModel } from '@/common/components/TitleContainer'
+import { RouterPath } from '@/common/router'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { useQuery } from 'react-query'
+import { PostingDto, PostingsApi, PostingsDto } from '../../data'
+import { findPostingCategoriesByValue, PostingCategories } from '../../models'
 
 const PageSize = 10
 
@@ -18,42 +17,42 @@ export const usePostingsView = () => {
   const [pageNumber, setPageNumber] = useState(1)
   const [searchDialogOpen, setSearchDialogOpen] = useState(false)
 
-  const [postingsSearchState, setPostingsSearchState] =
-    useRecoilState(postingsSearchAtom)
-  const { category, keyword, withBlind } = postingsSearchState
-  const handleCategoryChange = (v: string) => {
-    const category = Object.values(PostingCategories).find(
-      it => it.label === v,
-    )!
-
-    setPostingsSearchState({ ...postingsSearchState, category })
-  }
-  const handleKeywordChange = (v: string) =>
-    setPostingsSearchState({ ...postingsSearchState, keyword: v })
-  const handleWithBlindChange = (checked: boolean) =>
-    setPostingsSearchState({ ...postingsSearchState, withBlind: checked })
+  const {
+    queryBuffer,
+    query,
+    handleKeywordChange,
+    handleCategoryChange,
+    handleWithBlindChange,
+  } = usePostingsQuery()
+  const { category, keyword, withBlind } = queryBuffer
 
   // fetch postings
-  const { data: postingsDto, refetch } = useQuery(
-    ['postings', pageNumber],
-    () =>
-      PostingsApi.findAll({
+  const { data: postingsDto } = useQuery(
+    ['postings', pageNumber, query],
+    () => {
+      const { category, keyword, withBlind } = query
+
+      return PostingsApi.findAll({
         page: pageNumber,
         size: PageSize,
         keyword,
-        category: category.value,
+        category,
         withBlind,
-      }),
+      })
+    },
     {
       onSuccess: () => setSearchDialogOpen(false),
     },
   )
 
+  // guard
   const result = { data: null }
   if (!postingsDto) return result
-  //
 
+  // mapping
   const { postings, metaData } = mapToPostings(postingsDto)
+  const categoryModel =
+    findPostingCategoriesByValue(category) ?? PostingCategories.All
 
   // table
   const dataTableProps: DataTableProps = {
@@ -122,7 +121,7 @@ export const usePostingsView = () => {
       selectors: [
         {
           title: '카테고리',
-          value: category.label,
+          value: categoryModel.label,
           onChange: handleCategoryChange,
           items: Object.values(PostingCategories).map(it => it.label),
         },
@@ -141,7 +140,10 @@ export const usePostingsView = () => {
     keywordState: {
       value: keyword,
       onChange: handleKeywordChange,
-      onSubmit: () => refetch(),
+      onSubmit: () => {
+        setSearchDialogOpen(false)
+        router.push(`${router.pathname}`, { query: { ...queryBuffer } })
+      },
     },
   }
 
@@ -169,6 +171,58 @@ export const usePostingsView = () => {
       searchDialogProps,
       openSearchDialog: () => setSearchDialogOpen(true),
     },
+  }
+}
+
+//
+const usePostingsQuery = () => {
+  const router = useRouter()
+
+  const [queryBuffer, setQueryBuffer] = useState({
+    category: '',
+    keyword: '',
+    withBlind: false,
+  })
+
+  const [query, setQuery] = useState({
+    category: '',
+    keyword: '',
+    withBlind: false,
+  })
+
+  const handleCategoryChange = (v: string) => {
+    setQueryBuffer({ ...queryBuffer, category: v })
+  }
+  const handleKeywordChange = (v: string) =>
+    setQueryBuffer({ ...queryBuffer, keyword: v })
+  const handleWithBlindChange = (checked: boolean) =>
+    setQueryBuffer({ ...queryBuffer, withBlind: checked })
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const keyword = params.get('keyword') ?? ''
+    const category = params.get('category') ?? ''
+    const withBlind: boolean = JSON.parse(params.get('withBlind') ?? 'false')
+
+    setQueryBuffer({
+      keyword,
+      category,
+      withBlind,
+    })
+
+    setQuery({
+      keyword,
+      category,
+      withBlind,
+    })
+  }, [router.asPath])
+
+  return {
+    queryBuffer,
+    query,
+    handleKeywordChange,
+    handleCategoryChange,
+    handleWithBlindChange,
   }
 }
 

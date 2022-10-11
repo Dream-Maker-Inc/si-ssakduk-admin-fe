@@ -5,7 +5,7 @@ import { DataTableProps } from '@/common/components/DataTable'
 import { useRouter } from 'next/router'
 import { RouterPath } from '@/common/router'
 import { SearchDialogProps } from '@/common/components/dialogs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CreateActionIconProps } from '@/common/components/icons'
 import { LifePostingDto, LifePostingsDto } from '../../data'
 import { BreadcrumbModel } from '@/common/components/TitleContainer'
@@ -17,22 +17,33 @@ export const useLifePostingsView = () => {
 
   const [pageNumber, setPageNumber] = useState(1)
   const [searchDialogOpen, setSearchDialogOpen] = useState(false)
+  const [keywordBuffer, setKeywordBuffer] = useState('')
+  const [keyword, setKeyword] = useState('')
 
-  const { keyword, handleKeywordChange } = useLifePostingsSearchState()
-
-  const { data: lifePostingsDto, refetch } = useQuery(['life-postings'], () =>
-    LifePostingApi.findAll({
-      page: 1,
-      size: PageSize,
-      keyword,
-    }),
+  // fetch
+  const { data: lifePostingsDto } = useQuery(
+    ['life-postings', pageNumber, keyword],
+    () =>
+      LifePostingApi.findAll({
+        page: 1,
+        size: PageSize,
+        keyword,
+      }),
   )
+
+  // effects
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const keyword = params.get('keyword') ?? ''
+    setKeywordBuffer(keyword)
+    setKeyword(keyword)
+  }, [router.asPath])
 
   // null guard
   const result = { data: null }
   if (!lifePostingsDto) return result
 
-  //
+  // mapping
   const { lifePostings, metaData } = mapToLifePosting(lifePostingsDto)
 
   // table
@@ -84,11 +95,11 @@ export const useLifePostingsView = () => {
     onClose: () => setSearchDialogOpen(false),
     filterModel: {},
     keywordState: {
-      value: keyword,
-      onChange: handleKeywordChange,
+      value: keywordBuffer,
+      onChange: setKeywordBuffer,
       onSubmit: () => {
-        refetch()
         setSearchDialogOpen(false)
+        router.push(`${router.pathname}`, { query: { keyword: keywordBuffer } })
       },
     },
   }

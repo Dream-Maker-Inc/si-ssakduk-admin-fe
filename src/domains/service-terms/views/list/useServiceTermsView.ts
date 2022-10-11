@@ -1,11 +1,11 @@
-import { useRouter } from 'next/router'
+/* eslint-disable react-hooks/exhaustive-deps */
 import { DataTableProps } from '@/common/components/DataTable'
 import { SearchDialogProps } from '@/common/components/dialogs'
 import { CreateActionIconProps } from '@/common/components/icons'
 import { BreadcrumbModel } from '@/common/components/TitleContainer'
-import { useServiceTermsSearchState } from '@/common/recoil/service-terms.atom'
 import { RouterPath } from '@/common/router'
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { ServiceTermsDto } from '../../data'
 import { ServiceTermsApi } from './../../data/service-terms.api'
@@ -17,12 +17,12 @@ export const useServiceTermsView = () => {
 
   const [pageNumber, setPageNumber] = useState(1)
   const [searchDialogOpen, setSearchDialogOpen] = useState(false)
-
-  const { keyword, handleKeywordChange } = useServiceTermsSearchState()
+  const [keywordBuffer, setKeywordBuffer] = useState('')
+  const [keyword, setKeyword] = useState('')
 
   // fetch
-  const { data: serviceTermsDto, refetch } = useQuery(
-    ['service-terms', pageNumber],
+  const { data: serviceTermsDto } = useQuery(
+    ['service-terms', pageNumber, keyword],
     () =>
       ServiceTermsApi.findAll({
         page: pageNumber,
@@ -32,10 +32,19 @@ export const useServiceTermsView = () => {
       }),
   )
 
+  // effects
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const keyword = params.get('keyword') ?? ''
+    setKeywordBuffer(keyword)
+    setKeyword(keyword)
+  }, [router.asPath])
+
+  // guard
   const result = { data: null }
   if (!serviceTermsDto) return result
-  //
 
+  // mapping
   const { serviceTerms, metaData } = mapToTerms(serviceTermsDto)
 
   // table
@@ -96,11 +105,11 @@ export const useServiceTermsView = () => {
     onClose: () => setSearchDialogOpen(false),
     filterModel: {},
     keywordState: {
-      value: keyword,
-      onChange: handleKeywordChange,
+      value: keywordBuffer,
+      onChange: setKeywordBuffer,
       onSubmit: () => {
         setSearchDialogOpen(false)
-        refetch()
+        router.push(`${router.pathname}`, { query: { keyword: keywordBuffer } })
       },
     },
   }
