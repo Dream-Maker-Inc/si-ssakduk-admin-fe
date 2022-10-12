@@ -7,7 +7,11 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { PostingDto, PostingsApi, PostingsDto } from '../../data'
-import { findPostingCategoriesByValue, PostingCategories } from '../../models'
+import {
+  findPostingCategories,
+  findPostingCategoriesByValue,
+  PostingCategories,
+} from '../../models'
 
 const PageSize = 10
 
@@ -32,11 +36,14 @@ export const usePostingsView = () => {
     () => {
       const { category, keyword, withBlind } = query
 
+      const categoryModel =
+        findPostingCategories(category) ?? PostingCategories.All
+
       return PostingsApi.findAll({
         page: pageNumber,
         size: PageSize,
         keyword,
-        category,
+        category: categoryModel.value,
         withBlind,
       })
     },

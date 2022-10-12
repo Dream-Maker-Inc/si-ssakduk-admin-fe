@@ -17,8 +17,8 @@ export const PostingCategories = {
   Misc: new PostingCategory('기타', '기타'),
 }
 
-export const findPostingCategories = (v: string) =>
-  Object.values(PostingCategories).find(it => it.label === v)
+export const findPostingCategories = (label: string) =>
+  Object.values(PostingCategories).find(it => it.label === label)
 
 export const findPostingCategoriesByValue = (v: string) =>
   Object.values(PostingCategories).find(it => it.value === v)
