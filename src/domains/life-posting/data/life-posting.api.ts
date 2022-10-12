@@ -9,7 +9,7 @@ export class LifePostingApi {
   static async findAll(params: LifePostingsParams) {
     return lastValueFrom(
       from(
-        BaseServerClient.get('/api/v1/life-posting', {
+        BaseServerClient.get('/api/admin/v1/life-posting', {
           params,
         }),
       ).pipe(map(res => plainToClass(LifePostingsDto, res.data))),
@@ -18,7 +18,7 @@ export class LifePostingApi {
 
   static async findOne(id: number) {
     return lastValueFrom(
-      from(BaseServerClient.get(`/api/v1/life-posting/${id}`)).pipe(
+      from(BaseServerClient.get(`/api/admin/v1/life-posting/${id}`)).pipe(
         tap(res => {
           if (res.data.statusCode) {
             throw new Error(res.data.message)
@@ -32,7 +32,7 @@ export class LifePostingApi {
   static async create(dto: CreateLifePostingDto) {
     return lastValueFrom(
       from(
-        BaseServerClient.post('/api/v1/life-posting', dto.toFormData()),
+        BaseServerClient.post('/api/admin/v1/life-posting', dto.toFormData()),
       ).pipe(map(res => res.data)),
     )
   }
@@ -40,14 +40,17 @@ export class LifePostingApi {
   static async update(id: number, dto: UpdateLifePostingDto) {
     return lastValueFrom(
       from(
-        BaseServerClient.patch(`/api/v1/life-posting/${id}`, dto.toFormData()),
+        BaseServerClient.patch(
+          `/api/admin/v1/life-posting/${id}`,
+          dto.toFormData(),
+        ),
       ).pipe(map(res => res.data)),
     )
   }
 
   static async delete(id: number) {
     return lastValueFrom(
-      from(BaseServerClient.delete(`/api/v1/life-posting/${id}`)).pipe(
+      from(BaseServerClient.delete(`/api/admin/v1/life-posting/${id}`)).pipe(
         map(res => res.data),
       ),
     )
