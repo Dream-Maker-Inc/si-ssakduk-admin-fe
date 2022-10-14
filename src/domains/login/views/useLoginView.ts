@@ -26,7 +26,7 @@ export const useLoginView = () => {
 
   const handleLoginSuccess = (accessToken: string) => {
     setUser({ accessToken })
-    router.push(RouterPath.Main.path)
+    router.push(RouterPath.Members.path)
   }
 
   const handleLogin = () => {
