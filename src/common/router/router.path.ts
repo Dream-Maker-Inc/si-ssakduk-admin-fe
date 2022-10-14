@@ -9,8 +9,10 @@ class Router {
 export const RouterPath = {
   Root: new Router('/'),
 
-  Main: new Router('/main'),
-  MainUpdate: new Router('/main/update'),
+  Main: new Router('/members'),
+  // Main: new Router('/main'),
+  // MainUpdate: new Router('/main/update'),
+  MainUpdate: new Router('/'),
 
   Members: new Router('/members'),
   Member: new Router('/members/detail'),

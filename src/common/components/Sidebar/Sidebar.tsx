@@ -19,12 +19,12 @@ export const Sidebar = () => {
     RouterPath
 
   const models = [
-    {
-      nodeId: 'main',
-      href: Main.path,
-      labelIcon: <DashboardRounded />,
-      labelText: '메인화면 관리',
-    },
+    // {
+    //   nodeId: 'main',
+    //   href: Main.path,
+    //   labelIcon: <DashboardRounded />,
+    //   labelText: '메인화면 관리',
+    // },
     {
       nodeId: 'member',
       href: Members.path,
