@@ -25,7 +25,7 @@ export const useLifePostingsView = () => {
     ['life-postings', pageNumber, keyword],
     () =>
       LifePostingApi.findAll({
-        page: 1,
+        page: pageNumber,
         size: PageSize,
         keyword,
       }),
