@@ -1,5 +1,6 @@
 import { useUserAuthentication } from '@/common/recoil'
 import { RouterPath } from '@/common/router'
+import { setAxiosAccessToken } from '@/data/common'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -26,6 +27,7 @@ export const useLoginView = () => {
 
   const handleLoginSuccess = (accessToken: string) => {
     setUser({ accessToken })
+    setAxiosAccessToken(accessToken)
     router.push(RouterPath.Members.path)
   }
 
