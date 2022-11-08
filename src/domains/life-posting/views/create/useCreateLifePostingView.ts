@@ -38,7 +38,7 @@ export const useCreateLifePostingView = () => {
     },
   )
 
-  const isValidFormModel = title && content
+  const isValidFormModel = title && content && attachments.length
 
   // functions
   const submitForm = () => {

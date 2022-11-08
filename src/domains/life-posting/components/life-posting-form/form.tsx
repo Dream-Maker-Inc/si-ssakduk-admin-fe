@@ -30,11 +30,11 @@ export const LifePostingForm = (p: LifePostingFormProps) => {
     <div css={st.root}>
       <div css={st.inner}>
         <DataRow
-          title='제목'
+          title='*제목'
           content={<TextField fullWidth {...titleTextFieldProps} />}
         />
         <DataRow
-          title='내용'
+          title='*내용'
           content={
             <TextField
               fullWidth
@@ -49,7 +49,7 @@ export const LifePostingForm = (p: LifePostingFormProps) => {
           content={<TextField fullWidth {...sponsorLinkProps} />}
         />
         <DataRow
-          title='파일 첨부 (최대 2개)'
+          title='*파일 첨부 (최대 2개)'
           content={<LocalUploadView {...attachmentsProps} />}
         />
       </div>
