@@ -3,7 +3,7 @@ name: sync up to codecommit
 on:
   push:
     branches:
-      - 'aws'
+      - 'main'
 
 jobs:
   sync:
@@ -27,4 +27,4 @@ jobs:
         with:
           repository_name: ssakduk-admin-frontend
           aws_region: ap-northeast-2
-          branch: aws
+          branch: main
