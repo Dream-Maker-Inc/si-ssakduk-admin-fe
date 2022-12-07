@@ -3,7 +3,7 @@
 // }
 
 export const ServerInfo = {
-  host: 'https://ssakduk-api.ureca.im',
+  host: 'https://api.ssakduk.com',
 }
 
 export const TempToken =
