@@ -122,7 +122,7 @@ export const useUpdateLifePostingView = (id: number) => {
     sponsorLinkProps: {
       value: sponsorLink,
       onChange: e => handleSponsorLinkChange(e.target.value),
-      placeholder: '스폰서 링크를 입력해주세요.',
+      placeholder: 'http://example.com',
     },
     attachmentsProps: {
       files: attachments,

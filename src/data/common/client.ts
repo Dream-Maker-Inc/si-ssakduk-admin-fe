@@ -5,22 +5,16 @@ const BaseServerClient = axios.create({
   baseURL: ServerInfo.host,
 })
 
-// BaseServerClient.interceptors.request.use(req => {
-//   req.headers = {
-//     Authorization: 'Bearer ' + TempToken,
-//   }
+BaseServerClient.interceptors.request.use(req => {
+  const userJSON = window.sessionStorage.getItem('user') as any
+  const userObj = JSON.parse(userJSON)
+  const token = userObj?.user?.accessToken
 
-//   return req
-// })
+  req.headers = {
+    Authorization: 'Bearer ' + token,
+  }
 
-const setAxiosAccessToken = (accessToken: string) => {
-  BaseServerClient.interceptors.request.use(req => {
-    req.headers = {
-      Authorization: 'Bearer ' + accessToken,
-    }
+  return req
+})
 
-    return req
-  })
-}
-
-export { BaseServerClient, setAxiosAccessToken }
+export { BaseServerClient }
