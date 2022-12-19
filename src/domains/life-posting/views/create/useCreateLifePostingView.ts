@@ -1,5 +1,6 @@
 import { BreadcrumbModel } from '@/common/components/TitleContainer'
 import { RouterPath } from '@/common/router'
+import { UrlRegex } from '@/common/utils/regex'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useMutation } from 'react-query'
@@ -38,7 +39,9 @@ export const useCreateLifePostingView = () => {
     },
   )
 
-  const isValidFormModel = title && content && attachments.length
+  const isValidLinkUrl = UrlRegex.test(sponsorLink)
+  const isValidFormModel =
+    title && content && attachments.length && isValidLinkUrl
 
   // functions
   const submitForm = () => {
@@ -79,7 +82,7 @@ export const useCreateLifePostingView = () => {
     sponsorLinkProps: {
       value: sponsorLink,
       onChange: e => handleSponsorLinkChange(e.target.value),
-      placeholder: '스폰서 링크를 입력해주세요.',
+      placeholder: 'http://example.com',
     },
     attachmentsProps: {
       files: attachments,

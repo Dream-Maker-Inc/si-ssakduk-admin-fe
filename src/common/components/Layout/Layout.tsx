@@ -16,7 +16,7 @@ export const Layout = ({ children }: LayoutProps) => {
       <div css={st.inner}>
         <Sidebar />
 
-        <main css={st.main}>{children}</main>
+        <div css={st.main}>{children}</div>
       </div>
     </div>
   )
