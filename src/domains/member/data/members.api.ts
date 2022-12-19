@@ -8,10 +8,10 @@ export class MembersApi {
   static async findAll(params: MembersParams) {
     return lastValueFrom(
       from(
-        BaseServerClient.get<MembersDto>('/api/admin/v1/member', {
+        BaseServerClient.get('/api/admin/v1/member', {
           params: { ...params, withBlind: true },
         }),
-      ).pipe(map(res => plainToClass(MembersDto, res.data))),
+      ).pipe(map(res => plainToClass(MembersDto, res.data.data))),
     )
   }
 
@@ -21,14 +21,14 @@ export class MembersApi {
         BaseServerClient.get('/api/admin/v1/member/removed', {
           params,
         }),
-      ).pipe(map(res => plainToClass(MembersDto, res.data))),
+      ).pipe(map(res => plainToClass(MembersDto, res.data.data))),
     )
   }
 
   static async findOne(id: string) {
     return lastValueFrom(
-      from(BaseServerClient.get<MemberDto>(`/api/v1/member/${id}`)).pipe(
-        map(res => plainToClass(MemberDto, res.data)),
+      from(BaseServerClient.get(`/api/v1/member/${id}`)).pipe(
+        map(res => plainToClass(MemberDto, res.data.data)),
       ),
     )
   }
@@ -37,13 +37,13 @@ export class MembersApi {
     const res = await BaseServerClient.patch(`/api/admin/v1/member/${id}`, {
       blind,
     })
-    return res.data
+    return res.data.data
   }
 
   static async blindCancel(id: string) {
     const res = await BaseServerClient.patch(`/api/admin/v1/member/${id}`, {
       blind: null,
     })
-    return res.data
+    return res.data.data
   }
 }

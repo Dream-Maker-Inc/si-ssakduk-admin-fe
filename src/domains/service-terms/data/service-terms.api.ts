@@ -14,14 +14,14 @@ export class ServiceTermsApi {
     return await lastValueFrom(
       from(
         BaseServerClient.get('/api/admin/v1/service-terms', { params }),
-      ).pipe(map(res => plainToClass(ServiceTermsDto, res.data))),
+      ).pipe(map(res => plainToClass(ServiceTermsDto, res.data.data))),
     )
   }
 
   static async findOne(id: number) {
     return await lastValueFrom(
       from(BaseServerClient.get(`/api/admin/v1/service-terms/${id}`)).pipe(
-        map(res => plainToClass(ServiceTermDto, res.data)),
+        map(res => plainToClass(ServiceTermDto, res.data.data)),
       ),
     )
   }
@@ -29,7 +29,7 @@ export class ServiceTermsApi {
   static async create(dto: CreateServiceTermDto) {
     return lastValueFrom(
       from(BaseServerClient.post('/api/admin/v1/service-terms', dto)).pipe(
-        map(res => res.data),
+        map(res => res.data.data),
       ),
     )
   }
@@ -38,14 +38,14 @@ export class ServiceTermsApi {
     return lastValueFrom(
       from(
         BaseServerClient.patch(`/api/admin/v1/service-terms/${id}`, dto),
-      ).pipe(map(res => res.data)),
+      ).pipe(map(res => res.data.data)),
     )
   }
 
   static async remove(id: number) {
     return lastValueFrom(
       from(BaseServerClient.delete(`/api/admin/v1/service-terms/${id}`)).pipe(
-        map(res => res.data),
+        map(res => res.data.data),
       ),
     )
   }

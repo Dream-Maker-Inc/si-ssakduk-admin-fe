@@ -8,7 +8,7 @@ export class LoginApi {
   static async login(dto: RequestLoginDto) {
     return await lastValueFrom(
       from(BaseServerClient.post('/api/v1/auth/admin/login', dto)).pipe(
-        map(res => plainToClass(ResponseLoginDto, res.data)),
+        map(res => plainToClass(ResponseLoginDto, res.data.data)),
       ),
     )
   }

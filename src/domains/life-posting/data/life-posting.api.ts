@@ -12,19 +12,14 @@ export class LifePostingApi {
         BaseServerClient.get('/api/admin/v1/life-posting', {
           params,
         }),
-      ).pipe(map(res => plainToClass(LifePostingsDto, res.data))),
+      ).pipe(map(res => plainToClass(LifePostingsDto, res.data.data))),
     )
   }
 
   static async findOne(id: number) {
     return lastValueFrom(
       from(BaseServerClient.get(`/api/admin/v1/life-posting/${id}`)).pipe(
-        tap(res => {
-          if (res.data.statusCode) {
-            throw new Error(res.data.message)
-          }
-        }),
-        map(res => plainToClass(LifePostingDto, res.data)),
+        map(res => plainToClass(LifePostingDto, res.data.data)),
       ),
     )
   }
@@ -33,7 +28,7 @@ export class LifePostingApi {
     return lastValueFrom(
       from(
         BaseServerClient.post('/api/admin/v1/life-posting', dto.toFormData()),
-      ).pipe(map(res => res.data)),
+      ).pipe(map(res => res.data.data)),
     )
   }
 
@@ -44,14 +39,14 @@ export class LifePostingApi {
           `/api/admin/v1/life-posting/${id}`,
           dto.toFormData(),
         ),
-      ).pipe(map(res => res.data)),
+      ).pipe(map(res => res.data.data)),
     )
   }
 
   static async delete(id: number) {
     return lastValueFrom(
       from(BaseServerClient.delete(`/api/admin/v1/life-posting/${id}`)).pipe(
-        map(res => res.data),
+        map(res => res.data.data),
       ),
     )
   }

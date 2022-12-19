@@ -8,7 +8,7 @@ export class PostingsApi {
   static async findAll(params: PostingsParams) {
     return await lastValueFrom(
       from(BaseServerClient.get('/api/admin/v1/posting', { params })).pipe(
-        map(res => plainToClass(PostingsDto, res.data)),
+        map(res => plainToClass(PostingsDto, res.data.data)),
       ),
     )
   }
@@ -16,7 +16,7 @@ export class PostingsApi {
   static async findOne(id: string) {
     return lastValueFrom(
       from(BaseServerClient.get(`/api/admin/v1/posting/${id}`)).pipe(
-        map(res => plainToClass(PostingDto, res.data)),
+        map(res => plainToClass(PostingDto, res.data.data)),
       ),
     )
   }
