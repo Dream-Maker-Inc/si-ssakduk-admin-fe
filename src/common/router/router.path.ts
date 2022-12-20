@@ -35,6 +35,12 @@ export const RouterPath = {
   LifePostingUpdate: new Router('/life/update'),
   LifePostingDelete: new Router('/life/delete'),
 
+  Notices: new Router('/notices'),
+  Notice: new Router('/notices/detail'),
+  NoticeCreate: new Router('/notices/create'),
+  NoticeUpdate: new Router('/notices/update'),
+  NoticeDelete: new Router('/notices/delete'),
+
   Login: new Router('/login'),
 }
 
