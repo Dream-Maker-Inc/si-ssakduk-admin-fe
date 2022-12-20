@@ -1,2 +1,2 @@
-export * from './dto'
-export * from './notices.api'
+export * from "./dto";
+export * from "./notices.api";

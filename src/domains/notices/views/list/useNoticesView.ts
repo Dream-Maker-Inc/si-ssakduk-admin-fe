@@ -5,7 +5,7 @@ import { RouterPath } from '@/common/router'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
-import { NoticesApi, NoticesDto } from '../data'
+import { NoticeDto, NoticesApi } from '../../data'
 
 const PageSize = 10
 
@@ -29,7 +29,7 @@ export const useNoticesView = () => {
     },
   )
 
-  // effects
+  // init url params
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const keyword = params.get('keyword') ?? ''
@@ -41,58 +41,12 @@ export const useNoticesView = () => {
   const result = { data: null }
   if (!noticesDto) return result
 
-  const { notices, metaData } = mapToNotices(noticesDto)
+  const { items, metaData } = noticesDto
 
   // table
-  const dataTableProps: DataTableProps = {
-    model: {
-      headers: [
-        {
-          minWidth: '80px',
-          width: '80px',
-          typographyProps: {
-            children: '번호',
-          },
-        },
-        {
-          minWidth: '300px',
-          width: '300px',
-          typographyProps: {
-            children: '제목',
-          },
-        },
-        {
-          typographyProps: {
-            children: '내용',
-          },
-        },
-        {
-          minWidth: '300px',
-          width: '300px',
-          typographyProps: {
-            children: '생성일',
-          },
-        },
-        {
-          minWidth: '300px',
-          width: '300px',
-          typographyProps: {
-            children: '수정일',
-          },
-        },
-      ],
-      data:
-        notices.map(it => [
-          it.id,
-          it.title,
-          it.content,
-          it.createdAt,
-          it.updateAt,
-        ]) ?? [],
-    },
-    onDataRowClick: (id: number) =>
-      router.push(RouterPath.NoticeCreate.createPathWithId(`${id}`)),
-  }
+  const dataTableProps: DataTableProps = mapToTableProps(items, id =>
+    router.push(RouterPath.Notice.createPathWithId(`${id}`)),
+  )
 
   // searchDialog props
   const searchDialogProps: SearchDialogProps = {
@@ -136,17 +90,59 @@ export const useNoticesView = () => {
   }
 }
 
-const mapToNotices = (dto: NoticesDto) => {
-  const { items, metaData } = dto
-
-  const notices = items.map(it => ({
-    ...it,
-    createdAt: it.createdDate.toLocaleString(),
-    updateAt: it.updatedDate.toLocaleString(),
-  }))
-
-  return {
-    notices,
-    metaData,
+// 서버 데이터 => 테이블 모델
+const mapToTableProps = (
+  notices: NoticeDto[],
+  onDataRowClick: (id: number) => void,
+) => {
+  const dataTableProps: DataTableProps = {
+    model: {
+      headers: [
+        {
+          minWidth: '80px',
+          width: '80px',
+          typographyProps: {
+            children: '번호',
+          },
+        },
+        {
+          minWidth: '300px',
+          width: '300px',
+          typographyProps: {
+            children: '제목',
+          },
+        },
+        {
+          typographyProps: {
+            children: '내용',
+          },
+        },
+        {
+          minWidth: '300px',
+          width: '300px',
+          typographyProps: {
+            children: '생성일',
+          },
+        },
+        {
+          minWidth: '300px',
+          width: '300px',
+          typographyProps: {
+            children: '수정일',
+          },
+        },
+      ],
+      data:
+        notices.map(it => [
+          it.id,
+          it.title,
+          it.content,
+          it.createdDate.toLocaleString(),
+          it.updatedDate.toLocaleString(),
+        ]) ?? [],
+    },
+    onDataRowClick,
   }
+
+  return dataTableProps
 }

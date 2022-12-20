@@ -1,1 +1,2 @@
-export * from './NoticesView'
+export * from "./detail";
+export * from "./list";
