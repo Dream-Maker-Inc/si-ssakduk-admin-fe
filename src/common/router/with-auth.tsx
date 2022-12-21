@@ -1,6 +1,5 @@
 import { NextComponentType, NextPageContext } from 'next'
 import { useRouter } from 'next/router'
-import { useUserAuthentication } from '../recoil'
 import { RouterPath } from './router.path'
 
 export const withAuth = (

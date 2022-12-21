@@ -1,5 +1,6 @@
 import { DataTableProps } from '@/common/components/DataTable'
 import { SearchDialogProps } from '@/common/components/dialogs'
+import { CreateActionIconProps } from '@/common/components/icons'
 import { BreadcrumbModel } from '@/common/components/TitleContainer'
 import { RouterPath } from '@/common/router'
 import { useRouter } from 'next/router'
@@ -63,6 +64,16 @@ export const useNoticesView = () => {
     },
   }
 
+  // create action icon props
+  const createActionIconProps: CreateActionIconProps = {
+    tooltip: '글 작성',
+    iconButtonProps: {
+      onClick: () => {
+        router.push(RouterPath.NoticeCreate.path)
+      },
+    },
+  }
+
   // pagination
   const paginationState = {
     count: metaData.totalPageCount,
@@ -86,6 +97,7 @@ export const useNoticesView = () => {
       breadcrumbModels,
       searchDialogProps,
       openSearchDialog: () => setSearchDialogOpen(true),
+      createActionIconProps,
     },
   }
 }
@@ -106,8 +118,8 @@ const mapToTableProps = (
           },
         },
         {
-          minWidth: '300px',
-          width: '300px',
+          minWidth: '200px',
+          width: '200px',
           typographyProps: {
             children: '제목',
           },
@@ -118,15 +130,15 @@ const mapToTableProps = (
           },
         },
         {
-          minWidth: '300px',
-          width: '300px',
+          minWidth: '200px',
+          width: '200px',
           typographyProps: {
             children: '생성일',
           },
         },
         {
-          minWidth: '300px',
-          width: '300px',
+          minWidth: '200px',
+          width: '200px',
           typographyProps: {
             children: '수정일',
           },

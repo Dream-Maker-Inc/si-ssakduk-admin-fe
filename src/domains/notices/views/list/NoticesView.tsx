@@ -1,7 +1,8 @@
 import { SearchDialogWithIcon } from '@/common/components/dialogs'
+import { CreateActionIcon } from '@/common/components/icons'
 import { ListPageTemplate } from '@/common/templates'
 import { Colors } from '@/common/themes/Color'
-import { Typography } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import { Fragment } from 'react'
 import { useNoticesView } from './useNoticesView'
 
@@ -15,6 +16,7 @@ export const NoticesView = () => {
     breadcrumbModels,
     searchDialogProps,
     openSearchDialog,
+    createActionIconProps,
   } = data
 
   return (
@@ -32,10 +34,14 @@ export const NoticesView = () => {
           </Typography>
         ),
         right: (
-          <SearchDialogWithIcon
-            openSearchDialog={openSearchDialog}
-            searchDialogProps={searchDialogProps}
-          />
+          <Stack direction={'row'} gap={'8px'}>
+            <SearchDialogWithIcon
+              openSearchDialog={openSearchDialog}
+              searchDialogProps={searchDialogProps}
+            />
+
+            <CreateActionIcon {...createActionIconProps} />
+          </Stack>
         ),
       }}
       dataTableProps={dataTableProps}
