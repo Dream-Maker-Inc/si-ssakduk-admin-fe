@@ -1,27 +1,19 @@
-import {
-  LocalUploadView,
-  LocalUploadViewProps,
-} from '@/common/components/antd/uploads'
 import { DataRow } from '@/common/components/DataRow'
 import { Colors } from '@/common/themes/Color'
 import { css } from '@emotion/react'
 import { Button, ButtonProps, TextField, TextFieldProps } from '@mui/material'
 
-export type LifePostingFormProps = {
+export type NoticeFormProps = {
   titleTextFieldProps: TextFieldProps
   contentTextFieldProps: TextFieldProps
-  sponsorLinkProps: TextFieldProps
-  attachmentsProps: LocalUploadViewProps
   cancelButtonProps: ButtonProps
   submitButtonProps: ButtonProps
 }
 
-export const LifePostingForm = (p: LifePostingFormProps) => {
+export const NoticeForm = (p: NoticeFormProps) => {
   const {
     titleTextFieldProps,
     contentTextFieldProps,
-    sponsorLinkProps,
-    attachmentsProps,
     cancelButtonProps,
     submitButtonProps,
   } = p
@@ -30,11 +22,11 @@ export const LifePostingForm = (p: LifePostingFormProps) => {
     <div css={st.root}>
       <div css={st.inner}>
         <DataRow
-          title='*제목'
+          title='제목'
           content={<TextField fullWidth {...titleTextFieldProps} />}
         />
         <DataRow
-          title='*내용'
+          title='내용'
           content={
             <TextField
               fullWidth
@@ -43,14 +35,6 @@ export const LifePostingForm = (p: LifePostingFormProps) => {
               {...contentTextFieldProps}
             />
           }
-        />
-        <DataRow
-          title='스폰서 링크'
-          content={<TextField fullWidth {...sponsorLinkProps} />}
-        />
-        <DataRow
-          title='*파일 첨부 (최대 2개)'
-          content={<LocalUploadView {...attachmentsProps} />}
         />
       </div>
 

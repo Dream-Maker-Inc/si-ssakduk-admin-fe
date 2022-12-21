@@ -2,6 +2,7 @@ import { RouterPath, RouterPathType } from '@/common/router'
 import { Colors } from '@/common/themes/Color'
 import { MediaQueries } from '@/common/themes/Limit'
 import { css } from '@emotion/react'
+import { ArticleRounded } from '@mui/icons-material'
 import BookmarkRounded from '@mui/icons-material/BookmarkRounded'
 import DashboardRounded from '@mui/icons-material/DashboardRounded'
 import PeopleRounded from '@mui/icons-material/PeopleRounded'
@@ -15,16 +16,10 @@ import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 
 export const Sidebar = () => {
-  const { Main, Members, Postings, Comments, ServiceTerms, LifePostings } =
+  const { Members, Postings, Comments, ServiceTerms, LifePostings, Notices } =
     RouterPath
 
   const models = [
-    // {
-    //   nodeId: 'main',
-    //   href: Main.path,
-    //   labelIcon: <DashboardRounded />,
-    //   labelText: '메인화면 관리',
-    // },
     {
       nodeId: 'member',
       href: Members.path,
@@ -59,6 +54,12 @@ export const Sidebar = () => {
       href: ServiceTerms.path,
       labelIcon: <DashboardRounded />,
       labelText: '약관 관리',
+    },
+    {
+      nodeId: 'notice-list',
+      href: Notices.path,
+      labelIcon: <ArticleRounded />,
+      labelText: '공지사항 관리',
     },
   ]
 

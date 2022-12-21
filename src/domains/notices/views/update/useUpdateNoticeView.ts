@@ -5,13 +5,10 @@ import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useMutation, useQuery } from 'react-query'
-import {
-  ServiceTermsFormProps,
-  useServiceTermsForm,
-} from '../../components/terms-form'
-import { ServiceTermsApi, UpdateServiceTermDto } from '../../data'
+import { NoticeFormProps, useNoticeForm } from '../../components'
+import { NoticesApi, UpdateNoticeDto } from '../../data'
 
-export const useUpdateTermsView = (id: number) => {
+export const useUpdateNoticeView = (id: number) => {
   const router = useRouter()
 
   const {
@@ -19,16 +16,15 @@ export const useUpdateTermsView = (id: number) => {
     handleTitleChange,
     content,
     handleContentChange,
-    isRequired,
-    handleIsRequiredChange,
-    formResult,
     setFormDefault,
-  } = useServiceTermsForm()
+  } = useNoticeForm()
 
-  // fetch posting
-  const { data: serviceTermDto, refetch } = useQuery(
-    ['service-term', id],
-    () => ServiceTermsApi.findOne(+id),
+  const isValidForm = title && content
+
+  // fetch old
+  const { data: noticeDto, refetch } = useQuery(
+    ['notice', id],
+    () => NoticesApi.findOne(+id),
     {
       onError: (err: Error) => {
         alert(err.message)
@@ -39,9 +35,9 @@ export const useUpdateTermsView = (id: number) => {
     },
   )
 
-  const { mutate } = useMutation(
-    ({ id, dto }: { id: number; dto: UpdateServiceTermDto }) =>
-      ServiceTermsApi.update(id, dto),
+  const { mutate: submit } = useMutation(
+    ({ id, dto }: { id: number; dto: UpdateNoticeDto }) =>
+      NoticesApi.update(id, dto),
     {
       onSuccess: () => {
         alert('글 수정에 성공 했습니다.')
@@ -54,51 +50,44 @@ export const useUpdateTermsView = (id: number) => {
     },
   )
 
-  const isValidFormModel = title && content
-
   // effects
   useEffect(() => {
     refetch()
   }, [id, refetch])
 
   useEffect(() => {
-    if (!serviceTermDto) return
+    if (!noticeDto) return
 
-    const { title, content, isRequired } = serviceTermDto
+    const { title, content } = noticeDto
 
-    setFormDefault({
-      title,
-      content,
-      isRequired,
-    })
-  }, [serviceTermDto])
+    setFormDefault({ title, content })
+  }, [noticeDto])
 
   // null guard
   const result = { data: null }
-  if (!serviceTermDto) return result
+  if (!noticeDto) return result
 
   // functions
   const submitForm = () => {
-    const { title, content, isRequired } = formResult
-    const dto = new UpdateServiceTermDto(title, content, isRequired)
-    mutate({ id, dto })
+    const dto = new UpdateNoticeDto(title, content)
+    submit({ id, dto })
   }
 
   // breadcrumbs
   const breadcrumbModels: BreadcrumbModel[] = [
     {
-      displayName: '이용약관 관리',
-      path: RouterPath.ServiceTerms.path,
+      displayName: '공지사항 관리',
+      path: RouterPath.Notices.path,
     },
     {
-      displayName: '이용약관 수정',
-      path: RouterPath.ServiceTermUpdate.createPathWithId(`${id}`),
+      displayName: '공지사항 수정',
+      path: RouterPath.NoticeUpdate.createPathWithId(`${id}`),
       accent: true,
     },
   ]
 
-  // formProps
-  const formProps: ServiceTermsFormProps = {
+  // form props
+  const formProps: NoticeFormProps = {
     titleTextFieldProps: {
       value: title,
       onChange: e => handleTitleChange(e.target.value),
@@ -109,16 +98,12 @@ export const useUpdateTermsView = (id: number) => {
       onChange: e => handleContentChange(e.target.value),
       placeholder: '내용을 입력해주세요.',
     },
-    requireTermsCheckBoxProps: {
-      checked: isRequired,
-      onChange: (_, checked) => handleIsRequiredChange(checked),
-    },
     cancelButtonProps: {
       onClick: () => router.back(),
       children: '취소',
     },
     submitButtonProps: {
-      disabled: !isValidFormModel,
+      disabled: !isValidForm,
       onClick: submitForm,
       children: '등록',
     },
