@@ -83,6 +83,7 @@ const st = {
     display: flex;
     justify-content: flex-end;
     gap: 8px;
+    padding: 12px;
   `,
   cancelButtonWrapper: css`
     color: ${Colors.WeakItem};

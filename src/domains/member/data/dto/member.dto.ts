@@ -1,4 +1,5 @@
 import { BaseModelWithBlind } from '@/data/common'
+import placeHolder from '@/images/place-holder.jpg'
 
 export class MemberDto extends BaseModelWithBlind {
   id: number
@@ -10,6 +11,6 @@ export class MemberDto extends BaseModelWithBlind {
   private profileImageUrl: string
 
   get profileImage() {
-    return this.profileImageUrl || '/images/place-holder.jpg'
+    return this.profileImageUrl || placeHolder
   }
 }
